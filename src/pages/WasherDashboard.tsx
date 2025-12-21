@@ -1,0 +1,298 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { mockRequests } from '@/data/mockData';
+import { LaundryRequest } from '@/types';
+import { 
+  Shirt, 
+  MapPin, 
+  Calendar,
+  DollarSign,
+  Star,
+  CheckCircle2,
+  Clock,
+  LogOut,
+  User,
+  Weight,
+  Sparkles
+} from 'lucide-react';
+import { toast } from 'sonner';
+
+const serviceLabels: Record<string, string> = {
+  'wash': 'Wash Only',
+  'wash-iron': 'Wash & Iron',
+  'iron-only': 'Iron Only',
+  'dry-clean': 'Dry Clean',
+};
+
+const laundryTypeLabels: Record<string, string> = {
+  'regular': 'Regular',
+  'delicate': 'Delicate',
+  'heavy': 'Heavy',
+  'mixed': 'Mixed',
+};
+
+export default function WasherDashboard() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [availableRequests, setAvailableRequests] = useState<LaundryRequest[]>(
+    mockRequests.filter(r => r.status === 'pending')
+  );
+  const [myJobs, setMyJobs] = useState<LaundryRequest[]>(
+    mockRequests.filter(r => r.washerId === 'washer-1')
+  );
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const handleAcceptJob = (request: LaundryRequest) => {
+    const updatedRequest = {
+      ...request,
+      status: 'accepted' as const,
+      washerId: user?.id,
+      washerName: user?.name,
+    };
+    
+    setAvailableRequests(prev => prev.filter(r => r.id !== request.id));
+    setMyJobs(prev => [updatedRequest, ...prev]);
+    toast.success('Job accepted! Contact the customer to arrange pickup.');
+  };
+
+  const formatDate = (date: Date) => {
+    return new Date(date).toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center">
+              <Shirt className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <span className="font-display font-bold text-xl text-gradient">FreshFold</span>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 text-sm bg-warning/10 text-warning px-2 py-1 rounded-full">
+                <Star className="w-3 h-3 fill-current" />
+                <span className="font-medium">{user?.rating || 4.8}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <User className="w-4 h-4 text-muted-foreground" />
+                <span className="font-medium">{user?.name}</span>
+              </div>
+            </div>
+            <Button variant="ghost" size="icon" onClick={handleLogout}>
+              <LogOut className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        {/* Welcome Section */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-display font-bold mb-2">
+            Ready to earn, {user?.name?.split(' ')[0]}? 💪
+          </h1>
+          <p className="text-muted-foreground">
+            Accept laundry jobs and get paid for your work
+          </p>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <Card className="border-0 shadow-md bg-gradient-to-br from-secondary/10 to-secondary/5">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-secondary" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">$0</p>
+                <p className="text-sm text-muted-foreground">Earnings this week</p>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-0 shadow-md bg-gradient-to-br from-primary/10 to-primary/5">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                <Clock className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{myJobs.filter(j => j.status !== 'completed').length}</p>
+                <p className="text-sm text-muted-foreground">Active Jobs</p>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-0 shadow-md bg-gradient-to-br from-success/10 to-success/5">
+            <CardContent className="p-6 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-success/20 flex items-center justify-center">
+                <CheckCircle2 className="w-6 h-6 text-success" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{user?.completedJobs || 0}</p>
+                <p className="text-sm text-muted-foreground">Completed Jobs</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Available Jobs */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <h2 className="text-xl font-display font-semibold">Available Jobs</h2>
+            <Badge variant="secondary" className="ml-2">{availableRequests.length}</Badge>
+          </div>
+          
+          {availableRequests.length === 0 ? (
+            <Card className="border-dashed border-2">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-muted mx-auto mb-4 flex items-center justify-center">
+                  <Shirt className="w-8 h-8 text-muted-foreground" />
+                </div>
+                <h3 className="font-semibold mb-2">No jobs available</h3>
+                <p className="text-muted-foreground">
+                  Check back later for new laundry requests!
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid gap-4">
+              {availableRequests.map((request) => (
+                <Card 
+                  key={request.id} 
+                  className="border-0 shadow-md hover:shadow-lg transition-all overflow-hidden"
+                >
+                  <CardContent className="p-0">
+                    <div className="flex flex-col lg:flex-row">
+                      {/* Main Info */}
+                      <div className="flex-1 p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="font-semibold text-lg mb-1">{request.title}</h3>
+                            <p className="text-sm text-muted-foreground">by {request.customerName}</p>
+                          </div>
+                          <div className="flex gap-2">
+                            <Badge variant="outline">{laundryTypeLabels[request.laundryType]}</Badge>
+                            <Badge variant="secondary">{serviceLabels[request.serviceType]}</Badge>
+                          </div>
+                        </div>
+                        
+                        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                          {request.description}
+                        </p>
+                        
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" />
+                            <span className="truncate max-w-[200px]">{request.pickupAddress}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            <span>{formatDate(request.pickupDate)}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Weight className="w-4 h-4" />
+                            <span>{request.weight}kg</span>
+                          </div>
+                        </div>
+                        
+                        {request.specialInstructions && (
+                          <div className="mt-3 p-3 bg-muted rounded-lg text-sm">
+                            <span className="font-medium">Note: </span>
+                            {request.specialInstructions}
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Price & Action */}
+                      <div className="lg:w-48 p-6 bg-muted/30 flex flex-row lg:flex-col items-center justify-between lg:justify-center gap-4 border-t lg:border-t-0 lg:border-l border-border">
+                        <div className="text-center">
+                          <p className="text-3xl font-bold text-gradient">${request.price}</p>
+                          <p className="text-xs text-muted-foreground">Payout</p>
+                        </div>
+                        <Button 
+                          onClick={() => handleAcceptJob(request)}
+                          className="bg-gradient-primary hover:opacity-90 w-full lg:w-auto"
+                        >
+                          Accept Job
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* My Jobs */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <CheckCircle2 className="w-5 h-5 text-secondary" />
+            <h2 className="text-xl font-display font-semibold">My Jobs</h2>
+            <Badge variant="secondary" className="ml-2">{myJobs.length}</Badge>
+          </div>
+          
+          {myJobs.length === 0 ? (
+            <Card className="border-dashed border-2">
+              <CardContent className="p-8 text-center">
+                <p className="text-muted-foreground">
+                  Accept a job above to get started!
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid gap-4">
+              {myJobs.map((job) => (
+                <Card 
+                  key={job.id} 
+                  className="border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                  onClick={() => navigate(`/request/${job.id}`)}
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-3 mb-1">
+                          <h3 className="font-semibold">{job.title}</h3>
+                          <Badge variant={job.status === 'completed' ? 'default' : 'secondary'} 
+                            className={job.status === 'completed' ? 'bg-success text-success-foreground' : ''}>
+                            {job.status === 'in-progress' ? 'In Progress' : 
+                             job.status === 'accepted' ? 'Accepted' : 
+                             job.status === 'completed' ? 'Completed' : job.status}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Customer: {job.customerName}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xl font-bold">${job.price}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}
