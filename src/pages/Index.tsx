@@ -1,12 +1,34 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Shirt, ArrowRight, Sparkles, Shield, Clock } from 'lucide-react';
+import { ServicesSection } from '@/components/ServicesSection';
+import { AdminServicesDialog } from '@/components/AdminServicesDialog';
+import { useServices } from '@/hooks/useServices';
 
 export default function Index() {
   const navigate = useNavigate();
+  const {
+    services,
+    activeServices,
+    addService,
+    updateService,
+    removeService,
+    toggleServiceActive,
+  } = useServices();
 
   return (
     <div className="min-h-screen bg-gradient-hero">
+      {/* Admin Button - Fixed position */}
+      <div className="fixed top-4 right-4 z-50">
+        <AdminServicesDialog
+          services={services}
+          onAddService={addService}
+          onUpdateService={updateService}
+          onRemoveService={removeService}
+          onToggleActive={toggleServiceActive}
+        />
+      </div>
+
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-primary shadow-glow mb-6 animate-float">
@@ -59,6 +81,9 @@ export default function Index() {
           </div>
         </div>
       </div>
+
+      {/* Services Section */}
+      <ServicesSection services={activeServices} />
     </div>
   );
 }

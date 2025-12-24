@@ -56,3 +56,12 @@ export interface ChatConversation {
     washer: User;
   };
 }
+
+export interface Service {
+  id: string;
+  name: string;
+  description: string;
+  pricePerKg: number;
+  discountPercent: number;
+  isActive: boolean;
+}
