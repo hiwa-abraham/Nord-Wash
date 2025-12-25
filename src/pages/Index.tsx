@@ -4,6 +4,7 @@ import { Shirt, ArrowRight, Sparkles, Shield, Clock } from 'lucide-react';
 import { ServicesSection } from '@/components/ServicesSection';
 import { AdminServicesDialog } from '@/components/AdminServicesDialog';
 import { useServices } from '@/hooks/useServices';
+import { Header } from '@/components/Header';
 
 export default function Index() {
   const navigate = useNavigate();
@@ -18,8 +19,10 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-gradient-hero">
+      <Header />
+      
       {/* Admin Button - Fixed position */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-20 right-4 z-40">
         <AdminServicesDialog
           services={services}
           onAddService={addService}
@@ -29,7 +32,7 @@ export default function Index() {
         />
       </div>
 
-      <div className="container mx-auto px-4 py-16 md:py-24">
+      <div className="container mx-auto px-4 pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-primary shadow-glow mb-6 animate-float">
             <Shirt className="w-10 h-10 text-primary-foreground" />
