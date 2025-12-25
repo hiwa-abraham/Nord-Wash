@@ -30,7 +30,7 @@ export default function Index() {
             <Button 
               size="lg" 
               className="h-14 px-8 text-lg bg-gradient-primary hover:opacity-90 shadow-glow"
-              onClick={() => navigate('/auth')}
+              onClick={() => navigate('/schedule-pickup')}
             >
               <CalendarCheck className="w-5 h-5 mr-2" />
               Schedule Pickup
