@@ -16,7 +16,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 const menuItems = [
   { label: 'NordWash', href: '/', icon: Droplets },
-  { label: 'Service & Pricing', href: '/#services', icon: DollarSign },
+  { label: 'Service & Pricing', href: '/services', icon: DollarSign },
   { label: 'Profile', href: '/customer', icon: User },
   { label: 'Billing', href: '/customer', icon: CreditCard },
   { label: 'Order History', href: '/customer', icon: History },

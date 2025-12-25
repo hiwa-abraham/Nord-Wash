@@ -1,36 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Shirt, ArrowRight, Sparkles, Shield, Clock } from 'lucide-react';
-import { ServicesSection } from '@/components/ServicesSection';
-import { AdminServicesDialog } from '@/components/AdminServicesDialog';
-import { useServices } from '@/hooks/useServices';
+import { Shirt, ArrowRight, Sparkles, Shield, Clock, CalendarCheck } from 'lucide-react';
 import { Header } from '@/components/Header';
 
 export default function Index() {
   const navigate = useNavigate();
-  const {
-    services,
-    activeServices,
-    addService,
-    updateService,
-    removeService,
-    toggleServiceActive,
-  } = useServices();
 
   return (
     <div className="min-h-screen bg-gradient-hero">
       <Header />
-      
-      {/* Admin Button - Fixed position */}
-      <div className="fixed top-20 right-4 z-40">
-        <AdminServicesDialog
-          services={services}
-          onAddService={addService}
-          onUpdateService={updateService}
-          onRemoveService={removeService}
-          onToggleActive={toggleServiceActive}
-        />
-      </div>
 
       <div className="container mx-auto px-4 pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="text-center max-w-3xl mx-auto">
@@ -48,14 +26,25 @@ export default function Index() {
             Or earn money by helping others with their laundry needs.
           </p>
           
-          <Button 
-            size="lg" 
-            className="h-14 px-8 text-lg bg-gradient-primary hover:opacity-90 shadow-glow"
-            onClick={() => navigate('/auth')}
-          >
-            Get Started
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="h-14 px-8 text-lg bg-gradient-primary hover:opacity-90 shadow-glow"
+              onClick={() => navigate('/auth')}
+            >
+              <CalendarCheck className="w-5 h-5 mr-2" />
+              Schedule Pickup
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="h-14 px-8 text-lg"
+              onClick={() => navigate('/services')}
+            >
+              View Pricing
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mt-20 max-w-4xl mx-auto">
@@ -84,9 +73,6 @@ export default function Index() {
           </div>
         </div>
       </div>
-
-      {/* Services Section */}
-      <ServicesSection services={activeServices} />
     </div>
   );
 }

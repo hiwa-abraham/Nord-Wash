@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import WasherDashboard from "./pages/WasherDashboard";
+import Services from "./pages/Services";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/customer" element={<CustomerDashboard />} />
             <Route path="/washer" element={<WasherDashboard />} />
+            <Route path="/services" element={<Services />} />
             <Route path="/help" element={<Help />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
