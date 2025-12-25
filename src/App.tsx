@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import WasherDashboard from "./pages/WasherDashboard";
 import Services from "./pages/Services";
+import SchedulePickup from "./pages/SchedulePickup";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/customer" element={<CustomerDashboard />} />
             <Route path="/washer" element={<WasherDashboard />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/schedule-pickup" element={<SchedulePickup />} />
             <Route path="/help" element={<Help />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
