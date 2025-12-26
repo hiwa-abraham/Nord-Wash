@@ -1,63 +1,159 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, UserRole } from '@/types';
-import { mockCustomer, mockWasher } from '@/data/mockData';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
+
+type AppRole = 'customer' | 'washer' | 'admin';
+
+interface Profile {
+  id: string;
+  user_id: string;
+  full_name: string;
+  phone: string | null;
+  email: string | null;
+  avatar_url: string | null;
+  address: string | null;
+  rating: number;
+  completed_jobs: number;
+}
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
+  profile: Profile | null;
+  role: AppRole | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string, role: UserRole) => Promise<void>;
-  signup: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
-  logout: () => void;
   isLoading: boolean;
+  isAdmin: boolean;
+  login: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signup: (name: string, email: string, password: string, role: AppRole) => Promise<{ error: Error | null }>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [role, setRole] = useState<AppRole | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const login = async (email: string, password: string, role: UserRole) => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock login - use mock data based on role
-    const mockUser = role === 'customer' ? mockCustomer : mockWasher;
-    setUser({ ...mockUser, email });
-    setIsLoading(false);
+  const fetchUserData = async (userId: string) => {
+    try {
+      // Fetch profile
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (profileError) {
+        console.error('Error fetching profile:', profileError);
+      } else {
+        setProfile(profileData);
+      }
+
+      // Fetch role
+      const { data: roleData, error: roleError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .single();
+
+      if (roleError) {
+        console.error('Error fetching role:', roleError);
+      } else {
+        setRole(roleData?.role as AppRole);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   };
 
-  const signup = async (name: string, email: string, password: string, role: UserRole) => {
+  useEffect(() => {
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          // Defer Supabase calls with setTimeout to avoid deadlock
+          setTimeout(() => {
+            fetchUserData(session.user.id);
+          }, 0);
+        } else {
+          setProfile(null);
+          setRole(null);
+        }
+        setIsLoading(false);
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        fetchUserData(session.user.id);
+      }
+      setIsLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newUser: User = {
-      id: `user-${Date.now()}`,
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      name,
-      role,
-      createdAt: new Date(),
-      ...(role === 'washer' && { rating: 0, completedJobs: 0 }),
-    };
-    setUser(newUser);
+      password,
+    });
     setIsLoading(false);
+    return { error };
   };
 
-  const logout = () => {
+  const signup = async (name: string, email: string, password: string, role: AppRole) => {
+    setIsLoading(true);
+    const redirectUrl = `${window.location.origin}/`;
+    
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: redirectUrl,
+        data: {
+          full_name: name,
+          role: role,
+        },
+      },
+    });
+    setIsLoading(false);
+    return { error };
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
+    setSession(null);
+    setProfile(null);
+    setRole(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        session,
+        profile,
+        role,
         isAuthenticated: !!user,
+        isLoading,
+        isAdmin: role === 'admin',
         login,
         signup,
         logout,
-        isLoading,
       }}
     >
       {children}

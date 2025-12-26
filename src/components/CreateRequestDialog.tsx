@@ -32,7 +32,7 @@ const serviceTypes: { value: ServiceType; label: string; priceMultiplier: number
 const BASE_PRICE_PER_KG = 4;
 
 export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: CreateRequestDialogProps) {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -59,7 +59,7 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
     const newRequest: LaundryRequest = {
       id: `req-${Date.now()}`,
       customerId: user.id,
-      customerName: user.name,
+      customerName: profile?.full_name || 'Customer',
       title: formData.title,
       description: formData.description,
       laundryType: formData.laundryType,

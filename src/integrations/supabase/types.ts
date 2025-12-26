@@ -141,38 +141,21 @@ export type Database = {
       }
     }
     Views: {
-      public_profiles: {
-        Row: {
-          avatar_url: string | null
-          completed_jobs: number | null
-          created_at: string | null
-          full_name: string | null
-          id: string | null
-          rating: number | null
-          user_id: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          completed_jobs?: number | null
-          created_at?: string | null
-          full_name?: string | null
-          id?: string | null
-          rating?: number | null
-          user_id?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
-          completed_jobs?: number | null
-          created_at?: string | null
-          full_name?: string | null
-          id?: string | null
-          rating?: number | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
+      get_public_profile: {
+        Args: { _user_id: string }
+        Returns: {
+          avatar_url: string
+          completed_jobs: number
+          created_at: string
+          full_name: string
+          id: string
+          rating: number
+          user_id: string
+        }[]
+      }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]

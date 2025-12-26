@@ -29,15 +29,15 @@ const statusConfig: Record<RequestStatus, { label: string; variant: 'default' | 
 };
 
 export default function CustomerDashboard() {
-  const { user, logout } = useAuth();
+  const { user, profile, logout } = useAuth();
   const navigate = useNavigate();
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [requests, setRequests] = useState<LaundryRequest[]>(
     mockRequests.filter(r => r.customerId === 'customer-1')
   );
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
 
@@ -70,7 +70,7 @@ export default function CustomerDashboard() {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-sm">
               <User className="w-4 h-4 text-muted-foreground" />
-              <span className="font-medium">{user?.name}</span>
+              <span className="font-medium">{profile?.full_name || 'Customer'}</span>
             </div>
             <Button variant="ghost" size="icon" onClick={handleLogout}>
               <LogOut className="w-4 h-4" />
@@ -84,7 +84,7 @@ export default function CustomerDashboard() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-display font-bold mb-2">
-            Hello, {user?.name?.split(' ')[0]}! 👋
+            Hello, {profile?.full_name?.split(' ')[0] || 'there'}! 👋
           </h1>
           <p className="text-muted-foreground">
             Manage your laundry requests and track their status
