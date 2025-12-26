@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { mockRequests } from '@/data/mockData';
-import { LaundryRequest } from '@/types';
+import ChatDialog from '@/components/ChatDialog';
 import { 
   Shirt, 
   MapPin, 
@@ -17,9 +16,28 @@ import {
   LogOut,
   User,
   Weight,
-  Sparkles
+  Sparkles,
+  MessageCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
+
+// Temporary mock data until orders table is created
+const mockAvailableRequests = [
+  {
+    id: '1',
+    title: 'Weekly Laundry',
+    customerName: 'John D.',
+    customerId: 'mock-customer-1',
+    description: 'Regular weekly laundry - mostly casual clothes',
+    laundryType: 'regular',
+    serviceType: 'wash-iron',
+    weight: 5,
+    price: 25,
+    pickupAddress: '123 Main St, City',
+    pickupDate: new Date(),
+    specialInstructions: 'Please handle with care',
+  },
+];
 
 const serviceLabels: Record<string, string> = {
   'wash': 'Wash Only',
@@ -36,31 +54,39 @@ const laundryTypeLabels: Record<string, string> = {
 };
 
 export default function WasherDashboard() {
-  const { user, logout } = useAuth();
+  const { user, profile, logout, isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
-  const [availableRequests, setAvailableRequests] = useState<LaundryRequest[]>(
-    mockRequests.filter(r => r.status === 'pending')
-  );
-  const [myJobs, setMyJobs] = useState<LaundryRequest[]>(
-    mockRequests.filter(r => r.washerId === 'washer-1')
-  );
+  const [availableRequests, setAvailableRequests] = useState(mockAvailableRequests);
+  const [myJobs, setMyJobs] = useState<typeof mockAvailableRequests>([]);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<{ id: string; name: string } | null>(null);
 
-  const handleLogout = () => {
-    logout();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/auth');
+    } else if (role && role !== 'washer' && role !== 'admin') {
+      navigate('/customer');
+    }
+  }, [isAuthenticated, role, navigate]);
+
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
 
-  const handleAcceptJob = (request: LaundryRequest) => {
+  const handleAcceptJob = (request: typeof mockAvailableRequests[0]) => {
     const updatedRequest = {
       ...request,
-      status: 'accepted' as const,
-      washerId: user?.id,
-      washerName: user?.name,
     };
     
     setAvailableRequests(prev => prev.filter(r => r.id !== request.id));
     setMyJobs(prev => [updatedRequest, ...prev]);
-    toast.success('Job accepted! Contact the customer to arrange pickup.');
+    toast.success('Job accepted! Use the chat to coordinate with the customer.');
+  };
+
+  const handleOpenChat = (customerId: string, customerName: string) => {
+    setSelectedCustomer({ id: customerId, name: customerName });
+    setChatOpen(true);
   };
 
   const formatDate = (date: Date) => {
@@ -89,11 +115,11 @@ export default function WasherDashboard() {
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 text-sm bg-warning/10 text-warning px-2 py-1 rounded-full">
                 <Star className="w-3 h-3 fill-current" />
-                <span className="font-medium">{user?.rating || 4.8}</span>
+                <span className="font-medium">{profile?.rating || 0}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <User className="w-4 h-4 text-muted-foreground" />
-                <span className="font-medium">{user?.name}</span>
+                <span className="font-medium">{profile?.full_name || 'Washer'}</span>
               </div>
             </div>
             <Button variant="ghost" size="icon" onClick={handleLogout}>
@@ -108,10 +134,10 @@ export default function WasherDashboard() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-display font-bold mb-2">
-            Ready to earn, {user?.name?.split(' ')[0]}? 💪
+            Ready to earn, {profile?.full_name?.split(' ')[0] || 'there'}? 💪
           </h1>
           <p className="text-muted-foreground">
-            Accept laundry jobs and get paid for your work
+            Accept laundry jobs and communicate with customers through in-app chat
           </p>
         </div>
 
@@ -135,7 +161,7 @@ export default function WasherDashboard() {
                 <Clock className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{myJobs.filter(j => j.status !== 'completed').length}</p>
+                <p className="text-2xl font-bold">{myJobs.length}</p>
                 <p className="text-sm text-muted-foreground">Active Jobs</p>
               </div>
             </CardContent>
@@ -147,7 +173,7 @@ export default function WasherDashboard() {
                 <CheckCircle2 className="w-6 h-6 text-success" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{user?.completedJobs || 0}</p>
+                <p className="text-2xl font-bold">{profile?.completed_jobs || 0}</p>
                 <p className="text-sm text-muted-foreground">Completed Jobs</p>
               </div>
             </CardContent>
@@ -223,18 +249,27 @@ export default function WasherDashboard() {
                         )}
                       </div>
                       
-                      {/* Price & Action */}
-                      <div className="lg:w-48 p-6 bg-muted/30 flex flex-row lg:flex-col items-center justify-between lg:justify-center gap-4 border-t lg:border-t-0 lg:border-l border-border">
+                      {/* Price & Actions */}
+                      <div className="lg:w-56 p-6 bg-muted/30 flex flex-row lg:flex-col items-center justify-between lg:justify-center gap-4 border-t lg:border-t-0 lg:border-l border-border">
                         <div className="text-center">
                           <p className="text-3xl font-bold text-gradient">${request.price}</p>
                           <p className="text-xs text-muted-foreground">Payout</p>
                         </div>
-                        <Button 
-                          onClick={() => handleAcceptJob(request)}
-                          className="bg-gradient-primary hover:opacity-90 w-full lg:w-auto"
-                        >
-                          Accept Job
-                        </Button>
+                        <div className="flex flex-col gap-2 w-full lg:w-auto">
+                          <Button 
+                            onClick={() => handleAcceptJob(request)}
+                            className="bg-gradient-primary hover:opacity-90"
+                          >
+                            Accept Job
+                          </Button>
+                          <Button 
+                            variant="outline"
+                            onClick={() => handleOpenChat(request.customerId, request.customerName)}
+                          >
+                            <MessageCircle className="w-4 h-4 mr-2" />
+                            Message
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -265,25 +300,29 @@ export default function WasherDashboard() {
               {myJobs.map((job) => (
                 <Card 
                   key={job.id} 
-                  className="border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer"
-                  onClick={() => navigate(`/request/${job.id}`)}
+                  className="border-0 shadow-md hover:shadow-lg transition-shadow"
                 >
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="flex items-center gap-3 mb-1">
                           <h3 className="font-semibold">{job.title}</h3>
-                          <Badge variant={job.status === 'completed' ? 'default' : 'secondary'} 
-                            className={job.status === 'completed' ? 'bg-success text-success-foreground' : ''}>
-                            {job.status === 'in-progress' ? 'In Progress' : 
-                             job.status === 'accepted' ? 'Accepted' : 
-                             job.status === 'completed' ? 'Completed' : job.status}
-                          </Badge>
+                          <Badge variant="secondary">Accepted</Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">Customer: {job.customerName}</p>
                       </div>
-                      <div className="text-right">
-                        <p className="text-xl font-bold">${job.price}</p>
+                      <div className="flex items-center gap-4">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleOpenChat(job.customerId, job.customerName)}
+                        >
+                          <MessageCircle className="w-4 h-4 mr-2" />
+                          Chat
+                        </Button>
+                        <div className="text-right">
+                          <p className="text-xl font-bold">${job.price}</p>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -293,6 +332,17 @@ export default function WasherDashboard() {
           )}
         </div>
       </main>
+
+      {/* Chat Dialog */}
+      {selectedCustomer && (
+        <ChatDialog
+          open={chatOpen}
+          onOpenChange={setChatOpen}
+          conversationId={null}
+          otherUserName={selectedCustomer.name}
+          otherUserId={selectedCustomer.id}
+        />
+      )}
     </div>
   );
 }
