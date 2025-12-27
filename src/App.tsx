@@ -1,3 +1,26 @@
+/**
+ * App.tsx - Main Application Entry Point
+ * 
+ * This is the root component of the FreshFold laundry platform.
+ * It sets up the core providers and routing for the application.
+ * 
+ * Provider Hierarchy:
+ * 1. QueryClientProvider - TanStack Query for server state management
+ * 2. AuthProvider - Custom authentication context for user state
+ * 3. TooltipProvider - Radix UI tooltips support
+ * 4. BrowserRouter - React Router for client-side routing
+ * 
+ * Routes:
+ * - / : Landing page (public)
+ * - /auth : Authentication page (login/signup with role selection)
+ * - /customer : Customer dashboard (protected - clothes owners)
+ * - /washer : Washer dashboard (protected - laundry providers)
+ * - /services : Service catalog (public)
+ * - /schedule-pickup : Pickup scheduling (protected)
+ * - /help : Help center (public)
+ * - * : 404 Not Found
+ */
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,23 +36,35 @@ import SchedulePickup from "./pages/SchedulePickup";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 
+// Create a QueryClient instance for TanStack Query
+// This manages caching, background updates, and stale data for API requests
 const queryClient = new QueryClient();
 
 const App = () => (
+  // QueryClientProvider enables React Query hooks throughout the app
   <QueryClientProvider client={queryClient}>
+    {/* AuthProvider manages user authentication state globally */}
     <AuthProvider>
+      {/* TooltipProvider enables Radix UI tooltips */}
       <TooltipProvider>
+        {/* Toast notifications for user feedback */}
         <Toaster />
         <Sonner />
+        {/* Client-side routing */}
         <BrowserRouter>
           <Routes>
+            {/* Public routes */}
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/help" element={<Help />} />
+            
+            {/* Protected routes - require authentication */}
             <Route path="/customer" element={<CustomerDashboard />} />
             <Route path="/washer" element={<WasherDashboard />} />
-            <Route path="/services" element={<Services />} />
             <Route path="/schedule-pickup" element={<SchedulePickup />} />
-            <Route path="/help" element={<Help />} />
+            
+            {/* Catch-all for 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
