@@ -76,6 +76,96 @@ export type Database = {
           },
         ]
       }
+      orders: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          customer_email: string
+          customer_id: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          owner_amount: number
+          paid_at: string | null
+          payment_method: string | null
+          payment_status: string
+          pickup_address: string
+          pickup_city: string
+          pickup_date: string
+          pickup_postal_code: string | null
+          pickup_time: string
+          service_fee: number
+          services: Json
+          services_total: number
+          special_instructions: string | null
+          status: string
+          stripe_payment_intent_id: string | null
+          total_amount: number
+          transport_fee: number
+          updated_at: string
+          washer_amount: number
+          washer_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          customer_email: string
+          customer_id: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          owner_amount?: number
+          paid_at?: string | null
+          payment_method?: string | null
+          payment_status?: string
+          pickup_address: string
+          pickup_city: string
+          pickup_date: string
+          pickup_postal_code?: string | null
+          pickup_time: string
+          service_fee?: number
+          services?: Json
+          services_total?: number
+          special_instructions?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          total_amount?: number
+          transport_fee?: number
+          updated_at?: string
+          washer_amount?: number
+          washer_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          customer_email?: string
+          customer_id?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          owner_amount?: number
+          paid_at?: string | null
+          payment_method?: string | null
+          payment_status?: string
+          pickup_address?: string
+          pickup_city?: string
+          pickup_date?: string
+          pickup_postal_code?: string | null
+          pickup_time?: string
+          service_fee?: number
+          services?: Json
+          services_total?: number
+          special_instructions?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          total_amount?: number
+          transport_fee?: number
+          updated_at?: string
+          washer_amount?: number
+          washer_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null
