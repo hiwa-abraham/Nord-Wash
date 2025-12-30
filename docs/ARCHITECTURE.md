@@ -156,6 +156,72 @@ FreshFold is a two-sided marketplace connecting **Clothes Owners** (customers) w
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
+## Payment System
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                           PAYMENT FLOW                                        │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   CUSTOMER                                                                    │
+│   ────────                                                                    │
+│                                                                              │
+│   1. Select Services                                                          │
+│      └─> Services Subtotal (e.g., €25.00)                                    │
+│                                                                              │
+│   2. Enter Contact Details                                                    │
+│      └─> Pickup address, phone, email                                        │
+│                                                                              │
+│   3. Review Order                                                             │
+│      └─> See price breakdown                                                 │
+│                                                                              │
+│   4. Payment Step                                                             │
+│      ┌────────────────────────────────────────┐                              │
+│      │  Price Breakdown:                      │                              │
+│      │  ├─ Services Subtotal:    €25.00      │                              │
+│      │  ├─ Service Fee:           €5.00      │                              │
+│      │  ├─ Transport Fee:        €10.00      │                              │
+│      │  └─ TOTAL:                €40.00      │                              │
+│      └────────────────────────────────────────┘                              │
+│                                                                              │
+│      Payment Methods:                                                         │
+│      ├─ 💳 Credit/Debit Card (Stripe - pending integration)                 │
+│      └─ 🏦 Bank Transfer                                                     │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        PAYMENT DISTRIBUTION                                   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Total Payment = Services + $5 Service Fee + $10 Transport Fee              │
+│                                                                              │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │                                                                     │   │
+│   │   OWNER (Platform)              WASHER (Service Provider)          │   │
+│   │   ─────────────────             ─────────────────────────          │   │
+│   │                                                                     │   │
+│   │   • $5 Service Fee              • 90% of Services                  │   │
+│   │   • 10% of Services             • $10 Transport Fee                │   │
+│   │                                                                     │   │
+│   │   Example (€25 services):       Example (€25 services):            │   │
+│   │   $5 + (€25 × 10%)             (€25 × 90%) + $10                   │   │
+│   │   = $5 + €2.50                 = €22.50 + $10                      │   │
+│   │   = €7.50                      = €32.50                            │   │
+│   │                                                                     │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│   Database: orders table stores all amounts in cents for precision           │
+│   ├─ services_total: Services subtotal in cents                             │
+│   ├─ service_fee: Platform fee (default 500 = $5.00)                        │
+│   ├─ transport_fee: Delivery fee (default 1000 = $10.00)                    │
+│   ├─ total_amount: Complete order total in cents                            │
+│   ├─ owner_amount: Platform's share in cents                                │
+│   └─ washer_amount: Service provider's share in cents                       │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Messaging System
 
 ```
@@ -231,10 +297,13 @@ src/
 │   ├── ChatDialog.tsx         # In-app messaging modal
 │   ├── CreateRequestDialog.tsx # New laundry request form
 │   ├── Header.tsx             # Navigation header
+│   ├── payment/
+│   │   └── PaymentStep.tsx    # Payment step component with fee breakdown
 │   └── ui/                    # Shadcn UI components
 │
 ├── hooks/
 │   ├── useServices.ts         # Service management hook
+│   ├── useCreateOrder.ts      # Order creation with payment distribution
 │   └── use-toast.ts           # Toast notifications
 │
 ├── types/

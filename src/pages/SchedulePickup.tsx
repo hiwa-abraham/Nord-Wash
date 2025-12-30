@@ -1,3 +1,19 @@
+/**
+ * SchedulePickup Page
+ * 
+ * Multi-step form for scheduling laundry pickup:
+ * 1. Select Services - Choose services and quantities
+ * 2. Contact Details - Enter pickup address and contact info
+ * 3. Review Order - Review before payment
+ * 4. Payment - Select payment method and complete order
+ * 
+ * Includes fee structure:
+ * - $5 service fee (goes to owner)
+ * - $10 transport fee (goes to washer)
+ * - 10% of services (goes to owner)
+ * - 90% of services (goes to washer)
+ */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
@@ -18,6 +34,8 @@ import {
 } from '@/components/ui/select';
 import { useServices } from '@/hooks/useServices';
 import { useToast } from '@/hooks/use-toast';
+import { useCreateOrder } from '@/hooks/useCreateOrder';
+import { PaymentStep, type PaymentMethod } from '@/components/payment/PaymentStep';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { 
@@ -30,7 +48,8 @@ import {
   MapPin,
   Phone,
   User,
-  Mail
+  Mail,
+  CreditCard
 } from 'lucide-react';
 
 interface ServiceSelection {
@@ -48,12 +67,18 @@ interface ContactDetails {
   specialInstructions: string;
 }
 
+// Fee constants
+const SERVICE_FEE = 5; // $5 service fee
+const TRANSPORT_FEE = 10; // $10 transport fee
+
 export default function SchedulePickup() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { activeServices } = useServices();
+  const { createOrder, isProcessing } = useCreateOrder();
   
-  const [step, setStep] = useState<'services' | 'details' | 'confirm'>('services');
+  // Current step in the flow: services -> details -> confirm -> payment
+  const [step, setStep] = useState<'services' | 'details' | 'confirm' | 'payment'>('services');
   const [selections, setSelections] = useState<ServiceSelection[]>([]);
   const [pickupDate, setPickupDate] = useState<Date>();
   const [pickupTime, setPickupTime] = useState<string>('');
@@ -108,19 +133,48 @@ export default function SchedulePickup() {
 
   const canProceedToDetails = hasSelections && pickupDate && pickupTime;
 
-  const canSubmit =
+  // Check if contact details are complete for proceeding to confirm
+  const canProceedToConfirm =
     contactDetails.name.trim() &&
     contactDetails.email.trim() &&
     contactDetails.phone.trim() &&
     contactDetails.address.trim() &&
     contactDetails.city.trim();
 
-  const handleSubmit = () => {
-    toast({
-      title: 'Pickup Scheduled!',
-      description: `Your laundry pickup is scheduled for ${format(pickupDate!, 'PPP')} at ${pickupTime}. Total: €${totalPrice.toFixed(2)}`,
+  // Total with fees for display
+  const totalWithFees = totalPrice + SERVICE_FEE + TRANSPORT_FEE;
+
+  /**
+   * Handle payment completion
+   * Creates the order and navigates on success
+   */
+  const handlePayment = async (paymentMethod: PaymentMethod) => {
+    // Prepare service data for order
+    const serviceData = selections.map((sel) => {
+      const service = activeServices.find((s) => s.id === sel.serviceId);
+      return {
+        serviceId: sel.serviceId,
+        serviceName: service?.name || 'Unknown Service',
+        quantity: sel.quantity,
+        pricePerKg: service?.pricePerKg || 0,
+        totalPrice: calculateServicePrice(sel.serviceId),
+      };
     });
-    navigate('/');
+
+    // Create the order
+    const orderId = await createOrder({
+      services: serviceData,
+      servicesTotal: totalPrice,
+      pickupDate: pickupDate!,
+      pickupTime,
+      contactDetails,
+      paymentMethod,
+    });
+
+    // Navigate on success
+    if (orderId) {
+      navigate('/');
+    }
   };
 
   const timeSlots = [
@@ -138,8 +192,9 @@ export default function SchedulePickup() {
 
       <main className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-3xl mx-auto">
-          {/* Progress Steps */}
-          <div className="flex items-center justify-center mb-8">
+          {/* Progress Steps - 4 steps now */}
+          <div className="flex items-center justify-center mb-8 flex-wrap gap-y-2">
+            {/* Step 1: Services */}
             <div className="flex items-center gap-2">
               <div className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
@@ -147,28 +202,45 @@ export default function SchedulePickup() {
               )}>
                 {step !== 'services' ? <CheckCircle2 className="w-5 h-5" /> : '1'}
               </div>
-              <span className="text-sm font-medium">Select Services</span>
+              <span className="text-sm font-medium hidden sm:inline">Services</span>
             </div>
-            <Separator className="w-8 mx-2" />
+            <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
+            
+            {/* Step 2: Details */}
             <div className="flex items-center gap-2">
               <div className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
                 step === 'details' ? "bg-primary text-primary-foreground" : 
-                step === 'confirm' ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
+                ['confirm', 'payment'].includes(step) ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
               )}>
-                {step === 'confirm' ? <CheckCircle2 className="w-5 h-5" /> : '2'}
+                {['confirm', 'payment'].includes(step) ? <CheckCircle2 className="w-5 h-5" /> : '2'}
               </div>
-              <span className="text-sm font-medium">Contact Details</span>
+              <span className="text-sm font-medium hidden sm:inline">Details</span>
             </div>
-            <Separator className="w-8 mx-2" />
+            <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
+            
+            {/* Step 3: Confirm */}
             <div className="flex items-center gap-2">
               <div className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
-                step === 'confirm' ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                step === 'confirm' ? "bg-primary text-primary-foreground" : 
+                step === 'payment' ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
               )}>
-                3
+                {step === 'payment' ? <CheckCircle2 className="w-5 h-5" /> : '3'}
               </div>
-              <span className="text-sm font-medium">Confirm</span>
+              <span className="text-sm font-medium hidden sm:inline">Review</span>
+            </div>
+            <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
+            
+            {/* Step 4: Payment */}
+            <div className="flex items-center gap-2">
+              <div className={cn(
+                "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
+                step === 'payment' ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+              )}>
+                <CreditCard className="w-4 h-4" />
+              </div>
+              <span className="text-sm font-medium hidden sm:inline">Payment</span>
             </div>
           </div>
 
@@ -473,7 +545,7 @@ export default function SchedulePickup() {
                   <Button
                     size="lg"
                     className="bg-gradient-primary hover:opacity-90"
-                    disabled={!canSubmit}
+                    disabled={!canProceedToConfirm}
                     onClick={() => setStep('confirm')}
                   >
                     Review Order
@@ -557,17 +629,30 @@ export default function SchedulePickup() {
                   </CardContent>
                 </Card>
 
-                {/* Confirm Button */}
+                {/* Proceed to Payment Button */}
                 <Button
                   size="lg"
                   className="w-full bg-gradient-primary hover:opacity-90"
-                  onClick={handleSubmit}
+                  onClick={() => setStep('payment')}
                 >
-                  <CheckCircle2 className="w-5 h-5 mr-2" />
-                  Confirm Pickup - €{totalPrice.toFixed(2)}
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Proceed to Payment - €{totalWithFees.toFixed(2)}
                 </Button>
               </div>
             </>
+          )}
+
+          {/* Step 4: Payment */}
+          {step === 'payment' && (
+            <PaymentStep
+              servicesTotal={totalPrice}
+              serviceFee={SERVICE_FEE}
+              transportFee={TRANSPORT_FEE}
+              onBack={() => setStep('confirm')}
+              onPayment={handlePayment}
+              stripeEnabled={false}
+              isProcessing={isProcessing}
+            />
           )}
         </div>
       </main>
