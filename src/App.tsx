@@ -31,6 +31,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import WasherDashboard from "./pages/WasherDashboard";
+import WasherEarnings from "./pages/WasherEarnings";
 import Services from "./pages/Services";
 import SchedulePickup from "./pages/SchedulePickup";
 import Orders from "./pages/Orders";
@@ -63,6 +64,7 @@ const App = () => (
             {/* Protected routes - require authentication */}
             <Route path="/customer" element={<CustomerDashboard />} />
             <Route path="/washer" element={<WasherDashboard />} />
+            <Route path="/washer/earnings" element={<WasherEarnings />} />
             <Route path="/schedule-pickup" element={<SchedulePickup />} />
             <Route path="/orders" element={<Orders />} />
             
