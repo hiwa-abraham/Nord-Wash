@@ -143,14 +143,17 @@ export default function WasherDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="border-0 shadow-md bg-gradient-to-br from-secondary/10 to-secondary/5">
+          <Card 
+            className="border-0 shadow-md bg-gradient-to-br from-secondary/10 to-secondary/5 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => navigate('/washer/earnings')}
+          >
             <CardContent className="p-6 flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center">
                 <DollarSign className="w-6 h-6 text-secondary" />
               </div>
               <div>
-                <p className="text-2xl font-bold">$0</p>
-                <p className="text-sm text-muted-foreground">Earnings this week</p>
+                <p className="text-2xl font-bold">View Earnings</p>
+                <p className="text-sm text-muted-foreground">Track your income</p>
               </div>
             </CardContent>
           </Card>
