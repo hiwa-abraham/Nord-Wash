@@ -33,6 +33,7 @@ import CustomerDashboard from "./pages/CustomerDashboard";
 import WasherDashboard from "./pages/WasherDashboard";
 import Services from "./pages/Services";
 import SchedulePickup from "./pages/SchedulePickup";
+import Orders from "./pages/Orders";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 
@@ -63,6 +64,7 @@ const App = () => (
             <Route path="/customer" element={<CustomerDashboard />} />
             <Route path="/washer" element={<WasherDashboard />} />
             <Route path="/schedule-pickup" element={<SchedulePickup />} />
+            <Route path="/orders" element={<Orders />} />
             
             {/* Catch-all for 404 */}
             <Route path="*" element={<NotFound />} />
