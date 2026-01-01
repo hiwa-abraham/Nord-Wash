@@ -19,7 +19,7 @@ const menuItems = [
   { label: 'Service & Pricing', href: '/services', icon: DollarSign },
   { label: 'Profile', href: '/customer', icon: User },
   { label: 'Billing', href: '/customer', icon: CreditCard },
-  { label: 'Order History', href: '/customer', icon: History },
+  { label: 'Order History', href: '/orders', icon: History },
   { label: 'Help', href: '/help', icon: HelpCircle },
 ];
 
