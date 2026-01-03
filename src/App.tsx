@@ -36,6 +36,8 @@ import Services from "./pages/Services";
 import SchedulePickup from "./pages/SchedulePickup";
 import Orders from "./pages/Orders";
 import Help from "./pages/Help";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 // Create a QueryClient instance for TanStack Query
@@ -60,6 +62,8 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/services" element={<Services />} />
             <Route path="/help" element={<Help />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
             
             {/* Protected routes - require authentication */}
             <Route path="/customer" element={<CustomerDashboard />} />

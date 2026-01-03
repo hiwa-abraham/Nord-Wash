@@ -2,8 +2,10 @@ import { Header } from '@/components/Header';
 import { ServicesSection } from '@/components/ServicesSection';
 import { AdminServicesDialog } from '@/components/AdminServicesDialog';
 import { useServices } from '@/hooks/useServices';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Services() {
+  const { role } = useAuth();
   const {
     services,
     activeServices,
@@ -13,12 +15,14 @@ export default function Services() {
     toggleServiceActive,
   } = useServices();
 
+  const isAdmin = role === 'admin';
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
       <main className="pt-16">
-        {/* Admin Controls */}
+        {/* Admin Controls - Only visible to admins */}
         <div className="container mx-auto px-4 pt-8">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -29,13 +33,15 @@ export default function Services() {
                 Browse our laundry services and pricing options
               </p>
             </div>
-            <AdminServicesDialog
-              services={services}
-              onAddService={addService}
-              onUpdateService={updateService}
-              onRemoveService={removeService}
-              onToggleActive={toggleServiceActive}
-            />
+            {isAdmin && (
+              <AdminServicesDialog
+                services={services}
+                onAddService={addService}
+                onUpdateService={updateService}
+                onRemoveService={removeService}
+                onToggleActive={toggleServiceActive}
+              />
+            )}
           </div>
         </div>
 

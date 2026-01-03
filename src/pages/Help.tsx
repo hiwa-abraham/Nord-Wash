@@ -123,6 +123,19 @@ export default function Help() {
               </Card>
             </div>
           </section>
+
+          {/* Legal Links */}
+          <section className="mt-12 pt-8 border-t border-border">
+            <div className="flex flex-wrap gap-4 justify-center text-sm text-muted-foreground">
+              <a href="/privacy" className="hover:text-foreground transition-colors">
+                Privacy Policy
+              </a>
+              <span>•</span>
+              <a href="/terms" className="hover:text-foreground transition-colors">
+                Terms of Service
+              </a>
+            </div>
+          </section>
         </div>
       </main>
     </div>
