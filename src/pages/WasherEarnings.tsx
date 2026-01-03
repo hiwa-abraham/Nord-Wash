@@ -18,7 +18,7 @@ import {
   Wallet,
   PiggyBank,
   ChevronRight,
-  Shirt
+  Wifi
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { useOrdersRealtime } from '@/hooks/useOrdersRealtime';
 import type { Tables } from '@/integrations/supabase/types';
 
 type Order = Tables<'orders'>;
@@ -40,9 +40,14 @@ interface ServiceItem {
 export default function WasherEarnings() {
   const navigate = useNavigate();
   const { user, profile, isAuthenticated, isLoading: authLoading, role } = useAuth();
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+
+  // Use realtime hook for live updates
+  const { orders, isLoading } = useOrdersRealtime({
+    userId: user?.id,
+    role: 'washer',
+    enabled: isAuthenticated && !!user?.id,
+  });
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -51,30 +56,6 @@ export default function WasherEarnings() {
       navigate('/customer');
     }
   }, [authLoading, isAuthenticated, role, navigate]);
-
-  useEffect(() => {
-    async function fetchOrders() {
-      if (!user?.id) return;
-      
-      setIsLoading(true);
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('washer_id', user.id)
-        .order('completed_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching orders:', error);
-      } else {
-        setOrders(data || []);
-      }
-      setIsLoading(false);
-    }
-
-    if (user?.id) {
-      fetchOrders();
-    }
-  }, [user?.id]);
 
   const formatCurrency = (cents: number) => {
     return `€${(cents / 100).toFixed(2)}`;
@@ -132,6 +113,10 @@ export default function WasherEarnings() {
               </div>
               <span className="font-display font-bold text-lg">Earnings</span>
             </div>
+            <Badge variant="outline" className="flex items-center gap-1.5 text-success border-success/30 ml-2">
+              <Wifi className="w-3 h-3" />
+              <span className="text-xs">Live</span>
+            </Badge>
           </div>
           
           <Link to="/washer">

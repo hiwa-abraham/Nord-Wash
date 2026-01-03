@@ -17,15 +17,16 @@ import {
   Calendar,
   ChevronRight,
   ArrowLeft,
-  Loader2
+  Loader2,
+  Wifi
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
-import type { Tables, Json } from '@/integrations/supabase/types';
+import { useOrdersRealtime } from '@/hooks/useOrdersRealtime';
+import type { Tables } from '@/integrations/supabase/types';
 import { Header } from '@/components/Header';
 
 type Order = Tables<'orders'>;
@@ -55,39 +56,20 @@ const paymentStatusConfig: Record<string, { label: string; color: string }> = {
 export default function Orders() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+
+  // Use realtime hook for live updates
+  const { orders, isLoading } = useOrdersRealtime({
+    userId: user?.id,
+    role: 'customer',
+    enabled: isAuthenticated && !!user?.id,
+  });
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       navigate('/auth');
     }
   }, [authLoading, isAuthenticated, navigate]);
-
-  useEffect(() => {
-    async function fetchOrders() {
-      if (!user?.id) return;
-      
-      setIsLoading(true);
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('customer_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching orders:', error);
-      } else {
-        setOrders(data || []);
-      }
-      setIsLoading(false);
-    }
-
-    if (user?.id) {
-      fetchOrders();
-    }
-  }, [user?.id]);
 
   const formatCurrency = (cents: number) => {
     return `€${(cents / 100).toFixed(2)}`;
@@ -119,18 +101,24 @@ export default function Orders() {
       <main className="pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Header */}
-          <div className="flex items-center gap-4 mb-8">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={() => navigate('/customer')}
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div>
-              <h1 className="text-2xl font-display font-bold">Order History</h1>
-              <p className="text-muted-foreground">View all your past orders and their status</p>
+          <div className="flex items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => navigate('/customer')}
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <div>
+                <h1 className="text-2xl font-display font-bold">Order History</h1>
+                <p className="text-muted-foreground">View all your past orders and their status</p>
+              </div>
             </div>
+            <Badge variant="outline" className="flex items-center gap-1.5 text-success border-success/30">
+              <Wifi className="w-3 h-3" />
+              <span className="text-xs">Live</span>
+            </Badge>
           </div>
 
           {/* Orders List */}
