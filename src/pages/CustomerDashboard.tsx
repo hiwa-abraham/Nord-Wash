@@ -19,6 +19,7 @@ import {
   User
 } from 'lucide-react';
 import CreateRequestDialog from '@/components/CreateRequestDialog';
+import { PushNotificationPrompt } from '@/components/PushNotificationPrompt';
 
 const statusConfig: Record<RequestStatus, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline'; className: string }> = {
   pending: { label: 'Pending', variant: 'outline', className: 'border-warning text-warning' },
@@ -81,6 +82,11 @@ export default function CustomerDashboard() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
+        {/* Push Notification Prompt */}
+        <div className="mb-6">
+          <PushNotificationPrompt />
+        </div>
+
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-display font-bold mb-2">
