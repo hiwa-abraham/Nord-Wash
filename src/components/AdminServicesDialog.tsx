@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Service } from '@/hooks/useServices';
+import { Service } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,15 +11,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Settings, Plus, Trash2, Pencil, Loader2 } from 'lucide-react';
+import { Settings, Plus, Trash2, Pencil } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface AdminServicesDialogProps {
   services: Service[];
-  onAddService: (service: Omit<Service, 'id'>) => Promise<boolean>;
-  onUpdateService: (id: string, updates: Partial<Service>) => Promise<boolean>;
-  onRemoveService: (id: string) => Promise<boolean>;
-  onToggleActive: (id: string) => Promise<boolean>;
+  onAddService: (service: Omit<Service, 'id'>) => void;
+  onUpdateService: (id: string, updates: Partial<Service>) => void;
+  onRemoveService: (id: string) => void;
+  onToggleActive: (id: string) => void;
 }
 
 export function AdminServicesDialog({
@@ -32,9 +32,6 @@ export function AdminServicesDialog({
   const [isOpen, setIsOpen] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [togglingId, setTogglingId] = useState<string | null>(null);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -65,14 +62,12 @@ export function AdminServicesDialog({
     setIsAddingNew(false);
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!formData.name || !formData.pricePerKg) {
       toast.error('Please fill in required fields');
       return;
     }
 
-    setIsSaving(true);
-    
     const serviceData = {
       name: formData.name,
       description: formData.description,
@@ -81,30 +76,20 @@ export function AdminServicesDialog({
       isActive: true,
     };
 
-    let success = false;
     if (editingService) {
-      success = await onUpdateService(editingService.id, serviceData);
+      onUpdateService(editingService.id, serviceData);
+      toast.success('Service updated successfully');
     } else {
-      success = await onAddService(serviceData);
+      onAddService(serviceData);
+      toast.success('Service added successfully');
     }
     
-    setIsSaving(false);
-    
-    if (success) {
-      resetForm();
-    }
+    resetForm();
   };
 
-  const handleDelete = async (id: string) => {
-    setDeletingId(id);
-    await onRemoveService(id);
-    setDeletingId(null);
-  };
-
-  const handleToggle = async (id: string) => {
-    setTogglingId(id);
-    await onToggleActive(id);
-    setTogglingId(null);
+  const handleDelete = (id: string) => {
+    onRemoveService(id);
+    toast.success('Service removed');
   };
 
   return (
@@ -112,12 +97,12 @@ export function AdminServicesDialog({
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="gap-2">
           <Settings className="w-4 h-4" />
-          Manage Pricing
+          Manage Services
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Manage Services & Pricing</DialogTitle>
+          <DialogTitle>Manage Services</DialogTitle>
         </DialogHeader>
         
         <div className="space-y-4 mt-4">
@@ -138,7 +123,7 @@ export function AdminServicesDialog({
                     )}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    €{service.pricePerKg.toFixed(2)}/kg
+                    ${service.pricePerKg}/kg
                   </p>
                 </div>
                 
@@ -150,8 +135,7 @@ export function AdminServicesDialog({
                     <Switch
                       id={`active-${service.id}`}
                       checked={service.isActive}
-                      disabled={togglingId === service.id}
-                      onCheckedChange={() => handleToggle(service.id)}
+                      onCheckedChange={() => onToggleActive(service.id)}
                     />
                   </div>
                   <Button
@@ -165,14 +149,9 @@ export function AdminServicesDialog({
                     variant="ghost"
                     size="icon"
                     className="text-destructive hover:text-destructive"
-                    disabled={deletingId === service.id}
                     onClick={() => handleDelete(service.id)}
                   >
-                    {deletingId === service.id ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <Trash2 className="w-4 h-4" />
-                    )}
+                    <Trash2 className="w-4 h-4" />
                   </Button>
                 </div>
               </div>
@@ -208,7 +187,7 @@ export function AdminServicesDialog({
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="price">Price per kg (€) *</Label>
+                  <Label htmlFor="price">Price per kg ($) *</Label>
                   <Input
                     id="price"
                     type="number"
@@ -235,11 +214,10 @@ export function AdminServicesDialog({
               </div>
               
               <div className="flex gap-2 justify-end">
-                <Button variant="outline" onClick={resetForm} disabled={isSaving}>
+                <Button variant="outline" onClick={resetForm}>
                   Cancel
                 </Button>
-                <Button onClick={handleSave} disabled={isSaving}>
-                  {isSaving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                <Button onClick={handleSave}>
                   {editingService ? 'Update' : 'Add'} Service
                 </Button>
               </div>

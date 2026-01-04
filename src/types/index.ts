@@ -124,16 +124,17 @@ export interface ChatConversation {
 // ============================================================================
 
 /**
- * @deprecated Use the Service type from '@/hooks/useServices' instead.
- * Service data is now stored in Supabase with proper RLS:
- * - Everyone can read active services
- * - Only admins can create/update/delete services
+ * Service entity - defines a type of laundry service.
+ * Admin can manage these through the admin panel.
+ * 
+ * Currently stored in localStorage via useServices hook.
+ * TODO: Migrate to Supabase table for admin management.
  */
 export interface Service {
   id: string;
   name: string;                // Service name (e.g., "Wash & Iron")
   description: string;         // What's included
-  pricePerKg: number;          // Base price per kilogram (in euros)
+  pricePerKg: number;          // Base price per kilogram
   discountPercent: number;     // Current discount (0-100)
   isActive: boolean;           // Whether service is available
 }
