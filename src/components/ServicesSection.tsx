@@ -1,4 +1,4 @@
-import { Service } from '@/types';
+import { Service } from '@/hooks/useServices';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles } from 'lucide-react';
 
@@ -48,17 +48,17 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                 {service.discountPercent > 0 ? (
                   <>
                     <span className="text-2xl font-bold text-primary">
-                      ${calculateDiscountedPrice(service.pricePerKg, service.discountPercent).toFixed(2)}
+                      €{calculateDiscountedPrice(service.pricePerKg, service.discountPercent).toFixed(2)}
                     </span>
                     <span className="text-sm text-muted-foreground line-through">
-                      ${service.pricePerKg.toFixed(2)}
+                      €{service.pricePerKg.toFixed(2)}
                     </span>
                     <span className="text-sm text-muted-foreground">/kg</span>
                   </>
                 ) : (
                   <>
                     <span className="text-2xl font-bold text-primary">
-                      ${service.pricePerKg.toFixed(2)}
+                      €{service.pricePerKg.toFixed(2)}
                     </span>
                     <span className="text-sm text-muted-foreground">/kg</span>
                   </>

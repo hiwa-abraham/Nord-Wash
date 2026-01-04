@@ -5,73 +5,52 @@
  * Services define what types of laundry work are available and their pricing.
  * 
  * Data Persistence:
- * - Currently uses localStorage for persistence
- * - TODO: Migrate to Supabase table when orders functionality is built
+ * - Uses Supabase for persistence
+ * - Admin-only write access via RLS policies
  * 
  * Features:
- * - CRUD operations for services
- * - Toggle service active/inactive status
- * - Automatic persistence to localStorage
- * - Default services provided on first load
- * 
- * Usage:
- * ```tsx
- * const { services, activeServices, addService, updateService, removeService, toggleServiceActive } = useServices();
- * ```
+ * - CRUD operations for services (admin only)
+ * - Read access for all authenticated users
+ * - Real-time updates when services change
  */
 
-import { useState, useEffect } from 'react';
-import { Service } from '@/types';
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
-// localStorage key for service data persistence
-const STORAGE_KEY = 'laundry-services';
+export interface Service {
+  id: string;
+  name: string;
+  description: string;
+  pricePerKg: number;       // Price in euros (converted from cents in DB)
+  discountPercent: number;
+  isActive: boolean;
+}
+
+interface DbService {
+  id: string;
+  name: string;
+  description: string;
+  price_per_kg: number;     // Price in cents
+  discount_percent: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
 /**
- * Default services provided when no saved services exist.
- * These represent the core laundry offerings of the platform.
+ * Convert database service to frontend format
  */
-const defaultServices: Service[] = [
-  {
-    id: 'service-1',
-    name: 'Regular Wash',
-    description: 'Standard washing for everyday clothes',
-    pricePerKg: 4,
-    discountPercent: 0,
-    isActive: true,
-  },
-  {
-    id: 'service-2',
-    name: 'Wash & Iron',
-    description: 'Washing with professional ironing',
-    pricePerKg: 6,
-    discountPercent: 10,
-    isActive: true,
-  },
-  {
-    id: 'service-3',
-    name: 'Dry Cleaning',
-    description: 'Delicate fabrics and special care items',
-    pricePerKg: 12,
-    discountPercent: 0,
-    isActive: true,
-  },
-  {
-    id: 'service-4',
-    name: 'Iron Only',
-    description: 'Professional ironing service',
-    pricePerKg: 3,
-    discountPercent: 15,
-    isActive: true,
-  },
-  {
-    id: 'service-5',
-    name: 'Express Service',
-    description: 'Same day pickup and delivery',
-    pricePerKg: 10,
-    discountPercent: 0,
-    isActive: true,
-  },
-];
+function dbToService(db: DbService): Service {
+  return {
+    id: db.id,
+    name: db.name,
+    description: db.description,
+    pricePerKg: db.price_per_kg / 100, // Convert cents to euros
+    discountPercent: db.discount_percent,
+    isActive: db.is_active,
+  };
+}
 
 /**
  * Custom hook for managing laundry services.
@@ -79,70 +58,137 @@ const defaultServices: Service[] = [
  * @returns Object containing services array, filtered active services, and CRUD methods
  */
 export function useServices() {
-  // Initialize state from localStorage or use defaults
-  const [services, setServices] = useState<Service[]>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : defaultServices;
-  });
-
-  // Persist to localStorage whenever services change
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(services));
-  }, [services]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   /**
-   * Adds a new service to the catalog.
-   * Generates a unique ID using timestamp.
+   * Fetches all services from the database
+   */
+  const fetchServices = useCallback(async () => {
+    setIsLoading(true);
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching services:', error);
+      toast.error('Failed to load services');
+    } else {
+      setServices((data || []).map(dbToService));
+    }
+    setIsLoading(false);
+  }, []);
+
+  // Fetch services on mount
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
+
+  /**
+   * Adds a new service to the catalog (Admin only).
    * 
    * @param service - Service data without ID (ID will be generated)
    */
-  const addService = (service: Omit<Service, 'id'>) => {
-    const newService: Service = {
-      ...service,
-      id: `service-${Date.now()}`,
-    };
-    setServices((prev) => [...prev, newService]);
+  const addService = async (service: Omit<Service, 'id'>) => {
+    const { data, error } = await supabase
+      .from('services')
+      .insert({
+        name: service.name,
+        description: service.description,
+        price_per_kg: Math.round(service.pricePerKg * 100), // Convert to cents
+        discount_percent: service.discountPercent,
+        is_active: service.isActive,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error adding service:', error);
+      toast.error('Failed to add service. Admin access required.');
+      return false;
+    }
+    
+    setServices(prev => [...prev, dbToService(data)]);
+    toast.success('Service added successfully');
+    return true;
   };
 
   /**
-   * Updates an existing service.
+   * Updates an existing service (Admin only).
    * 
    * @param id - ID of the service to update
    * @param updates - Partial service data to merge
    */
-  const updateService = (id: string, updates: Partial<Service>) => {
-    setServices((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, ...updates } : s))
+  const updateService = async (id: string, updates: Partial<Service>) => {
+    const dbUpdates: Record<string, unknown> = {};
+    
+    if (updates.name !== undefined) dbUpdates.name = updates.name;
+    if (updates.description !== undefined) dbUpdates.description = updates.description;
+    if (updates.pricePerKg !== undefined) dbUpdates.price_per_kg = Math.round(updates.pricePerKg * 100);
+    if (updates.discountPercent !== undefined) dbUpdates.discount_percent = updates.discountPercent;
+    if (updates.isActive !== undefined) dbUpdates.is_active = updates.isActive;
+
+    const { error } = await supabase
+      .from('services')
+      .update(dbUpdates)
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error updating service:', error);
+      toast.error('Failed to update service. Admin access required.');
+      return false;
+    }
+
+    setServices(prev =>
+      prev.map(s => (s.id === id ? { ...s, ...updates } : s))
     );
+    toast.success('Service updated successfully');
+    return true;
   };
 
   /**
-   * Removes a service from the catalog.
+   * Removes a service from the catalog (Admin only).
    * 
    * @param id - ID of the service to remove
    */
-  const removeService = (id: string) => {
-    setServices((prev) => prev.filter((s) => s.id !== id));
+  const removeService = async (id: string) => {
+    const { error } = await supabase
+      .from('services')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error removing service:', error);
+      toast.error('Failed to remove service. Admin access required.');
+      return false;
+    }
+
+    setServices(prev => prev.filter(s => s.id !== id));
+    toast.success('Service removed successfully');
+    return true;
   };
 
   /**
-   * Toggles a service's active status.
-   * Inactive services are not shown to customers.
+   * Toggles a service's active status (Admin only).
    * 
    * @param id - ID of the service to toggle
    */
-  const toggleServiceActive = (id: string) => {
-    setServices((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, isActive: !s.isActive } : s))
-    );
+  const toggleServiceActive = async (id: string) => {
+    const service = services.find(s => s.id === id);
+    if (!service) return false;
+
+    return updateService(id, { isActive: !service.isActive });
   };
 
   return {
-    services,                                    // All services
-    activeServices: services.filter((s) => s.isActive), // Only active services
+    services,
+    activeServices: services.filter(s => s.isActive),
+    isLoading,
     addService,
     updateService,
     removeService,
     toggleServiceActive,
+    refetch: fetchServices,
   };
 }
