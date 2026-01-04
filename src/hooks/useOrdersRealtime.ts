@@ -2,12 +2,16 @@
  * useOrdersRealtime - Real-time orders subscription hook
  * 
  * Provides real-time updates for orders, filtering by customer or washer ID.
+ * Integrates with push notifications for native app support.
  */
 
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { Tables } from '@/integrations/supabase/types';
 import { toast } from 'sonner';
+import { Capacitor } from '@capacitor/core';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { getOrderStatusNotification } from './usePushNotifications';
 
 type Order = Tables<'orders'>;
 
@@ -94,15 +98,28 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
             // Show status change notification
             const oldOrder = orders.find(o => o.id === updatedOrder.id);
             if (oldOrder && oldOrder.status !== updatedOrder.status) {
-              const statusMessages: Record<string, string> = {
-                paid: 'Order has been paid!',
-                assigned: 'A washer has been assigned!',
-                in_progress: 'Your laundry is being processed!',
-                completed: 'Order completed!',
-                cancelled: 'Order was cancelled.',
-              };
-              const message = statusMessages[updatedOrder.status] || `Order status: ${updatedOrder.status}`;
-              toast.info(message);
+              const notification = getOrderStatusNotification(updatedOrder.status);
+              
+              if (notification) {
+                // Show toast for in-app notification
+                toast.info(notification.title, {
+                  description: notification.body,
+                });
+                
+                // Send local notification for native apps (works in background)
+                if (Capacitor.isNativePlatform()) {
+                  LocalNotifications.schedule({
+                    notifications: [{
+                      id: Date.now(),
+                      title: notification.title,
+                      body: notification.body,
+                      extra: { orderId: updatedOrder.id },
+                    }],
+                  }).catch(err => console.error('Local notification error:', err));
+                }
+              } else {
+                toast.info(`Order status: ${updatedOrder.status}`);
+              }
             }
           }
         }

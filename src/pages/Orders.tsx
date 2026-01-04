@@ -28,6 +28,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useOrdersRealtime } from '@/hooks/useOrdersRealtime';
 import type { Tables } from '@/integrations/supabase/types';
 import { Header } from '@/components/Header';
+import { PushNotificationPrompt } from '@/components/PushNotificationPrompt';
 
 type Order = Tables<'orders'>;
 
@@ -100,6 +101,11 @@ export default function Orders() {
       
       <main className="pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-4xl">
+          {/* Push Notification Prompt */}
+          <div className="mb-6">
+            <PushNotificationPrompt />
+          </div>
+
           {/* Header */}
           <div className="flex items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-4">
