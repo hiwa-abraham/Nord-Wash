@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { 
@@ -10,7 +10,7 @@ import {
   History, 
   HelpCircle,
   Menu,
-  X
+  ChevronLeft
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -27,6 +27,14 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Check if we're on the home page - don't show back button there
+  const isHomePage = location.pathname === '/';
+  
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
@@ -51,11 +59,24 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <Droplets className="w-8 h-8 text-primary" />
-            <span className="font-display font-bold text-xl">NordWash</span>
-          </Link>
+          {/* Back Button + Logo */}
+          <div className="flex items-center gap-2">
+            {!isHomePage && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleBack}
+                className="text-muted-foreground hover:text-foreground"
+                aria-label="Go back"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </Button>
+            )}
+            <Link to="/" className="flex items-center gap-2">
+              <Droplets className="w-8 h-8 text-primary" />
+              <span className="font-display font-bold text-xl">NordWash</span>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">
