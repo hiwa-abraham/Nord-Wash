@@ -57,31 +57,7 @@ export default function CustomerDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center">
-              <Shirt className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <span className="font-display font-bold text-xl text-gradient">FreshFold</span>
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm">
-              <User className="w-4 h-4 text-muted-foreground" />
-              <span className="font-medium">{profile?.full_name || 'Customer'}</span>
-            </div>
-            <Button variant="ghost" size="icon" onClick={handleLogout}>
-              <LogOut className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+    <main className="container mx-auto px-4 py-8 pt-24">
         {/* Push Notification Prompt */}
         <div className="mb-6">
           <PushNotificationPrompt />
@@ -217,13 +193,12 @@ export default function CustomerDashboard() {
             })}
           </div>
         )}
-      </main>
 
-      <CreateRequestDialog 
-        open={showCreateDialog} 
-        onOpenChange={setShowCreateDialog}
-        onSubmit={handleCreateRequest}
-      />
-    </div>
+        <CreateRequestDialog 
+          open={showCreateDialog} 
+          onOpenChange={setShowCreateDialog}
+          onSubmit={handleCreateRequest}
+        />
+      </main>
   );
 }

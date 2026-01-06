@@ -1,4 +1,3 @@
-import { Header } from '@/components/Header';
 import { 
   Accordion,
   AccordionContent,
@@ -38,106 +37,102 @@ const faqs = [
 
 export default function Help() {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 pt-24 pb-12">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">
-            Help Center
-          </h1>
-          <p className="text-muted-foreground mb-8">
-            Find answers to common questions or get in touch with us.
-          </p>
+    <main className="container mx-auto px-4 pt-24 pb-12">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">
+          Help Center
+        </h1>
+        <p className="text-muted-foreground mb-8">
+          Find answers to common questions or get in touch with us.
+        </p>
 
-          {/* FAQ Section */}
-          <section className="mb-12">
-            <h2 className="text-xl font-semibold mb-4">Frequently Asked Questions</h2>
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </section>
+        {/* FAQ Section */}
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">Frequently Asked Questions</h2>
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="text-left">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </section>
 
-          {/* Contact Section */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-primary" />
-                    Email
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Get a response within 24 hours
-                  </p>
-                  <Button variant="outline" size="sm" className="w-full">
-                    support@nordwash.com
-                  </Button>
-                </CardContent>
-              </Card>
+        {/* Contact Section */}
+        <section>
+          <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-primary" />
+                  Email
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Get a response within 24 hours
+                </p>
+                <Button variant="outline" size="sm" className="w-full">
+                  support@nordwash.com
+                </Button>
+              </CardContent>
+            </Card>
 
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-primary" />
-                    Phone
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Mon-Fri 9am-6pm
-                  </p>
-                  <Button variant="outline" size="sm" className="w-full">
-                    +1 (555) 123-4567
-                  </Button>
-                </CardContent>
-              </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-primary" />
+                  Phone
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Mon-Fri 9am-6pm
+                </p>
+                <Button variant="outline" size="sm" className="w-full">
+                  +1 (555) 123-4567
+                </Button>
+              </CardContent>
+            </Card>
 
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <MessageCircle className="w-4 h-4 text-primary" />
-                    Live Chat
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Available 24/7
-                  </p>
-                  <Button size="sm" className="w-full bg-gradient-primary hover:opacity-90">
-                    Start Chat
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </section>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <MessageCircle className="w-4 h-4 text-primary" />
+                  Live Chat
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Available 24/7
+                </p>
+                <Button size="sm" className="w-full bg-gradient-primary hover:opacity-90">
+                  Start Chat
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
 
-          {/* Legal Links */}
-          <section className="mt-12 pt-8 border-t border-border">
-            <div className="flex flex-wrap gap-4 justify-center text-sm text-muted-foreground">
-              <a href="/privacy" className="hover:text-foreground transition-colors">
-                Privacy Policy
-              </a>
-              <span>•</span>
-              <a href="/terms" className="hover:text-foreground transition-colors">
-                Terms of Service
-              </a>
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
+        {/* Legal Links */}
+        <section className="mt-12 pt-8 border-t border-border">
+          <div className="flex flex-wrap gap-4 justify-center text-sm text-muted-foreground">
+            <a href="/privacy" className="hover:text-foreground transition-colors">
+              Privacy Policy
+            </a>
+            <span>•</span>
+            <a href="/terms" className="hover:text-foreground transition-colors">
+              Terms of Service
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }

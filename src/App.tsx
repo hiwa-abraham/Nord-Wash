@@ -27,6 +27,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { Layout } from "@/components/Layout";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import CustomerDashboard from "./pages/CustomerDashboard";
@@ -56,25 +57,27 @@ const App = () => (
         <Sonner />
         {/* Client-side routing */}
         <BrowserRouter>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/help" element={<Help />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<TermsOfService />} />
-            
-            {/* Protected routes - require authentication */}
-            <Route path="/customer" element={<CustomerDashboard />} />
-            <Route path="/washer" element={<WasherDashboard />} />
-            <Route path="/washer/earnings" element={<WasherEarnings />} />
-            <Route path="/schedule-pickup" element={<SchedulePickup />} />
-            <Route path="/orders" element={<Orders />} />
-            
-            {/* Catch-all for 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Layout>
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              
+              {/* Protected routes - require authentication */}
+              <Route path="/customer" element={<CustomerDashboard />} />
+              <Route path="/washer" element={<WasherDashboard />} />
+              <Route path="/washer/earnings" element={<WasherEarnings />} />
+              <Route path="/schedule-pickup" element={<SchedulePickup />} />
+              <Route path="/orders" element={<Orders />} />
+              
+              {/* Catch-all for 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
