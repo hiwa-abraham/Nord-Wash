@@ -95,39 +95,7 @@ export default function WasherEarnings() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={() => navigate('/washer')}
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <Wallet className="w-4 h-4 text-primary-foreground" />
-              </div>
-              <span className="font-display font-bold text-lg">Earnings</span>
-            </div>
-            <Badge variant="outline" className="flex items-center gap-1.5 text-success border-success/30 ml-2">
-              <Wifi className="w-3 h-3" />
-              <span className="text-xs">Live</span>
-            </Badge>
-          </div>
-          
-          <Link to="/washer">
-            <Button variant="outline" size="sm">
-              Back to Dashboard
-            </Button>
-          </Link>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+    <main className="container mx-auto px-4 py-8 pt-24 max-w-4xl">
         {/* Earnings Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Card className="border-0 shadow-md bg-gradient-to-br from-success/10 to-success/5">
@@ -279,8 +247,17 @@ export default function WasherEarnings() {
             )}
           </TabsContent>
         </Tabs>
+
+        {/* Back Button */}
+        <div className="mt-8 text-center">
+          <Link to="/washer">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
       </main>
-    </div>
   );
 }
 

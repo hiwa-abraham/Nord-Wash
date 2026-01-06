@@ -16,7 +16,6 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -187,10 +186,7 @@ export default function SchedulePickup() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-
-      <main className="container mx-auto px-4 pt-24 pb-12">
+    <main className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-3xl mx-auto">
           {/* Progress Steps - 4 steps now */}
           <div className="flex items-center justify-center mb-8 flex-wrap gap-y-2">
@@ -656,6 +652,5 @@ export default function SchedulePickup() {
           )}
         </div>
       </main>
-    </div>
   );
 }

@@ -1,16 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Shirt, ArrowRight, Sparkles, Shield, Clock, CalendarCheck } from 'lucide-react';
-import { Header } from '@/components/Header';
 
 export default function Index() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
-      <Header />
-
-      <div className="container mx-auto px-4 pt-24 pb-16 md:pt-32 md:pb-24">
+    <div className="pt-16">
+      <div className="container mx-auto px-4 pt-8 pb-16 md:pt-16 md:pb-24">
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-primary shadow-glow mb-6 animate-float">
             <Shirt className="w-10 h-10 text-primary-foreground" />
