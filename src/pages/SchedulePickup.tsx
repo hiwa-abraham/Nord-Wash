@@ -379,11 +379,11 @@ export default function SchedulePickup() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Total</p>
-                      <p className="text-2xl font-bold">€{totalPrice.toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">Total (incl. fees)</p>
+                      <p className="text-2xl font-bold">€{totalWithFees.toFixed(2)}</p>
                       {hasSelections && (
                         <p className="text-xs text-muted-foreground">
-                          {selections.reduce((sum, s) => sum + s.quantity, 0)} kg total
+                          Services €{totalPrice.toFixed(2)} + Pickup €{TRANSPORT_FEE} + Service fee €{SERVICE_FEE}
                         </p>
                       )}
                     </div>
@@ -591,9 +591,22 @@ export default function SchedulePickup() {
                       );
                     })}
                     <Separator />
+                    <div className="flex justify-between text-muted-foreground">
+                      <span>Subtotal (Services)</span>
+                      <span>€{totalPrice.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-muted-foreground">
+                      <span>Pickup Fee</span>
+                      <span>€{TRANSPORT_FEE.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-muted-foreground">
+                      <span>Service Fee</span>
+                      <span>€{SERVICE_FEE.toFixed(2)}</span>
+                    </div>
+                    <Separator />
                     <div className="flex justify-between text-lg font-bold">
                       <span>Total</span>
-                      <span className="text-primary">€{totalPrice.toFixed(2)}</span>
+                      <span className="text-primary">€{totalWithFees.toFixed(2)}</span>
                     </div>
                   </CardContent>
                 </Card>
