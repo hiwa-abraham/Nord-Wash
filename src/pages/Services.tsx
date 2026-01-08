@@ -1,5 +1,6 @@
 import { ServicesSection } from '@/components/ServicesSection';
 import { AdminServicesDialog } from '@/components/AdminServicesDialog';
+import { AdminFeesDialog } from '@/components/AdminFeesDialog';
 import { useServices } from '@/hooks/useServices';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -30,13 +31,16 @@ export default function Services() {
             </p>
           </div>
           {isAdmin && (
-            <AdminServicesDialog
-              services={services}
-              onAddService={addService}
-              onUpdateService={updateService}
-              onRemoveService={removeService}
-              onToggleActive={toggleServiceActive}
-            />
+            <div className="flex items-center gap-2">
+              <AdminFeesDialog />
+              <AdminServicesDialog
+                services={services}
+                onAddService={addService}
+                onUpdateService={updateService}
+                onRemoveService={removeService}
+                onToggleActive={toggleServiceActive}
+              />
+            </div>
           )}
         </div>
       </div>

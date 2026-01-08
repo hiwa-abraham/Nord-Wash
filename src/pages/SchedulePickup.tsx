@@ -34,6 +34,7 @@ import {
 import { useServices } from '@/hooks/useServices';
 import { useToast } from '@/hooks/use-toast';
 import { useCreateOrder } from '@/hooks/useCreateOrder';
+import { useSettings } from '@/hooks/useSettings';
 import { PaymentStep, type PaymentMethod } from '@/components/payment/PaymentStep';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -66,15 +67,16 @@ interface ContactDetails {
   specialInstructions: string;
 }
 
-// Fee constants
-const SERVICE_FEE = 5; // $5 service fee
-const TRANSPORT_FEE = 10; // $10 transport fee
-
 export default function SchedulePickup() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { activeServices } = useServices();
   const { createOrder, isProcessing } = useCreateOrder();
+  const { settings, isLoading: isLoadingSettings } = useSettings();
+  
+  // Dynamic fees from settings
+  const SERVICE_FEE = settings.service_fee;
+  const TRANSPORT_FEE = settings.transport_fee;
   
   // Current step in the flow: services -> details -> confirm -> payment
   const [step, setStep] = useState<'services' | 'details' | 'confirm' | 'payment'>('services');
