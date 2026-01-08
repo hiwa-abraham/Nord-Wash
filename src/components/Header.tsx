@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { 
@@ -34,6 +35,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const menuItems = [
   { label: 'NordWash', href: '/', icon: Droplets },
@@ -62,6 +64,7 @@ const routeNames: Record<string, string> = {
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, logout, user } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -248,6 +251,9 @@ export function Header() {
             ))}
           </nav>
 
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* Profile Dropdown or Sign In */}
           <div className="shrink-0">
             {isAuthenticated ? (
@@ -265,7 +271,7 @@ export function Header() {
                 <DropdownMenuContent className="w-56 bg-background border border-border shadow-lg z-[60]" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">My Account</p>
+                      <p className="text-sm font-medium leading-none">{t('common.profile')}</p>
                       <p className="text-xs leading-none text-muted-foreground">
                         {user?.email || 'user@example.com'}
                       </p>
@@ -274,24 +280,24 @@ export function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => navigate('/customer')} className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
+                    <span>{t('common.profile')}</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/orders')} className="cursor-pointer">
                     <History className="mr-2 h-4 w-4" />
-                    <span>Order History</span>
+                    <span>{t('nav.orderHistory')}</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/customer')} className="cursor-pointer">
                     <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <span>{t('common.settings')}</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/help')} className="cursor-pointer">
                     <HelpCircle className="mr-2 h-4 w-4" />
-                    <span>Help & Support</span>
+                    <span>{t('nav.helpSupport')}</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
+                    <span>{t('common.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -301,7 +307,7 @@ export function Header() {
                 className="bg-gradient-primary hover:opacity-90"
                 onClick={() => navigate('/auth')}
               >
-                Sign In
+                {t('common.login')}
               </Button>
             )}
           </div>
