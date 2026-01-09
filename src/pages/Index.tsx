@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Shirt, ArrowRight, Sparkles, Shield, Clock, CalendarCheck } from 'lucide-react';
 
 export default function Index() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="pt-16">
@@ -14,13 +16,12 @@ export default function Index() {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            Fresh laundry,{' '}
-            <span className="text-gradient">delivered to you</span>
+            {t('home.heroTitle')}{' '}
+            <span className="text-gradient">{t('home.heroTitleHighlight')}</span>
           </h1>
           
           <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-            Connect with local washers who pick up, clean, and deliver your laundry. 
-            Or earn money by helping others with their laundry needs.
+            {t('home.heroSubtitle')}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -30,7 +31,7 @@ export default function Index() {
               onClick={() => navigate('/schedule-pickup')}
             >
               <CalendarCheck className="w-5 h-5 mr-2" />
-              Schedule Pickup
+              {t('home.schedulePickup')}
             </Button>
             <Button 
               size="lg" 
@@ -38,7 +39,7 @@ export default function Index() {
               className="h-14 px-8 text-lg"
               onClick={() => navigate('/services')}
             >
-              View Pricing
+              {t('home.viewPricing')}
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </div>
@@ -49,24 +50,24 @@ export default function Index() {
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
               <Clock className="w-6 h-6 text-primary" />
             </div>
-            <h3 className="font-semibold mb-2">Save Time</h3>
-            <p className="text-sm text-muted-foreground">Skip the laundromat. We pick up and deliver.</p>
+            <h3 className="font-semibold mb-2">{t('home.saveTime')}</h3>
+            <p className="text-sm text-muted-foreground">{t('home.saveTimeDesc')}</p>
           </div>
           
           <div className="bg-card rounded-2xl p-6 shadow-md text-center">
             <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mx-auto mb-4">
               <Sparkles className="w-6 h-6 text-secondary" />
             </div>
-            <h3 className="font-semibold mb-2">Quality Care</h3>
-            <p className="text-sm text-muted-foreground">Your clothes handled with professional care.</p>
+            <h3 className="font-semibold mb-2">{t('home.qualityCare')}</h3>
+            <p className="text-sm text-muted-foreground">{t('home.qualityCareDesc')}</p>
           </div>
           
           <div className="bg-card rounded-2xl p-6 shadow-md text-center">
             <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
               <Shield className="w-6 h-6 text-accent" />
             </div>
-            <h3 className="font-semibold mb-2">Secure Payments</h3>
-            <p className="text-sm text-muted-foreground">Pay securely through the app with Stripe.</p>
+            <h3 className="font-semibold mb-2">{t('home.securePayments')}</h3>
+            <p className="text-sm text-muted-foreground">{t('home.securePaymentsDesc')}</p>
           </div>
         </div>
       </div>

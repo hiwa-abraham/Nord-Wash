@@ -20,7 +20,15 @@
     "back": "Atrás",
     "next": "Siguiente",
     "confirm": "Confirmar",
-    "language": "Idioma"
+    "language": "Idioma",
+    "live": "En vivo",
+    "status": "Estado",
+    "servicesSubtotal": "Subtotal servicios",
+    "serviceFee": "Tarifa de servicio",
+    "transportFee": "Tarifa de transporte",
+    "total": "Total",
+    "specialInstructions": "Instrucciones especiales",
+    "paidOn": "Pagado el"
   },
   "nav": {
     "schedulePickup": "Programar recogida",
@@ -28,19 +36,17 @@
     "helpSupport": "Ayuda y soporte"
   },
   "home": {
-    "heroTitle": "Servicio de Lavandería Profesional",
-    "heroSubtitle": "Recogemos, limpiamos y entregamos tu ropa fresca y doblada.",
+    "heroTitle": "Ropa fresca,",
+    "heroTitleHighlight": "entregada a ti",
+    "heroSubtitle": "Conéctate con lavadores locales que recogen, limpian y entregan tu ropa. O gana dinero ayudando a otros con sus necesidades de lavandería.",
     "schedulePickup": "Programar recogida",
-    "viewServices": "Ver servicios",
-    "howItWorks": "Cómo funciona",
-    "step1Title": "Programa",
-    "step1Desc": "Reserva una hora de recogida que te convenga",
-    "step2Title": "Recogemos",
-    "step2Desc": "Nuestro lavador recoge tu ropa",
-    "step3Title": "Limpia y Fresca",
-    "step3Desc": "Lavamos, secamos y doblamos con cuidado",
-    "step4Title": "Entregado",
-    "step4Desc": "Ropa fresca entregada en tu puerta"
+    "viewPricing": "Ver precios",
+    "saveTime": "Ahorra tiempo",
+    "saveTimeDesc": "Salta la lavandería. Recogemos y entregamos.",
+    "qualityCare": "Cuidado de calidad",
+    "qualityCareDesc": "Tu ropa manejada con cuidado profesional.",
+    "securePayments": "Pagos seguros",
+    "securePaymentsDesc": "Paga de forma segura a través de la app con Stripe."
   },
   "services": {
     "title": "Servicios y Precios",
@@ -81,9 +87,13 @@
     "orderSuccessDesc": "Tu recogida ha sido programada."
   },
   "orders": {
-    "title": "Mis pedidos",
+    "title": "Historial de pedidos",
+    "subtitle": "Ve todos tus pedidos anteriores y su estado",
     "noOrders": "Sin pedidos aún",
-    "noOrdersDesc": "Programa tu primera recogida para empezar",
+    "noOrdersDesc": "No has realizado ningún pedido. ¡Programa tu primera recogida!",
+    "orderNumber": "Pedido #",
+    "pickupAddress": "Dirección de recogida",
+    "pickupDateTime": "Fecha y hora de recogida",
     "status": {
       "pending_payment": "Pendiente de pago",
       "paid": "Pagado",
@@ -92,16 +102,23 @@
       "completed": "Completado",
       "cancelled": "Cancelado"
     },
+    "paymentStatus": {
+      "pending": "Pendiente",
+      "paid": "Pagado",
+      "failed": "Fallido",
+      "refunded": "Reembolsado"
+    },
     "pickupDate": "Fecha de recogida",
     "pickupTime": "Hora de recogida",
     "services": "Servicios",
     "total": "Total"
   },
   "auth": {
+    "tagline": "Tu ropa, entregada fresca",
     "loginTitle": "Bienvenido de nuevo",
-    "loginSubtitle": "Inicia sesión en tu cuenta",
-    "signupTitle": "Crear cuenta",
-    "signupSubtitle": "Únete hoy",
+    "loginSubtitle": "Inicia sesión para continuar como {{role}}",
+    "signupTitle": "Crea tu cuenta",
+    "signupSubtitle": "Regístrate para comenzar como {{role}}",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "confirmPassword": "Confirmar contraseña",
@@ -110,9 +127,18 @@
     "hasAccount": "¿Ya tienes cuenta?",
     "signInWithGoogle": "Iniciar sesión con Google",
     "or": "o",
-    "selectRole": "Quiero",
-    "customerRole": "Que laven mi ropa",
-    "washerRole": "Ser lavador"
+    "customerRole": "Necesito lavar mi ropa",
+    "washerRole": "Quiero lavar",
+    "clothesOwner": "Dueño de ropa",
+    "laundryProvider": "Proveedor de lavandería",
+    "signIn": "Iniciar sesión",
+    "createAccount": "Crear cuenta",
+    "fullName": "Nombre completo",
+    "welcomeBack": "¡Bienvenido de nuevo!",
+    "accountCreated": "¡Cuenta creada!",
+    "invalidCredentials": "Correo o contraseña inválidos",
+    "emailRegistered": "Este correo ya está registrado. Por favor inicia sesión.",
+    "somethingWrong": "Algo salió mal. Por favor intenta de nuevo."
   },
   "footer": {
     "termsOfService": "Términos de servicio",

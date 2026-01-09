@@ -20,7 +20,15 @@
     "back": "Tilbage",
     "next": "Næste",
     "confirm": "Bekræft",
-    "language": "Sprog"
+    "language": "Sprog",
+    "live": "Live",
+    "status": "Status",
+    "servicesSubtotal": "Tjenester subtotal",
+    "serviceFee": "Servicegebyr",
+    "transportFee": "Transportgebyr",
+    "total": "Total",
+    "specialInstructions": "Særlige instruktioner",
+    "paidOn": "Betalt den"
   },
   "nav": {
     "schedulePickup": "Planlæg afhentning",
@@ -28,19 +36,17 @@
     "helpSupport": "Hjælp & Support"
   },
   "home": {
-    "heroTitle": "Professionel Vaskeservice",
-    "heroSubtitle": "Vi henter, vasker og leverer dit vasketøj frisk og foldet.",
+    "heroTitle": "Friskt vasketøj,",
+    "heroTitleHighlight": "leveret til dig",
+    "heroSubtitle": "Forbind med lokale vaskere, der henter, vasker og leverer dit vasketøj. Eller tjen penge ved at hjælpe andre med deres vaskebehov.",
     "schedulePickup": "Planlæg afhentning",
-    "viewServices": "Se tjenester",
-    "howItWorks": "Sådan fungerer det",
-    "step1Title": "Planlæg",
-    "step1Desc": "Book et afhentningstidspunkt der passer dig",
-    "step2Title": "Vi henter",
-    "step2Desc": "Vores vasker henter dit vasketøj",
-    "step3Title": "Rent & Friskt",
-    "step3Desc": "Vi vasker, tørrer og folder med omhu",
-    "step4Title": "Leveret",
-    "step4Desc": "Friskt vasketøj leveret til din dør"
+    "viewPricing": "Se priser",
+    "saveTime": "Spar tid",
+    "saveTimeDesc": "Spring vaskeriet over. Vi henter og leverer.",
+    "qualityCare": "Kvalitetspleje",
+    "qualityCareDesc": "Dit tøj håndteres med professionel omsorg.",
+    "securePayments": "Sikre betalinger",
+    "securePaymentsDesc": "Betal sikkert gennem appen med Stripe."
   },
   "services": {
     "title": "Tjenester & Priser",
@@ -81,9 +87,13 @@
     "orderSuccessDesc": "Din afhentning er planlagt."
   },
   "orders": {
-    "title": "Mine ordrer",
+    "title": "Ordrehistorik",
+    "subtitle": "Se alle dine tidligere ordrer og deres status",
     "noOrders": "Ingen ordrer endnu",
-    "noOrdersDesc": "Planlæg din første afhentning for at komme i gang",
+    "noOrdersDesc": "Du har ikke afgivet nogen ordrer. Planlæg din første afhentning!",
+    "orderNumber": "Ordre #",
+    "pickupAddress": "Afhentningsadresse",
+    "pickupDateTime": "Afhentningsdato & tid",
     "status": {
       "pending_payment": "Afventer betaling",
       "paid": "Betalt",
@@ -92,16 +102,23 @@
       "completed": "Fuldført",
       "cancelled": "Annulleret"
     },
+    "paymentStatus": {
+      "pending": "Afventer",
+      "paid": "Betalt",
+      "failed": "Mislykkedes",
+      "refunded": "Refunderet"
+    },
     "pickupDate": "Afhentningsdato",
     "pickupTime": "Afhetningstid",
     "services": "Tjenester",
     "total": "Total"
   },
   "auth": {
+    "tagline": "Dit vasketøj, leveret friskt",
     "loginTitle": "Velkommen tilbage",
-    "loginSubtitle": "Log ind på din konto",
-    "signupTitle": "Opret konto",
-    "signupSubtitle": "Tilmeld dig i dag",
+    "loginSubtitle": "Log ind for at fortsætte som {{role}}",
+    "signupTitle": "Opret din konto",
+    "signupSubtitle": "Tilmeld dig for at komme i gang som {{role}}",
     "email": "E-mail",
     "password": "Adgangskode",
     "confirmPassword": "Bekræft adgangskode",
@@ -110,9 +127,18 @@
     "hasAccount": "Har du allerede en konto?",
     "signInWithGoogle": "Log ind med Google",
     "or": "eller",
-    "selectRole": "Jeg vil",
-    "customerRole": "Have mit vasketøj vasket",
-    "washerRole": "Blive vasker"
+    "customerRole": "Jeg har brug for vasketøj",
+    "washerRole": "Jeg vil vaske",
+    "clothesOwner": "Tøjejer",
+    "laundryProvider": "Vaskeudbyder",
+    "signIn": "Log ind",
+    "createAccount": "Opret konto",
+    "fullName": "Fulde navn",
+    "welcomeBack": "Velkommen tilbage!",
+    "accountCreated": "Konto oprettet!",
+    "invalidCredentials": "Ugyldig e-mail eller adgangskode",
+    "emailRegistered": "Denne e-mail er allerede registreret. Log venligst ind.",
+    "somethingWrong": "Noget gik galt. Prøv venligst igen."
   },
   "footer": {
     "termsOfService": "Servicevilkår",

@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { 
   Package, 
@@ -37,23 +38,33 @@ interface ServiceItem {
   quantity: number;
 }
 
-const statusConfig: Record<string, { label: string; color: string; icon: typeof Clock }> = {
-  pending_payment: { label: 'Pending Payment', color: 'bg-warning/10 text-warning border-warning/20', icon: Clock },
-  paid: { label: 'Paid', color: 'bg-primary/10 text-primary border-primary/20', icon: CreditCard },
-  assigned: { label: 'Assigned', color: 'bg-secondary/10 text-secondary border-secondary/20', icon: Package },
-  in_progress: { label: 'In Progress', color: 'bg-secondary/10 text-secondary border-secondary/20', icon: Package },
-  completed: { label: 'Completed', color: 'bg-success/10 text-success border-success/20', icon: CheckCircle2 },
-  cancelled: { label: 'Cancelled', color: 'bg-destructive/10 text-destructive border-destructive/20', icon: XCircle },
+const statusIcons: Record<string, typeof Clock> = {
+  pending_payment: Clock,
+  paid: CreditCard,
+  assigned: Package,
+  in_progress: Package,
+  completed: CheckCircle2,
+  cancelled: XCircle,
 };
 
-const paymentStatusConfig: Record<string, { label: string; color: string }> = {
-  pending: { label: 'Pending', color: 'bg-warning/10 text-warning' },
-  paid: { label: 'Paid', color: 'bg-success/10 text-success' },
-  failed: { label: 'Failed', color: 'bg-destructive/10 text-destructive' },
-  refunded: { label: 'Refunded', color: 'bg-muted text-muted-foreground' },
+const statusColors: Record<string, string> = {
+  pending_payment: 'bg-warning/10 text-warning border-warning/20',
+  paid: 'bg-primary/10 text-primary border-primary/20',
+  assigned: 'bg-secondary/10 text-secondary border-secondary/20',
+  in_progress: 'bg-secondary/10 text-secondary border-secondary/20',
+  completed: 'bg-success/10 text-success border-success/20',
+  cancelled: 'bg-destructive/10 text-destructive border-destructive/20',
+};
+
+const paymentStatusColors: Record<string, string> = {
+  pending: 'bg-warning/10 text-warning',
+  paid: 'bg-success/10 text-success',
+  failed: 'bg-destructive/10 text-destructive',
+  refunded: 'bg-muted text-muted-foreground',
 };
 
 export default function Orders() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
@@ -75,12 +86,16 @@ export default function Orders() {
     return `€${(cents / 100).toFixed(2)}`;
   };
 
-  const getStatusConfig = (status: string) => {
-    return statusConfig[status] || statusConfig.pending_payment;
+  const getStatusIcon = (status: string) => {
+    return statusIcons[status] || Clock;
   };
 
-  const getPaymentStatusConfig = (status: string) => {
-    return paymentStatusConfig[status] || paymentStatusConfig.pending;
+  const getStatusColor = (status: string) => {
+    return statusColors[status] || statusColors.pending_payment;
+  };
+
+  const getPaymentStatusColor = (status: string) => {
+    return paymentStatusColors[status] || paymentStatusColors.pending;
   };
 
   if (authLoading || isLoading) {
@@ -110,13 +125,13 @@ export default function Orders() {
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-display font-bold">Order History</h1>
-              <p className="text-muted-foreground">View all your past orders and their status</p>
+              <h1 className="text-2xl font-display font-bold">{t('orders.title')}</h1>
+              <p className="text-muted-foreground">{t('orders.subtitle')}</p>
             </div>
           </div>
           <Badge variant="outline" className="flex items-center gap-1.5 text-success border-success/30">
             <Wifi className="w-3 h-3" />
-            <span className="text-xs">Live</span>
+            <span className="text-xs">{t('common.live')}</span>
           </Badge>
         </div>
 
@@ -125,21 +140,21 @@ export default function Orders() {
           <Card className="border-dashed">
             <CardContent className="py-12 text-center">
               <Package className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2">No orders yet</h3>
+              <h3 className="text-lg font-medium mb-2">{t('orders.noOrders')}</h3>
               <p className="text-muted-foreground mb-4">
-                You haven't placed any orders. Schedule your first pickup!
+                {t('orders.noOrdersDesc')}
               </p>
               <Button onClick={() => navigate('/schedule-pickup')}>
-                Schedule Pickup
+                {t('home.schedulePickup')}
               </Button>
             </CardContent>
           </Card>
         ) : (
           <div className="space-y-4">
             {orders.map((order) => {
-              const status = getStatusConfig(order.status);
-              const paymentStatus = getPaymentStatusConfig(order.payment_status);
-              const StatusIcon = status.icon;
+              const StatusIcon = getStatusIcon(order.status);
+              const statusColor = getStatusColor(order.status);
+              const paymentColor = getPaymentStatusColor(order.payment_status);
               const isExpanded = expandedOrder === order.id;
               const services = (Array.isArray(order.services) ? order.services : []) as unknown as ServiceItem[];
 
@@ -154,12 +169,12 @@ export default function Orders() {
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-start gap-3">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${status.color}`}>
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${statusColor}`}>
                           <StatusIcon className="w-5 h-5" />
                         </div>
                         <div>
                           <CardTitle className="text-base font-medium">
-                            Order #{order.id.slice(0, 8).toUpperCase()}
+                            {t('orders.orderNumber')}{order.id.slice(0, 8).toUpperCase()}
                           </CardTitle>
                           <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
                             <Calendar className="w-3.5 h-3.5" />
@@ -171,8 +186,8 @@ export default function Orders() {
                       <div className="flex items-center gap-3">
                         <div className="text-right">
                           <p className="font-semibold">{formatCurrency(order.total_amount)}</p>
-                          <Badge variant="outline" className={`text-xs ${paymentStatus.color}`}>
-                            {paymentStatus.label}
+                          <Badge variant="outline" className={`text-xs ${paymentColor}`}>
+                            {t(`orders.paymentStatus.${order.payment_status}`)}
                           </Badge>
                         </div>
                         <ChevronRight 
@@ -187,9 +202,9 @@ export default function Orders() {
                       <div className="pt-4 space-y-4">
                         {/* Status Badge */}
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-muted-foreground">Status:</span>
-                          <Badge variant="outline" className={status.color}>
-                            {status.label}
+                          <span className="text-sm text-muted-foreground">{t('common.status')}:</span>
+                          <Badge variant="outline" className={statusColor}>
+                            {t(`orders.status.${order.status}`)}
                           </Badge>
                         </div>
 
@@ -198,7 +213,7 @@ export default function Orders() {
                           <div className="flex items-start gap-2">
                             <MapPin className="w-4 h-4 text-muted-foreground mt-0.5" />
                             <div>
-                              <p className="text-sm font-medium">Pickup Address</p>
+                              <p className="text-sm font-medium">{t('orders.pickupAddress')}</p>
                               <p className="text-sm text-muted-foreground">
                                 {order.pickup_address}, {order.pickup_city}
                                 {order.pickup_postal_code && `, ${order.pickup_postal_code}`}
@@ -208,7 +223,7 @@ export default function Orders() {
                           <div className="flex items-start gap-2">
                             <Calendar className="w-4 h-4 text-muted-foreground mt-0.5" />
                             <div>
-                              <p className="text-sm font-medium">Pickup Date & Time</p>
+                              <p className="text-sm font-medium">{t('orders.pickupDateTime')}</p>
                               <p className="text-sm text-muted-foreground">
                                 {format(new Date(order.pickup_date), 'EEEE, MMMM d, yyyy')} at {order.pickup_time}
                               </p>
@@ -219,7 +234,7 @@ export default function Orders() {
                         {/* Services */}
                         {services.length > 0 && (
                           <div>
-                            <p className="text-sm font-medium mb-2">Services</p>
+                            <p className="text-sm font-medium mb-2">{t('orders.services')}</p>
                             <div className="space-y-1">
                               {services.map((service, idx) => (
                                 <div key={idx} className="flex justify-between text-sm">
@@ -238,20 +253,20 @@ export default function Orders() {
                         {/* Price Breakdown */}
                         <div className="space-y-1 text-sm">
                           <div className="flex justify-between text-muted-foreground">
-                            <span>Services Subtotal</span>
+                            <span>{t('common.servicesSubtotal')}</span>
                             <span>{formatCurrency(order.services_total)}</span>
                           </div>
                           <div className="flex justify-between text-muted-foreground">
-                            <span>Service Fee</span>
+                            <span>{t('common.serviceFee')}</span>
                             <span>{formatCurrency(order.service_fee)}</span>
                           </div>
                           <div className="flex justify-between text-muted-foreground">
-                            <span>Transport Fee</span>
+                            <span>{t('common.transportFee')}</span>
                             <span>{formatCurrency(order.transport_fee)}</span>
                           </div>
                           <Separator className="my-2" />
                           <div className="flex justify-between font-semibold">
-                            <span>Total</span>
+                            <span>{t('common.total')}</span>
                             <span className="text-primary">{formatCurrency(order.total_amount)}</span>
                           </div>
                         </div>
@@ -259,7 +274,7 @@ export default function Orders() {
                         {/* Special Instructions */}
                         {order.special_instructions && (
                           <div className="bg-muted/30 rounded-lg p-3">
-                            <p className="text-xs font-medium text-muted-foreground mb-1">Special Instructions</p>
+                            <p className="text-xs font-medium text-muted-foreground mb-1">{t('common.specialInstructions')}</p>
                             <p className="text-sm">{order.special_instructions}</p>
                           </div>
                         )}
@@ -267,7 +282,7 @@ export default function Orders() {
                         {/* Payment Date */}
                         {order.paid_at && (
                           <div className="text-xs text-muted-foreground">
-                            Paid on {format(new Date(order.paid_at), 'MMM d, yyyy at h:mm a')}
+                            {t('common.paidOn')} {format(new Date(order.paid_at), 'MMM d, yyyy at h:mm a')}
                           </div>
                         )}
                       </div>

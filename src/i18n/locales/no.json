@@ -20,7 +20,15 @@
     "back": "Tilbake",
     "next": "Neste",
     "confirm": "Bekreft",
-    "language": "Språk"
+    "language": "Språk",
+    "live": "Live",
+    "status": "Status",
+    "servicesSubtotal": "Tjenester delsum",
+    "serviceFee": "Serviceavgift",
+    "transportFee": "Transportavgift",
+    "total": "Totalt",
+    "specialInstructions": "Spesielle instruksjoner",
+    "paidOn": "Betalt den"
   },
   "nav": {
     "schedulePickup": "Planlegg henting",
@@ -28,19 +36,17 @@
     "helpSupport": "Hjelp & Support"
   },
   "home": {
-    "heroTitle": "Profesjonell Vaskeritjeneste",
-    "heroSubtitle": "Vi henter, vasker og leverer klærne dine friske og brettet.",
+    "heroTitle": "Friske klær,",
+    "heroTitleHighlight": "levert til deg",
+    "heroSubtitle": "Koble deg til lokale vaskere som henter, vasker og leverer klærne dine. Eller tjen penger ved å hjelpe andre med deres vaskebehov.",
     "schedulePickup": "Planlegg henting",
-    "viewServices": "Se tjenester",
-    "howItWorks": "Slik fungerer det",
-    "step1Title": "Planlegg",
-    "step1Desc": "Bestill en hentetid som passer deg",
-    "step2Title": "Vi henter",
-    "step2Desc": "Vår vasker henter klærne dine",
-    "step3Title": "Rent & Friskt",
-    "step3Desc": "Vi vasker, tørker og bretter med omhu",
-    "step4Title": "Levert",
-    "step4Desc": "Friske klær levert til døren din"
+    "viewPricing": "Se priser",
+    "saveTime": "Spar tid",
+    "saveTimeDesc": "Hopp over vaskeriet. Vi henter og leverer.",
+    "qualityCare": "Kvalitetspleie",
+    "qualityCareDesc": "Klærne dine håndteres med profesjonell omsorg.",
+    "securePayments": "Sikre betalinger",
+    "securePaymentsDesc": "Betal sikkert gjennom appen med Stripe."
   },
   "services": {
     "title": "Tjenester & Priser",
@@ -81,9 +87,13 @@
     "orderSuccessDesc": "Din henting er planlagt."
   },
   "orders": {
-    "title": "Mine bestillinger",
+    "title": "Bestillingshistorikk",
+    "subtitle": "Se alle dine tidligere bestillinger og deres status",
     "noOrders": "Ingen bestillinger ennå",
-    "noOrdersDesc": "Planlegg din første henting for å komme i gang",
+    "noOrdersDesc": "Du har ikke lagt inn noen bestillinger. Planlegg din første henting!",
+    "orderNumber": "Bestilling #",
+    "pickupAddress": "Henteadresse",
+    "pickupDateTime": "Hentedato & tid",
     "status": {
       "pending_payment": "Venter på betaling",
       "paid": "Betalt",
@@ -92,16 +102,23 @@
       "completed": "Fullført",
       "cancelled": "Kansellert"
     },
+    "paymentStatus": {
+      "pending": "Venter",
+      "paid": "Betalt",
+      "failed": "Mislyktes",
+      "refunded": "Refundert"
+    },
     "pickupDate": "Hentedato",
     "pickupTime": "Hentetid",
     "services": "Tjenester",
     "total": "Totalt"
   },
   "auth": {
+    "tagline": "Klærne dine, levert friske",
     "loginTitle": "Velkommen tilbake",
-    "loginSubtitle": "Logg inn på kontoen din",
-    "signupTitle": "Opprett konto",
-    "signupSubtitle": "Bli med i dag",
+    "loginSubtitle": "Logg inn for å fortsette som {{role}}",
+    "signupTitle": "Opprett kontoen din",
+    "signupSubtitle": "Registrer deg for å komme i gang som {{role}}",
     "email": "E-post",
     "password": "Passord",
     "confirmPassword": "Bekreft passord",
@@ -110,9 +127,18 @@
     "hasAccount": "Har du allerede en konto?",
     "signInWithGoogle": "Logg inn med Google",
     "or": "eller",
-    "selectRole": "Jeg vil",
-    "customerRole": "Få klærne mine vasket",
-    "washerRole": "Bli vasker"
+    "customerRole": "Jeg trenger å få vasket klær",
+    "washerRole": "Jeg vil vaske",
+    "clothesOwner": "Klesier",
+    "laundryProvider": "Vaskeleverandør",
+    "signIn": "Logg inn",
+    "createAccount": "Opprett konto",
+    "fullName": "Fullt navn",
+    "welcomeBack": "Velkommen tilbake!",
+    "accountCreated": "Konto opprettet!",
+    "invalidCredentials": "Ugyldig e-post eller passord",
+    "emailRegistered": "Denne e-posten er allerede registrert. Vennligst logg inn.",
+    "somethingWrong": "Noe gikk galt. Vennligst prøv igjen."
   },
   "footer": {
     "termsOfService": "Tjenestevilkår",
