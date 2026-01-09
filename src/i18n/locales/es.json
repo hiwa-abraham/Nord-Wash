@@ -28,7 +28,8 @@
     "transportFee": "Tarifa de transporte",
     "total": "Total",
     "specialInstructions": "Instrucciones especiales",
-    "paidOn": "Pagado el"
+    "paidOn": "Pagado el",
+    "note": "Nota"
   },
   "nav": {
     "schedulePickup": "Programar recogida",
@@ -139,6 +140,51 @@
     "invalidCredentials": "Correo o contraseña inválidos",
     "emailRegistered": "Este correo ya está registrado. Por favor inicia sesión.",
     "somethingWrong": "Algo salió mal. Por favor intenta de nuevo."
+  },
+  "customerDashboard": {
+    "hello": "¡Hola, {{name}}!",
+    "welcomeSubtitle": "Administra tus solicitudes de lavandería y sigue su estado",
+    "pending": "Pendiente",
+    "inProgress": "En progreso",
+    "completed": "Completado",
+    "yourRequests": "Tus solicitudes",
+    "newRequest": "Nueva solicitud",
+    "noRequestsYet": "Sin solicitudes aún",
+    "noRequestsDesc": "¡Crea tu primera solicitud de lavandería y deja que nuestros lavadores te ayuden!",
+    "createRequest": "Crear solicitud"
+  },
+  "washerDashboard": {
+    "readyToEarn": "¿Listo para ganar, {{name}}?",
+    "welcomeSubtitle": "Acepta trabajos de lavandería y comunícate con clientes a través del chat",
+    "viewEarnings": "Ver ganancias",
+    "trackIncome": "Sigue tus ingresos",
+    "activeJobs": "Trabajos activos",
+    "completedJobs": "Trabajos completados",
+    "availableJobs": "Trabajos disponibles",
+    "noJobsAvailable": "No hay trabajos disponibles",
+    "checkBackLater": "¡Vuelve más tarde para nuevas solicitudes de lavandería!",
+    "by": "por",
+    "payout": "Pago",
+    "acceptJob": "Aceptar trabajo",
+    "message": "Mensaje",
+    "myJobs": "Mis trabajos",
+    "acceptJobToStart": "¡Acepta un trabajo arriba para comenzar!",
+    "accepted": "Aceptado",
+    "customer": "Cliente",
+    "chat": "Chat",
+    "jobAccepted": "¡Trabajo aceptado! Usa el chat para coordinar con el cliente.",
+    "laundryTypes": {
+      "regular": "Regular",
+      "delicate": "Delicado",
+      "heavy": "Pesado",
+      "mixed": "Mixto"
+    },
+    "serviceTypes": {
+      "wash": "Solo lavado",
+      "wash-iron": "Lavado y planchado",
+      "iron-only": "Solo planchado",
+      "dry-clean": "Tintorería"
+    }
   },
   "footer": {
     "termsOfService": "Términos de servicio",

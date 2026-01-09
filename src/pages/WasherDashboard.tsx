@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,11 +11,8 @@ import {
   MapPin, 
   Calendar,
   DollarSign,
-  Star,
   CheckCircle2,
   Clock,
-  LogOut,
-  User,
   Weight,
   Sparkles,
   MessageCircle
@@ -39,22 +37,9 @@ const mockAvailableRequests = [
   },
 ];
 
-const serviceLabels: Record<string, string> = {
-  'wash': 'Wash Only',
-  'wash-iron': 'Wash & Iron',
-  'iron-only': 'Iron Only',
-  'dry-clean': 'Dry Clean',
-};
-
-const laundryTypeLabels: Record<string, string> = {
-  'regular': 'Regular',
-  'delicate': 'Delicate',
-  'heavy': 'Heavy',
-  'mixed': 'Mixed',
-};
-
 export default function WasherDashboard() {
-  const { user, profile, logout, isAuthenticated, role } = useAuth();
+  const { t } = useTranslation();
+  const { profile, isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
   const [availableRequests, setAvailableRequests] = useState(mockAvailableRequests);
   const [myJobs, setMyJobs] = useState<typeof mockAvailableRequests>([]);
@@ -69,11 +54,6 @@ export default function WasherDashboard() {
     }
   }, [isAuthenticated, role, navigate]);
 
-  const handleLogout = async () => {
-    await logout();
-    navigate('/');
-  };
-
   const handleAcceptJob = (request: typeof mockAvailableRequests[0]) => {
     const updatedRequest = {
       ...request,
@@ -81,7 +61,7 @@ export default function WasherDashboard() {
     
     setAvailableRequests(prev => prev.filter(r => r.id !== request.id));
     setMyJobs(prev => [updatedRequest, ...prev]);
-    toast.success('Job accepted! Use the chat to coordinate with the customer.');
+    toast.success(t('washerDashboard.jobAccepted'));
   };
 
   const handleOpenChat = (customerId: string, customerName: string) => {
@@ -99,6 +79,16 @@ export default function WasherDashboard() {
     });
   };
 
+  const getLaundryTypeLabel = (type: string) => {
+    const key = `washerDashboard.laundryTypes.${type}` as const;
+    return t(key);
+  };
+
+  const getServiceTypeLabel = (type: string) => {
+    const key = `washerDashboard.serviceTypes.${type}` as const;
+    return t(key);
+  };
+
   return (
     <>
       {/* Main Content */}
@@ -106,10 +96,10 @@ export default function WasherDashboard() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-display font-bold mb-2">
-            Ready to earn, {profile?.full_name?.split(' ')[0] || 'there'}? 💪
+            {t('washerDashboard.readyToEarn', { name: profile?.full_name?.split(' ')[0] || 'there' })} 💪
           </h1>
           <p className="text-muted-foreground">
-            Accept laundry jobs and communicate with customers through in-app chat
+            {t('washerDashboard.welcomeSubtitle')}
           </p>
         </div>
 
@@ -124,8 +114,8 @@ export default function WasherDashboard() {
                 <DollarSign className="w-6 h-6 text-secondary" />
               </div>
               <div>
-                <p className="text-2xl font-bold">View Earnings</p>
-                <p className="text-sm text-muted-foreground">Track your income</p>
+                <p className="text-2xl font-bold">{t('washerDashboard.viewEarnings')}</p>
+                <p className="text-sm text-muted-foreground">{t('washerDashboard.trackIncome')}</p>
               </div>
             </CardContent>
           </Card>
@@ -137,7 +127,7 @@ export default function WasherDashboard() {
               </div>
               <div>
                 <p className="text-2xl font-bold">{myJobs.length}</p>
-                <p className="text-sm text-muted-foreground">Active Jobs</p>
+                <p className="text-sm text-muted-foreground">{t('washerDashboard.activeJobs')}</p>
               </div>
             </CardContent>
           </Card>
@@ -149,7 +139,7 @@ export default function WasherDashboard() {
               </div>
               <div>
                 <p className="text-2xl font-bold">{profile?.completed_jobs || 0}</p>
-                <p className="text-sm text-muted-foreground">Completed Jobs</p>
+                <p className="text-sm text-muted-foreground">{t('washerDashboard.completedJobs')}</p>
               </div>
             </CardContent>
           </Card>
@@ -159,7 +149,7 @@ export default function WasherDashboard() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <Sparkles className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-display font-semibold">Available Jobs</h2>
+            <h2 className="text-xl font-display font-semibold">{t('washerDashboard.availableJobs')}</h2>
             <Badge variant="secondary" className="ml-2">{availableRequests.length}</Badge>
           </div>
           
@@ -169,9 +159,9 @@ export default function WasherDashboard() {
                 <div className="w-16 h-16 rounded-full bg-muted mx-auto mb-4 flex items-center justify-center">
                   <Shirt className="w-8 h-8 text-muted-foreground" />
                 </div>
-                <h3 className="font-semibold mb-2">No jobs available</h3>
+                <h3 className="font-semibold mb-2">{t('washerDashboard.noJobsAvailable')}</h3>
                 <p className="text-muted-foreground">
-                  Check back later for new laundry requests!
+                  {t('washerDashboard.checkBackLater')}
                 </p>
               </CardContent>
             </Card>
@@ -189,11 +179,11 @@ export default function WasherDashboard() {
                         <div className="flex items-start justify-between mb-3">
                           <div>
                             <h3 className="font-semibold text-lg mb-1">{request.title}</h3>
-                            <p className="text-sm text-muted-foreground">by {request.customerName}</p>
+                            <p className="text-sm text-muted-foreground">{t('washerDashboard.by')} {request.customerName}</p>
                           </div>
                           <div className="flex gap-2">
-                            <Badge variant="outline">{laundryTypeLabels[request.laundryType]}</Badge>
-                            <Badge variant="secondary">{serviceLabels[request.serviceType]}</Badge>
+                            <Badge variant="outline">{getLaundryTypeLabel(request.laundryType)}</Badge>
+                            <Badge variant="secondary">{getServiceTypeLabel(request.serviceType)}</Badge>
                           </div>
                         </div>
                         
@@ -218,7 +208,7 @@ export default function WasherDashboard() {
                         
                         {request.specialInstructions && (
                           <div className="mt-3 p-3 bg-muted rounded-lg text-sm">
-                            <span className="font-medium">Note: </span>
+                            <span className="font-medium">{t('common.note')}: </span>
                             {request.specialInstructions}
                           </div>
                         )}
@@ -228,21 +218,21 @@ export default function WasherDashboard() {
                       <div className="lg:w-56 p-6 bg-muted/30 flex flex-row lg:flex-col items-center justify-between lg:justify-center gap-4 border-t lg:border-t-0 lg:border-l border-border">
                         <div className="text-center">
                           <p className="text-3xl font-bold text-gradient">${request.price}</p>
-                          <p className="text-xs text-muted-foreground">Payout</p>
+                          <p className="text-xs text-muted-foreground">{t('washerDashboard.payout')}</p>
                         </div>
                         <div className="flex flex-col gap-2 w-full lg:w-auto">
                           <Button 
                             onClick={() => handleAcceptJob(request)}
                             className="bg-gradient-primary hover:opacity-90"
                           >
-                            Accept Job
+                            {t('washerDashboard.acceptJob')}
                           </Button>
                           <Button 
                             variant="outline"
                             onClick={() => handleOpenChat(request.customerId, request.customerName)}
                           >
                             <MessageCircle className="w-4 h-4 mr-2" />
-                            Message
+                            {t('washerDashboard.message')}
                           </Button>
                         </div>
                       </div>
@@ -258,7 +248,7 @@ export default function WasherDashboard() {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle2 className="w-5 h-5 text-secondary" />
-            <h2 className="text-xl font-display font-semibold">My Jobs</h2>
+            <h2 className="text-xl font-display font-semibold">{t('washerDashboard.myJobs')}</h2>
             <Badge variant="secondary" className="ml-2">{myJobs.length}</Badge>
           </div>
           
@@ -266,7 +256,7 @@ export default function WasherDashboard() {
             <Card className="border-dashed border-2">
               <CardContent className="p-8 text-center">
                 <p className="text-muted-foreground">
-                  Accept a job above to get started!
+                  {t('washerDashboard.acceptJobToStart')}
                 </p>
               </CardContent>
             </Card>
@@ -282,9 +272,9 @@ export default function WasherDashboard() {
                       <div>
                         <div className="flex items-center gap-3 mb-1">
                           <h3 className="font-semibold">{job.title}</h3>
-                          <Badge variant="secondary">Accepted</Badge>
+                          <Badge variant="secondary">{t('washerDashboard.accepted')}</Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground">Customer: {job.customerName}</p>
+                        <p className="text-sm text-muted-foreground">{t('washerDashboard.customer')}: {job.customerName}</p>
                       </div>
                       <div className="flex items-center gap-4">
                         <Button 
@@ -293,7 +283,7 @@ export default function WasherDashboard() {
                           onClick={() => handleOpenChat(job.customerId, job.customerName)}
                         >
                           <MessageCircle className="w-4 h-4 mr-2" />
-                          Chat
+                          {t('washerDashboard.chat')}
                         </Button>
                         <div className="text-right">
                           <p className="text-xl font-bold">${job.price}</p>

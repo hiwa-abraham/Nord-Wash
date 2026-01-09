@@ -28,7 +28,8 @@
     "transportFee": "Transportgebyr",
     "total": "Total",
     "specialInstructions": "Særlige instruktioner",
-    "paidOn": "Betalt den"
+    "paidOn": "Betalt den",
+    "note": "Note"
   },
   "nav": {
     "schedulePickup": "Planlæg afhentning",
@@ -139,6 +140,51 @@
     "invalidCredentials": "Ugyldig e-mail eller adgangskode",
     "emailRegistered": "Denne e-mail er allerede registreret. Log venligst ind.",
     "somethingWrong": "Noget gik galt. Prøv venligst igen."
+  },
+  "customerDashboard": {
+    "hello": "Hej, {{name}}!",
+    "welcomeSubtitle": "Administrer dine vaskeanmodninger og følg deres status",
+    "pending": "Afventer",
+    "inProgress": "I gang",
+    "completed": "Fuldført",
+    "yourRequests": "Dine anmodninger",
+    "newRequest": "Ny anmodning",
+    "noRequestsYet": "Ingen anmodninger endnu",
+    "noRequestsDesc": "Opret din første vaskeanmodning og lad vores vaskere hjælpe dig!",
+    "createRequest": "Opret anmodning"
+  },
+  "washerDashboard": {
+    "readyToEarn": "Klar til at tjene, {{name}}?",
+    "welcomeSubtitle": "Accepter vaskejobs og kommuniker med kunder via in-app chat",
+    "viewEarnings": "Se indtjening",
+    "trackIncome": "Følg din indkomst",
+    "activeJobs": "Aktive jobs",
+    "completedJobs": "Fuldførte jobs",
+    "availableJobs": "Tilgængelige jobs",
+    "noJobsAvailable": "Ingen jobs tilgængelige",
+    "checkBackLater": "Tjek tilbage senere for nye vaskeanmodninger!",
+    "by": "af",
+    "payout": "Udbetaling",
+    "acceptJob": "Accepter job",
+    "message": "Besked",
+    "myJobs": "Mine jobs",
+    "acceptJobToStart": "Accepter et job ovenfor for at komme i gang!",
+    "accepted": "Accepteret",
+    "customer": "Kunde",
+    "chat": "Chat",
+    "jobAccepted": "Job accepteret! Brug chatten til at koordinere med kunden.",
+    "laundryTypes": {
+      "regular": "Almindelig",
+      "delicate": "Sart",
+      "heavy": "Tung",
+      "mixed": "Blandet"
+    },
+    "serviceTypes": {
+      "wash": "Kun vask",
+      "wash-iron": "Vask & strygning",
+      "iron-only": "Kun strygning",
+      "dry-clean": "Renseri"
+    }
   },
   "footer": {
     "termsOfService": "Servicevilkår",
