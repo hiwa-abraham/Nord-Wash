@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,6 +20,7 @@ const authSchema = z.object({
 });
 
 export default function Auth() {
+  const { t } = useTranslation();
   const [role, setRole] = useState<AppRole>('customer');
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -32,6 +34,10 @@ export default function Auth() {
       navigate(userRole === 'customer' ? '/customer' : '/washer');
     }
   }, [isAuthenticated, userRole, navigate]);
+
+  const getRoleLabel = () => {
+    return role === 'customer' ? t('auth.clothesOwner') : t('auth.laundryProvider');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,27 +59,27 @@ export default function Auth() {
         const { error } = await login(email, password);
         if (error) {
           if (error.message.includes('Invalid login credentials')) {
-            toast.error('Invalid email or password');
+            toast.error(t('auth.invalidCredentials'));
           } else {
             toast.error(error.message);
           }
           return;
         }
-        toast.success('Welcome back!');
+        toast.success(t('auth.welcomeBack'));
       } else {
         const { error } = await signup(name, email, password, role);
         if (error) {
           if (error.message.includes('already registered')) {
-            toast.error('This email is already registered. Please sign in.');
+            toast.error(t('auth.emailRegistered'));
           } else {
             toast.error(error.message);
           }
           return;
         }
-        toast.success('Account created successfully!');
+        toast.success(t('auth.accountCreated'));
       }
     } catch (error) {
-      toast.error('Something went wrong. Please try again.');
+      toast.error(t('auth.somethingWrong'));
     }
   };
 
@@ -86,7 +92,7 @@ export default function Auth() {
             <Shirt className="w-8 h-8 text-primary-foreground" />
           </div>
           <h1 className="text-3xl font-display font-bold text-gradient">FreshFold</h1>
-          <p className="text-muted-foreground mt-2">Your laundry, delivered fresh</p>
+          <p className="text-muted-foreground mt-2">{t('auth.tagline')}</p>
         </div>
 
         {/* Role Selection */}
@@ -98,14 +104,14 @@ export default function Auth() {
                 className="h-12 data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground font-medium"
               >
                 <User className="w-4 h-4 mr-2" />
-                I need laundry done
+                {t('auth.customerRole')}
               </TabsTrigger>
               <TabsTrigger 
                 value="washer"
                 className="h-12 data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground font-medium"
               >
                 <Sparkles className="w-4 h-4 mr-2" />
-                I want to wash
+                {t('auth.washerRole')}
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -115,12 +121,12 @@ export default function Auth() {
         <Card className="border-0 shadow-lg">
           <CardHeader className="text-center pb-4">
             <CardTitle className="text-xl">
-              {isLogin ? 'Welcome back' : 'Create your account'}
+              {isLogin ? t('auth.loginTitle') : t('auth.signupTitle')}
             </CardTitle>
             <CardDescription>
               {isLogin 
-                ? `Sign in to continue as a ${role === 'customer' ? 'Clothes Owner' : 'Laundry Provider'}` 
-                : `Sign up to get started as a ${role === 'customer' ? 'Clothes Owner' : 'Laundry Provider'}`
+                ? t('auth.loginSubtitle', { role: getRoleLabel() })
+                : t('auth.signupSubtitle', { role: getRoleLabel() })
               }
             </CardDescription>
           </CardHeader>
@@ -128,7 +134,7 @@ export default function Auth() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isLogin && (
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name">{t('auth.fullName')}</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
@@ -145,7 +151,7 @@ export default function Auth() {
               )}
               
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('auth.email')}</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -161,7 +167,7 @@ export default function Auth() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('auth.password')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -186,7 +192,7 @@ export default function Auth() {
                   <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
                 ) : (
                   <>
-                    {isLogin ? 'Sign In' : 'Create Account'}
+                    {isLogin ? t('auth.signIn') : t('auth.createAccount')}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </>
                 )}
@@ -199,9 +205,9 @@ export default function Auth() {
                 onClick={() => setIsLogin(!isLogin)}
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
-                {isLogin ? "Don't have an account? " : 'Already have an account? '}
+                {isLogin ? t('auth.noAccount') + ' ' : t('auth.hasAccount') + ' '}
                 <span className="font-medium text-primary">
-                  {isLogin ? 'Sign up' : 'Sign in'}
+                  {isLogin ? t('common.signUp') : t('common.login')}
                 </span>
               </button>
             </div>

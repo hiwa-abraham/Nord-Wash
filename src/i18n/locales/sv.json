@@ -20,7 +20,15 @@
     "back": "Tillbaka",
     "next": "Nästa",
     "confirm": "Bekräfta",
-    "language": "Språk"
+    "language": "Språk",
+    "live": "Live",
+    "status": "Status",
+    "servicesSubtotal": "Tjänster delsumma",
+    "serviceFee": "Serviceavgift",
+    "transportFee": "Transportavgift",
+    "total": "Totalt",
+    "specialInstructions": "Särskilda instruktioner",
+    "paidOn": "Betald den"
   },
   "nav": {
     "schedulePickup": "Boka hämtning",
@@ -28,19 +36,17 @@
     "helpSupport": "Hjälp & Support"
   },
   "home": {
-    "heroTitle": "Professionell Tvättservice",
-    "heroSubtitle": "Vi hämtar, tvättar och levererar din tvätt fräsch och vikt.",
+    "heroTitle": "Fräsch tvätt,",
+    "heroTitleHighlight": "levererad till dig",
+    "heroSubtitle": "Anslut med lokala tvättare som hämtar, tvättar och levererar din tvätt. Eller tjäna pengar genom att hjälpa andra med deras tvättbehov.",
     "schedulePickup": "Boka hämtning",
-    "viewServices": "Visa tjänster",
-    "howItWorks": "Så fungerar det",
-    "step1Title": "Boka",
-    "step1Desc": "Välj en hämtningstid som passar dig",
-    "step2Title": "Vi hämtar",
-    "step2Desc": "Vår tvättare hämtar din tvätt",
-    "step3Title": "Ren & Fräsch",
-    "step3Desc": "Vi tvättar, torkar och viker med omsorg",
-    "step4Title": "Levererat",
-    "step4Desc": "Fräsch tvätt levererad till din dörr"
+    "viewPricing": "Visa priser",
+    "saveTime": "Spara tid",
+    "saveTimeDesc": "Hoppa över tvättstugan. Vi hämtar och levererar.",
+    "qualityCare": "Kvalitetsvård",
+    "qualityCareDesc": "Dina kläder hanteras med professionell omsorg.",
+    "securePayments": "Säkra betalningar",
+    "securePaymentsDesc": "Betala säkert genom appen med Stripe."
   },
   "services": {
     "title": "Tjänster & Priser",
@@ -81,9 +87,13 @@
     "orderSuccessDesc": "Din hämtning har bokats."
   },
   "orders": {
-    "title": "Mina beställningar",
+    "title": "Beställningshistorik",
+    "subtitle": "Se alla dina tidigare beställningar och deras status",
     "noOrders": "Inga beställningar än",
-    "noOrdersDesc": "Boka din första hämtning för att komma igång",
+    "noOrdersDesc": "Du har inte lagt några beställningar. Boka din första hämtning!",
+    "orderNumber": "Beställning #",
+    "pickupAddress": "Hämtningsadress",
+    "pickupDateTime": "Hämtningsdatum & tid",
     "status": {
       "pending_payment": "Väntar på betalning",
       "paid": "Betald",
@@ -92,16 +102,23 @@
       "completed": "Slutförd",
       "cancelled": "Avbruten"
     },
+    "paymentStatus": {
+      "pending": "Väntar",
+      "paid": "Betald",
+      "failed": "Misslyckades",
+      "refunded": "Återbetald"
+    },
     "pickupDate": "Hämtningsdatum",
     "pickupTime": "Hämtningstid",
     "services": "Tjänster",
     "total": "Totalt"
   },
   "auth": {
+    "tagline": "Din tvätt, levererad fräsch",
     "loginTitle": "Välkommen tillbaka",
-    "loginSubtitle": "Logga in på ditt konto",
-    "signupTitle": "Skapa konto",
-    "signupSubtitle": "Gå med oss idag",
+    "loginSubtitle": "Logga in för att fortsätta som {{role}}",
+    "signupTitle": "Skapa ditt konto",
+    "signupSubtitle": "Registrera dig för att komma igång som {{role}}",
     "email": "E-post",
     "password": "Lösenord",
     "confirmPassword": "Bekräfta lösenord",
@@ -110,9 +127,18 @@
     "hasAccount": "Har du redan ett konto?",
     "signInWithGoogle": "Logga in med Google",
     "or": "eller",
-    "selectRole": "Jag vill",
-    "customerRole": "Få min tvätt gjord",
-    "washerRole": "Bli tvättare"
+    "customerRole": "Jag behöver tvätt gjord",
+    "washerRole": "Jag vill tvätta",
+    "clothesOwner": "Klädägare",
+    "laundryProvider": "Tvättleverantör",
+    "signIn": "Logga in",
+    "createAccount": "Skapa konto",
+    "fullName": "Fullständigt namn",
+    "welcomeBack": "Välkommen tillbaka!",
+    "accountCreated": "Konto skapat!",
+    "invalidCredentials": "Ogiltig e-post eller lösenord",
+    "emailRegistered": "Denna e-post är redan registrerad. Vänligen logga in.",
+    "somethingWrong": "Något gick fel. Försök igen."
   },
   "footer": {
     "termsOfService": "Användarvillkor",

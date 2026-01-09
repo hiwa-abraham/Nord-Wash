@@ -20,7 +20,15 @@
     "back": "Back",
     "next": "Next",
     "confirm": "Confirm",
-    "language": "Language"
+    "language": "Language",
+    "live": "Live",
+    "status": "Status",
+    "servicesSubtotal": "Services Subtotal",
+    "serviceFee": "Service Fee",
+    "transportFee": "Transport Fee",
+    "total": "Total",
+    "specialInstructions": "Special Instructions",
+    "paidOn": "Paid on"
   },
   "nav": {
     "schedulePickup": "Schedule Pickup",
@@ -28,19 +36,17 @@
     "helpSupport": "Help & Support"
   },
   "home": {
-    "heroTitle": "Professional Laundry Service",
-    "heroSubtitle": "We pick up, clean, and deliver your laundry fresh and folded.",
-    "schedulePickup": "Schedule a Pickup",
-    "viewServices": "View Services",
-    "howItWorks": "How It Works",
-    "step1Title": "Schedule",
-    "step1Desc": "Book a pickup time that works for you",
-    "step2Title": "We Collect",
-    "step2Desc": "Our washer picks up your laundry",
-    "step3Title": "Clean & Fresh",
-    "step3Desc": "We wash, dry and fold with care",
-    "step4Title": "Delivered",
-    "step4Desc": "Fresh laundry delivered to your door"
+    "heroTitle": "Fresh laundry,",
+    "heroTitleHighlight": "delivered to you",
+    "heroSubtitle": "Connect with local washers who pick up, clean, and deliver your laundry. Or earn money by helping others with their laundry needs.",
+    "schedulePickup": "Schedule Pickup",
+    "viewPricing": "View Pricing",
+    "saveTime": "Save Time",
+    "saveTimeDesc": "Skip the laundromat. We pick up and deliver.",
+    "qualityCare": "Quality Care",
+    "qualityCareDesc": "Your clothes handled with professional care.",
+    "securePayments": "Secure Payments",
+    "securePaymentsDesc": "Pay securely through the app with Stripe."
   },
   "services": {
     "title": "Services & Pricing",
@@ -81,9 +87,13 @@
     "orderSuccessDesc": "Your pickup has been scheduled."
   },
   "orders": {
-    "title": "My Orders",
+    "title": "Order History",
+    "subtitle": "View all your past orders and their status",
     "noOrders": "No orders yet",
-    "noOrdersDesc": "Schedule your first pickup to get started",
+    "noOrdersDesc": "You haven't placed any orders. Schedule your first pickup!",
+    "orderNumber": "Order #",
+    "pickupAddress": "Pickup Address",
+    "pickupDateTime": "Pickup Date & Time",
     "status": {
       "pending_payment": "Pending Payment",
       "paid": "Paid",
@@ -92,16 +102,23 @@
       "completed": "Completed",
       "cancelled": "Cancelled"
     },
+    "paymentStatus": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
     "pickupDate": "Pickup Date",
     "pickupTime": "Pickup Time",
     "services": "Services",
     "total": "Total"
   },
   "auth": {
-    "loginTitle": "Welcome Back",
-    "loginSubtitle": "Sign in to your account",
-    "signupTitle": "Create Account",
-    "signupSubtitle": "Join us today",
+    "tagline": "Your laundry, delivered fresh",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to continue as a {{role}}",
+    "signupTitle": "Create your account",
+    "signupSubtitle": "Sign up to get started as a {{role}}",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
@@ -110,9 +127,18 @@
     "hasAccount": "Already have an account?",
     "signInWithGoogle": "Sign in with Google",
     "or": "or",
-    "selectRole": "I want to",
-    "customerRole": "Get my laundry done",
-    "washerRole": "Become a washer"
+    "customerRole": "I need laundry done",
+    "washerRole": "I want to wash",
+    "clothesOwner": "Clothes Owner",
+    "laundryProvider": "Laundry Provider",
+    "signIn": "Sign In",
+    "createAccount": "Create Account",
+    "fullName": "Full Name",
+    "welcomeBack": "Welcome back!",
+    "accountCreated": "Account created successfully!",
+    "invalidCredentials": "Invalid email or password",
+    "emailRegistered": "This email is already registered. Please sign in.",
+    "somethingWrong": "Something went wrong. Please try again."
   },
   "footer": {
     "termsOfService": "Terms of Service",
