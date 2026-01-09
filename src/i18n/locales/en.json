@@ -28,7 +28,8 @@
     "transportFee": "Transport Fee",
     "total": "Total",
     "specialInstructions": "Special Instructions",
-    "paidOn": "Paid on"
+    "paidOn": "Paid on",
+    "note": "Note"
   },
   "nav": {
     "schedulePickup": "Schedule Pickup",
@@ -139,6 +140,51 @@
     "invalidCredentials": "Invalid email or password",
     "emailRegistered": "This email is already registered. Please sign in.",
     "somethingWrong": "Something went wrong. Please try again."
+  },
+  "customerDashboard": {
+    "hello": "Hello, {{name}}!",
+    "welcomeSubtitle": "Manage your laundry requests and track their status",
+    "pending": "Pending",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "yourRequests": "Your Requests",
+    "newRequest": "New Request",
+    "noRequestsYet": "No requests yet",
+    "noRequestsDesc": "Create your first laundry request and let our washers help you!",
+    "createRequest": "Create Request"
+  },
+  "washerDashboard": {
+    "readyToEarn": "Ready to earn, {{name}}?",
+    "welcomeSubtitle": "Accept laundry jobs and communicate with customers through in-app chat",
+    "viewEarnings": "View Earnings",
+    "trackIncome": "Track your income",
+    "activeJobs": "Active Jobs",
+    "completedJobs": "Completed Jobs",
+    "availableJobs": "Available Jobs",
+    "noJobsAvailable": "No jobs available",
+    "checkBackLater": "Check back later for new laundry requests!",
+    "by": "by",
+    "payout": "Payout",
+    "acceptJob": "Accept Job",
+    "message": "Message",
+    "myJobs": "My Jobs",
+    "acceptJobToStart": "Accept a job above to get started!",
+    "accepted": "Accepted",
+    "customer": "Customer",
+    "chat": "Chat",
+    "jobAccepted": "Job accepted! Use the chat to coordinate with the customer.",
+    "laundryTypes": {
+      "regular": "Regular",
+      "delicate": "Delicate",
+      "heavy": "Heavy",
+      "mixed": "Mixed"
+    },
+    "serviceTypes": {
+      "wash": "Wash Only",
+      "wash-iron": "Wash & Iron",
+      "iron-only": "Iron Only",
+      "dry-clean": "Dry Clean"
+    }
   },
   "footer": {
     "termsOfService": "Terms of Service",

@@ -28,7 +28,8 @@
     "transportFee": "Transportavgift",
     "total": "Totalt",
     "specialInstructions": "Särskilda instruktioner",
-    "paidOn": "Betald den"
+    "paidOn": "Betald den",
+    "note": "Notering"
   },
   "nav": {
     "schedulePickup": "Boka hämtning",
@@ -139,6 +140,51 @@
     "invalidCredentials": "Ogiltig e-post eller lösenord",
     "emailRegistered": "Denna e-post är redan registrerad. Vänligen logga in.",
     "somethingWrong": "Något gick fel. Försök igen."
+  },
+  "customerDashboard": {
+    "hello": "Hej, {{name}}!",
+    "welcomeSubtitle": "Hantera dina tvättförfrågningar och följ deras status",
+    "pending": "Väntar",
+    "inProgress": "Pågående",
+    "completed": "Slutförd",
+    "yourRequests": "Dina förfrågningar",
+    "newRequest": "Ny förfrågan",
+    "noRequestsYet": "Inga förfrågningar än",
+    "noRequestsDesc": "Skapa din första tvättförfrågan och låt våra tvättare hjälpa dig!",
+    "createRequest": "Skapa förfrågan"
+  },
+  "washerDashboard": {
+    "readyToEarn": "Redo att tjäna, {{name}}?",
+    "welcomeSubtitle": "Acceptera tvättjobb och kommunicera med kunder via in-app chat",
+    "viewEarnings": "Visa inkomster",
+    "trackIncome": "Följ din inkomst",
+    "activeJobs": "Aktiva jobb",
+    "completedJobs": "Slutförda jobb",
+    "availableJobs": "Tillgängliga jobb",
+    "noJobsAvailable": "Inga jobb tillgängliga",
+    "checkBackLater": "Kolla tillbaka senare för nya tvättförfrågningar!",
+    "by": "av",
+    "payout": "Utbetalning",
+    "acceptJob": "Acceptera jobb",
+    "message": "Meddelande",
+    "myJobs": "Mina jobb",
+    "acceptJobToStart": "Acceptera ett jobb ovan för att komma igång!",
+    "accepted": "Accepterad",
+    "customer": "Kund",
+    "chat": "Chatt",
+    "jobAccepted": "Jobb accepterat! Använd chatten för att koordinera med kunden.",
+    "laundryTypes": {
+      "regular": "Vanlig",
+      "delicate": "Ömtålig",
+      "heavy": "Tung",
+      "mixed": "Blandad"
+    },
+    "serviceTypes": {
+      "wash": "Endast tvätt",
+      "wash-iron": "Tvätt & strykning",
+      "iron-only": "Endast strykning",
+      "dry-clean": "Kemtvätt"
+    }
   },
   "footer": {
     "termsOfService": "Användarvillkor",
