@@ -29,7 +29,17 @@
     "total": "Total",
     "specialInstructions": "Instrucciones especiales",
     "paidOn": "Pagado el",
-    "note": "Nota"
+    "note": "Nota",
+    "continue": "Continuar",
+    "review": "Revisar",
+    "date": "Fecha",
+    "time": "Hora",
+    "name": "Nombre",
+    "phone": "Teléfono",
+    "email": "Correo",
+    "notes": "Notas",
+    "backToDashboard": "Volver al panel",
+    "completedOn": "Completado el"
   },
   "nav": {
     "schedulePickup": "Programar recogida",
@@ -64,8 +74,11 @@
   "pickup": {
     "title": "Programar recogida",
     "selectServices": "Seleccionar servicios",
+    "selectServicesDesc": "Selecciona los servicios que necesitas y especifica la cantidad en kilogramos.",
     "contactDetails": "Datos de contacto",
+    "contactDetailsDesc": "Ingresa tu dirección de recogida e información de contacto.",
     "reviewOrder": "Revisar pedido",
+    "reviewOrderDesc": "Por favor revisa los detalles de tu pedido antes de confirmar.",
     "payment": "Pago",
     "selectDate": "Seleccionar fecha",
     "selectTime": "Seleccionar horario",
@@ -76,6 +89,7 @@
     "city": "Ciudad",
     "postalCode": "Código postal",
     "specialInstructions": "Instrucciones especiales",
+    "specialInstructionsPlaceholder": "Código de acceso, notas de entrega, etc.",
     "quantity": "Cantidad (kg)",
     "subtotal": "Subtotal (servicios)",
     "total": "Total",
@@ -85,7 +99,18 @@
     "proceedToPayment": "Continuar al pago",
     "placeOrder": "Realizar pedido",
     "orderSuccess": "¡Pedido realizado!",
-    "orderSuccessDesc": "Tu recogida ha sido programada."
+    "orderSuccessDesc": "Tu recogida ha sido programada.",
+    "pickupSchedule": "Horario de recogida",
+    "pickupDate": "Fecha de recogida",
+    "pickupTime": "Hora de recogida",
+    "personalInfo": "Información personal",
+    "pickupAddress": "Dirección de recogida",
+    "streetAddress": "Dirección",
+    "backToServices": "Volver a servicios",
+    "backToDetails": "Volver a datos",
+    "orderSummary": "Resumen del pedido",
+    "pickupDetails": "Detalles de recogida",
+    "contactInfo": "Información de contacto"
   },
   "orders": {
     "title": "Historial de pedidos",
@@ -185,6 +210,170 @@
       "iron-only": "Solo planchado",
       "dry-clean": "Tintorería"
     }
+  },
+  "earnings": {
+    "thisWeek": "Esta semana",
+    "thisMonth": "Este mes",
+    "totalEarned": "Total ganado",
+    "pending": "Pendiente",
+    "jobsCompleted": "Trabajos completados",
+    "avgPerJob": "Promedio por trabajo",
+    "completed": "Completados",
+    "inProgress": "En progreso",
+    "noCompletedJobs": "Sin trabajos completados aún",
+    "completeFirstJob": "¡Completa tu primer trabajo para empezar a ganar!",
+    "viewAvailableJobs": "Ver trabajos disponibles",
+    "noPendingJobs": "Sin trabajos pendientes",
+    "acceptJobsFromDashboard": "Acepta trabajos desde el panel para verlos aquí.",
+    "customer": "Cliente",
+    "servicesProvided": "Servicios proporcionados",
+    "earningsBreakdown": "Desglose de tus ganancias",
+    "transportFeeYours": "Tarifa de transporte (tuya)",
+    "serviceShare": "Participación del servicio (90%)",
+    "yourTotal": "Tu total"
+  },
+  "help": {
+    "title": "Centro de ayuda",
+    "subtitle": "Encuentra respuestas a preguntas comunes o contáctanos.",
+    "faq": "Preguntas frecuentes",
+    "contactUs": "Contáctanos",
+    "email": "Correo electrónico",
+    "emailResponse": "Obtén respuesta en 24 horas",
+    "phone": "Teléfono",
+    "phoneHours": "Lun-Vie 9am-6pm",
+    "liveChat": "Chat en vivo",
+    "liveChatAvailable": "Disponible 24/7",
+    "startChat": "Iniciar chat",
+    "faqItems": {
+      "howItWorks": {
+        "question": "¿Cómo funciona NordWash?",
+        "answer": "NordWash te conecta con lavadores locales que recogen tu ropa, la limpian profesionalmente y te la devuelven. Simplemente crea un pedido, elige tus servicios, y nosotros nos encargamos del resto."
+      },
+      "pricing": {
+        "question": "¿Cuáles son las opciones de precios?",
+        "answer": "Ofrecemos precios competitivos por artículo para todos los servicios incluyendo lavado y doblado, tintorería, planchado y más. Consulta nuestra sección de Servicios y Precios para tarifas detalladas."
+      },
+      "turnaround": {
+        "question": "¿Cuánto tiempo tarda?",
+        "answer": "El tiempo estándar es de 24-48 horas. El servicio express está disponible para entrega el mismo día con cargo adicional."
+      },
+      "insurance": {
+        "question": "¿Mi ropa está asegurada?",
+        "answer": "Sí, todos los artículos están asegurados durante el proceso de lavado. Asumimos total responsabilidad por tu ropa desde la recogida hasta la entrega."
+      },
+      "payment": {
+        "question": "¿Cómo pago?",
+        "answer": "Aceptamos todas las tarjetas de crédito principales y pagos digitales a través de nuestra integración segura con Stripe. El pago se procesa después de completar tu pedido."
+      },
+      "cancellation": {
+        "question": "¿Puedo cancelar mi pedido?",
+        "answer": "Puedes cancelar tu pedido gratis antes de que el lavador recoja tu ropa. Después de la recogida, pueden aplicarse cargos por cancelación."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Política de privacidad",
+    "lastUpdated": "Última actualización: 3 de enero de 2026",
+    "sections": {
+      "infoCollect": {
+        "title": "1. Información que recopilamos",
+        "intro": "NordWash recopila información que nos proporcionas directamente, incluyendo:",
+        "items": [
+          "Información de cuenta (nombre, correo electrónico, número de teléfono)",
+          "Direcciones de recogida y entrega",
+          "Información de pago (procesada de forma segura a través de Stripe)",
+          "Historial de pedidos y preferencias",
+          "Comunicaciones con nuestro equipo o lavadores"
+        ]
+      },
+      "howUse": {
+        "title": "2. Cómo usamos tu información",
+        "intro": "Usamos la información que recopilamos para:",
+        "items": [
+          "Procesar y cumplir tus pedidos de lavandería",
+          "Comunicarnos contigo sobre tus pedidos",
+          "Enviarte actualizaciones de servicio y ofertas promocionales",
+          "Mejorar nuestros servicios y experiencia de usuario",
+          "Garantizar la seguridad de nuestra plataforma"
+        ]
+      },
+      "infoSharing": {
+        "title": "3. Compartir información",
+        "intro": "Compartimos tu información solo cuando es necesario para proporcionar nuestros servicios:",
+        "items": [
+          "Con lavadores para cumplir tus pedidos (dirección de recogida y detalles del pedido)",
+          "Con procesadores de pago para completar transacciones",
+          "Cuando lo requiera la ley o para proteger nuestros derechos"
+        ],
+        "noSell": "No vendemos tu información personal a terceros."
+      },
+      "dataSecurity": {
+        "title": "4. Seguridad de datos",
+        "content": "Implementamos medidas técnicas y organizativas apropiadas para proteger tu información personal contra acceso no autorizado, alteración, divulgación o destrucción."
+      },
+      "yourRights": {
+        "title": "5. Tus derechos",
+        "intro": "Tienes derecho a:",
+        "items": [
+          "Acceder a tus datos personales",
+          "Solicitar corrección de datos inexactos",
+          "Solicitar eliminación de tus datos",
+          "Optar por no recibir comunicaciones de marketing"
+        ]
+      },
+      "contact": {
+        "title": "6. Contáctanos",
+        "content": "Si tienes preguntas sobre esta Política de Privacidad, contáctanos a través de la sección de Ayuda de nuestra app."
+      }
+    }
+  },
+  "terms": {
+    "title": "Términos de servicio",
+    "lastUpdated": "Última actualización: 3 de enero de 2026",
+    "sections": {
+      "acceptance": {
+        "title": "1. Aceptación de términos",
+        "content": "Al acceder y usar NordWash, aceptas y te comprometes a cumplir estos Términos de Servicio. Si no estás de acuerdo con estos términos, por favor no uses nuestros servicios."
+      },
+      "description": {
+        "title": "2. Descripción del servicio",
+        "content": "NordWash es una plataforma que conecta clientes con proveedores de servicios de lavandería (lavadores). Facilitamos la recogida, limpieza y entrega de artículos de lavandería."
+      },
+      "userAccounts": {
+        "title": "3. Cuentas de usuario",
+        "content": "Para usar nuestros servicios, debes crear una cuenta con información precisa y completa. Eres responsable de mantener la confidencialidad de tus credenciales de cuenta y de todas las actividades en tu cuenta."
+      },
+      "ordersPayments": {
+        "title": "4. Pedidos y pagos",
+        "items": [
+          "Todos los precios se muestran en la app y pueden estar sujetos a cambios",
+          "El pago se procesa de forma segura a través de nuestro proveedor de pagos",
+          "Aceptas pagar todos los pedidos realizados a través de tu cuenta",
+          "Los reembolsos se manejan caso por caso"
+        ]
+      },
+      "liability": {
+        "title": "5. Responsabilidad",
+        "content": "Aunque cuidamos de garantizar un servicio de calidad, NordWash no es responsable de daños a artículos que son inherentemente delicados o etiquetados incorrectamente. Recomendamos declarar cualquier requisito de cuidado especial al realizar pedidos."
+      },
+      "userConduct": {
+        "title": "6. Conducta del usuario",
+        "content": "Aceptas usar nuestros servicios de manera respetuosa y legal. El abuso de la plataforma, incluyendo acoso a lavadores o actividad fraudulenta, puede resultar en terminación de cuenta."
+      },
+      "changesToTerms": {
+        "title": "7. Cambios en los términos",
+        "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado del servicio después de los cambios constituye aceptación de los nuevos términos."
+      },
+      "contact": {
+        "title": "8. Contacto",
+        "content": "Para preguntas sobre estos Términos de Servicio, contáctanos a través de la sección de Ayuda de nuestra app."
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "¡Ups! Página no encontrada",
+    "returnHome": "Volver al inicio"
   },
   "footer": {
     "termsOfService": "Términos de servicio",

@@ -29,7 +29,17 @@
     "total": "Totalt",
     "specialInstructions": "Spesielle instruksjoner",
     "paidOn": "Betalt den",
-    "note": "Merknad"
+    "note": "Merknad",
+    "continue": "Fortsett",
+    "review": "Gjennomgå",
+    "date": "Dato",
+    "time": "Tid",
+    "name": "Navn",
+    "phone": "Telefon",
+    "email": "E-post",
+    "notes": "Notater",
+    "backToDashboard": "Tilbake til dashbordet",
+    "completedOn": "Fullført den"
   },
   "nav": {
     "schedulePickup": "Planlegg henting",
@@ -64,8 +74,11 @@
   "pickup": {
     "title": "Planlegg henting",
     "selectServices": "Velg tjenester",
+    "selectServicesDesc": "Velg tjenestene du trenger og spesifiser mengden i kilogram.",
     "contactDetails": "Kontaktinformasjon",
+    "contactDetailsDesc": "Oppgi henteadressen og kontaktinformasjonen din.",
     "reviewOrder": "Gjennomgå bestilling",
+    "reviewOrderDesc": "Vennligst gjennomgå bestillingsdetaljene før du bekrefter.",
     "payment": "Betaling",
     "selectDate": "Velg dato",
     "selectTime": "Velg tidspunkt",
@@ -76,6 +89,7 @@
     "city": "By",
     "postalCode": "Postnummer",
     "specialInstructions": "Spesielle instruksjoner",
+    "specialInstructionsPlaceholder": "Portkode, leveringsnotater, etc.",
     "quantity": "Mengde (kg)",
     "subtotal": "Delsum (tjenester)",
     "total": "Totalt",
@@ -85,7 +99,18 @@
     "proceedToPayment": "Fortsett til betaling",
     "placeOrder": "Legg inn bestilling",
     "orderSuccess": "Bestilling lagt inn!",
-    "orderSuccessDesc": "Din henting er planlagt."
+    "orderSuccessDesc": "Din henting er planlagt.",
+    "pickupSchedule": "Henteplan",
+    "pickupDate": "Hentedato",
+    "pickupTime": "Hentetid",
+    "personalInfo": "Personlig informasjon",
+    "pickupAddress": "Henteadresse",
+    "streetAddress": "Gateadresse",
+    "backToServices": "Tilbake til tjenester",
+    "backToDetails": "Tilbake til detaljer",
+    "orderSummary": "Bestillingsoversikt",
+    "pickupDetails": "Hentedetaljer",
+    "contactInfo": "Kontaktinformasjon"
   },
   "orders": {
     "title": "Bestillingshistorikk",
@@ -130,7 +155,7 @@
     "or": "eller",
     "customerRole": "Jeg trenger å få vasket klær",
     "washerRole": "Jeg vil vaske",
-    "clothesOwner": "Klesier",
+    "clothesOwner": "Kleseier",
     "laundryProvider": "Vaskeleverandør",
     "signIn": "Logg inn",
     "createAccount": "Opprett konto",
@@ -185,6 +210,170 @@
       "iron-only": "Kun stryking",
       "dry-clean": "Renseri"
     }
+  },
+  "earnings": {
+    "thisWeek": "Denne uken",
+    "thisMonth": "Denne måneden",
+    "totalEarned": "Totalt tjent",
+    "pending": "Ventende",
+    "jobsCompleted": "Jobber fullført",
+    "avgPerJob": "Snitt per jobb",
+    "completed": "Fullførte",
+    "inProgress": "Pågående",
+    "noCompletedJobs": "Ingen fullførte jobber ennå",
+    "completeFirstJob": "Fullfør din første jobb for å begynne å tjene!",
+    "viewAvailableJobs": "Se tilgjengelige jobber",
+    "noPendingJobs": "Ingen ventende jobber",
+    "acceptJobsFromDashboard": "Godta jobber fra dashbordet for å se dem her.",
+    "customer": "Kunde",
+    "servicesProvided": "Utførte tjenester",
+    "earningsBreakdown": "Din inntektsoversikt",
+    "transportFeeYours": "Transportavgift (din)",
+    "serviceShare": "Tjenesteandel (90%)",
+    "yourTotal": "Din totalsum"
+  },
+  "help": {
+    "title": "Hjelpesenter",
+    "subtitle": "Finn svar på vanlige spørsmål eller kontakt oss.",
+    "faq": "Ofte stilte spørsmål",
+    "contactUs": "Kontakt oss",
+    "email": "E-post",
+    "emailResponse": "Få svar innen 24 timer",
+    "phone": "Telefon",
+    "phoneHours": "Man-Fre 9-18",
+    "liveChat": "Live chat",
+    "liveChatAvailable": "Tilgjengelig 24/7",
+    "startChat": "Start chat",
+    "faqItems": {
+      "howItWorks": {
+        "question": "Hvordan fungerer NordWash?",
+        "answer": "NordWash kobler deg til lokale vaskere som henter klærne dine, vasker dem profesjonelt og leverer dem tilbake til deg. Opprett enkelt en bestilling, velg tjenestene dine, så tar vi oss av resten."
+      },
+      "pricing": {
+        "question": "Hva er prisalternativene?",
+        "answer": "Vi tilbyr konkurransedyktige priser per plagg for alle tjenester inkludert vask og bretting, renseri, stryking og mer. Sjekk vår seksjon Tjenester & Priser for detaljerte priser."
+      },
+      "turnaround": {
+        "question": "Hvor lang tid tar det?",
+        "answer": "Standard leveringstid er 24-48 timer. Ekspressservice er tilgjengelig for levering samme dag mot ekstra kostnad."
+      },
+      "insurance": {
+        "question": "Er klærne mine forsikret?",
+        "answer": "Ja, alle plagg er forsikret under vaskeprosessen. Vi tar fullt ansvar for klærne dine fra henting til levering."
+      },
+      "payment": {
+        "question": "Hvordan betaler jeg?",
+        "answer": "Vi aksepterer alle større kredittkort og digitale betalinger gjennom vår sikre Stripe-integrasjon. Betaling behandles etter at bestillingen din er fullført."
+      },
+      "cancellation": {
+        "question": "Kan jeg kansellere bestillingen min?",
+        "answer": "Du kan kansellere bestillingen din gratis før vaskeren henter klærne dine. Etter henting kan kanselleringsgebyrer gjelde."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Personvernerklæring",
+    "lastUpdated": "Sist oppdatert: 3. januar 2026",
+    "sections": {
+      "infoCollect": {
+        "title": "1. Informasjon vi samler inn",
+        "intro": "NordWash samler inn informasjon du gir oss direkte, inkludert:",
+        "items": [
+          "Kontoinformasjon (navn, e-postadresse, telefonnummer)",
+          "Hente- og leveringsadresser",
+          "Betalingsinformasjon (behandlet sikkert gjennom Stripe)",
+          "Bestillingshistorikk og preferanser",
+          "Kommunikasjon med teamet vårt eller vaskere"
+        ]
+      },
+      "howUse": {
+        "title": "2. Hvordan vi bruker informasjonen din",
+        "intro": "Vi bruker informasjonen vi samler inn for å:",
+        "items": [
+          "Behandle og fullføre vaskebestillingene dine",
+          "Kommunisere med deg om bestillingene dine",
+          "Sende deg tjenesteoppdateringer og kampanjetilbud",
+          "Forbedre tjenestene våre og brukeropplevelsen",
+          "Sikre sikkerheten på plattformen vår"
+        ]
+      },
+      "infoSharing": {
+        "title": "3. Informasjonsdeling",
+        "intro": "Vi deler informasjonen din kun når det er nødvendig for å levere tjenestene våre:",
+        "items": [
+          "Med vaskere for å fullføre bestillingene dine (henteadresse og bestillingsdetaljer)",
+          "Med betalingsbehandlere for å fullføre transaksjoner",
+          "Når det kreves ved lov eller for å beskytte rettighetene våre"
+        ],
+        "noSell": "Vi selger ikke din personlige informasjon til tredjeparter."
+      },
+      "dataSecurity": {
+        "title": "4. Datasikkerhet",
+        "content": "Vi implementerer passende tekniske og organisatoriske tiltak for å beskytte din personlige informasjon mot uautorisert tilgang, endring, offentliggjøring eller ødeleggelse."
+      },
+      "yourRights": {
+        "title": "5. Dine rettigheter",
+        "intro": "Du har rett til å:",
+        "items": [
+          "Få tilgang til dine personopplysninger",
+          "Be om korrigering av unøyaktige data",
+          "Be om sletting av dataene dine",
+          "Melde deg av markedsføringskommunikasjon"
+        ]
+      },
+      "contact": {
+        "title": "6. Kontakt oss",
+        "content": "Hvis du har spørsmål om denne personvernerklæringen, kontakt oss gjennom Hjelp-seksjonen i appen vår."
+      }
+    }
+  },
+  "terms": {
+    "title": "Tjenestevilkår",
+    "lastUpdated": "Sist oppdatert: 3. januar 2026",
+    "sections": {
+      "acceptance": {
+        "title": "1. Aksept av vilkår",
+        "content": "Ved å få tilgang til og bruke NordWash, aksepterer du og forplikter deg til å overholde disse tjenestevilkårene. Hvis du ikke aksepterer disse vilkårene, vennligst ikke bruk tjenestene våre."
+      },
+      "description": {
+        "title": "2. Beskrivelse av tjenesten",
+        "content": "NordWash er en plattform som kobler kunder med vaskeleverandører (vaskere). Vi tilrettelegger for henting, rengjøring og levering av vaskeklær."
+      },
+      "userAccounts": {
+        "title": "3. Brukerkontoer",
+        "content": "For å bruke tjenestene våre må du opprette en konto med nøyaktig og fullstendig informasjon. Du er ansvarlig for å opprettholde konfidensialiteten til kontoinformasjonen din og for alle aktiviteter under kontoen din."
+      },
+      "ordersPayments": {
+        "title": "4. Bestillinger og betalinger",
+        "items": [
+          "Alle priser vises i appen og kan endres",
+          "Betaling behandles sikkert gjennom vår betalingsleverandør",
+          "Du godtar å betale for alle bestillinger gjort gjennom kontoen din",
+          "Refusjoner håndteres fra sak til sak"
+        ]
+      },
+      "liability": {
+        "title": "5. Ansvar",
+        "content": "Selv om vi tar vare på å sikre kvalitetstjenester, er NordWash ikke ansvarlig for skader på gjenstander som er naturlig ømfintlige eller feilmerket. Vi anbefaler å oppgi eventuelle spesielle pleiebehov ved bestilling."
+      },
+      "userConduct": {
+        "title": "6. Brukeratferd",
+        "content": "Du godtar å bruke tjenestene våre respektfullt og lovlig. Misbruk av plattformen, inkludert trakassering av vaskere eller svindelaktivitet, kan føre til kontostenging."
+      },
+      "changesToTerms": {
+        "title": "7. Endringer i vilkår",
+        "content": "Vi forbeholder oss retten til å endre disse vilkårene når som helst. Fortsatt bruk av tjenesten etter endringer utgjør aksept av de nye vilkårene."
+      },
+      "contact": {
+        "title": "8. Kontakt",
+        "content": "For spørsmål angående disse tjenestevilkårene, kontakt oss gjennom Hjelp-seksjonen i appen vår."
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Ops! Siden ble ikke funnet",
+    "returnHome": "Tilbake til hjemmesiden"
   },
   "footer": {
     "termsOfService": "Tjenestevilkår",

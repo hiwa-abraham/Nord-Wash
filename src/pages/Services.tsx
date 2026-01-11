@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { ServicesSection } from '@/components/ServicesSection';
 import { AdminServicesDialog } from '@/components/AdminServicesDialog';
 import { AdminFeesDialog } from '@/components/AdminFeesDialog';
@@ -5,6 +6,7 @@ import { useServices } from '@/hooks/useServices';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Services() {
+  const { t } = useTranslation();
   const { role } = useAuth();
   const {
     services,
@@ -24,10 +26,10 @@ export default function Services() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-display font-bold">
-              Services & Pricing
+              {t('services.title')}
             </h1>
             <p className="text-muted-foreground mt-2">
-              Browse our laundry services and pricing options
+              {t('services.subtitle')}
             </p>
           </div>
           {isAdmin && (
