@@ -29,7 +29,17 @@
     "total": "Totalt",
     "specialInstructions": "Särskilda instruktioner",
     "paidOn": "Betald den",
-    "note": "Notering"
+    "note": "Notering",
+    "continue": "Fortsätt",
+    "review": "Granska",
+    "date": "Datum",
+    "time": "Tid",
+    "name": "Namn",
+    "phone": "Telefon",
+    "email": "E-post",
+    "notes": "Anteckningar",
+    "backToDashboard": "Tillbaka till instrumentpanelen",
+    "completedOn": "Slutförd den"
   },
   "nav": {
     "schedulePickup": "Boka hämtning",
@@ -64,8 +74,11 @@
   "pickup": {
     "title": "Boka hämtning",
     "selectServices": "Välj tjänster",
+    "selectServicesDesc": "Välj de tjänster du behöver och ange mängden i kilogram.",
     "contactDetails": "Kontaktuppgifter",
+    "contactDetailsDesc": "Ange din hämtningsadress och kontaktinformation.",
     "reviewOrder": "Granska beställning",
+    "reviewOrderDesc": "Vänligen granska dina beställningsuppgifter innan du bekräftar.",
     "payment": "Betalning",
     "selectDate": "Välj datum",
     "selectTime": "Välj tidslucka",
@@ -76,6 +89,7 @@
     "city": "Stad",
     "postalCode": "Postnummer",
     "specialInstructions": "Särskilda instruktioner",
+    "specialInstructionsPlaceholder": "Portkod, leveransnoteringar, etc.",
     "quantity": "Mängd (kg)",
     "subtotal": "Delsumma (tjänster)",
     "total": "Totalt",
@@ -85,7 +99,18 @@
     "proceedToPayment": "Fortsätt till betalning",
     "placeOrder": "Lägg beställning",
     "orderSuccess": "Beställning lagd!",
-    "orderSuccessDesc": "Din hämtning har bokats."
+    "orderSuccessDesc": "Din hämtning har bokats.",
+    "pickupSchedule": "Hämtningsschema",
+    "pickupDate": "Hämtningsdatum",
+    "pickupTime": "Hämtningstid",
+    "personalInfo": "Personlig information",
+    "pickupAddress": "Hämtningsadress",
+    "streetAddress": "Gatuadress",
+    "backToServices": "Tillbaka till tjänster",
+    "backToDetails": "Tillbaka till uppgifter",
+    "orderSummary": "Beställningsöversikt",
+    "pickupDetails": "Hämtningsuppgifter",
+    "contactInfo": "Kontaktinformation"
   },
   "orders": {
     "title": "Beställningshistorik",
@@ -185,6 +210,170 @@
       "iron-only": "Endast strykning",
       "dry-clean": "Kemtvätt"
     }
+  },
+  "earnings": {
+    "thisWeek": "Denna vecka",
+    "thisMonth": "Denna månad",
+    "totalEarned": "Totalt intjänat",
+    "pending": "Väntande",
+    "jobsCompleted": "Jobb slutförda",
+    "avgPerJob": "Snitt per jobb",
+    "completed": "Slutförda",
+    "inProgress": "Pågående",
+    "noCompletedJobs": "Inga slutförda jobb än",
+    "completeFirstJob": "Slutför ditt första jobb för att börja tjäna!",
+    "viewAvailableJobs": "Visa tillgängliga jobb",
+    "noPendingJobs": "Inga väntande jobb",
+    "acceptJobsFromDashboard": "Acceptera jobb från instrumentpanelen för att se dem här.",
+    "customer": "Kund",
+    "servicesProvided": "Utförda tjänster",
+    "earningsBreakdown": "Din intäktsfördelning",
+    "transportFeeYours": "Transportavgift (din)",
+    "serviceShare": "Tjänsteandel (90%)",
+    "yourTotal": "Din totalsumma"
+  },
+  "help": {
+    "title": "Hjälpcenter",
+    "subtitle": "Hitta svar på vanliga frågor eller kontakta oss.",
+    "faq": "Vanliga frågor",
+    "contactUs": "Kontakta oss",
+    "email": "E-post",
+    "emailResponse": "Få svar inom 24 timmar",
+    "phone": "Telefon",
+    "phoneHours": "Mån-Fre 9-18",
+    "liveChat": "Livechatt",
+    "liveChatAvailable": "Tillgänglig 24/7",
+    "startChat": "Starta chatt",
+    "faqItems": {
+      "howItWorks": {
+        "question": "Hur fungerar NordWash?",
+        "answer": "NordWash kopplar dig till lokala tvättare som hämtar din tvätt, tvättar den professionellt och levererar tillbaka den. Skapa enkelt en beställning, välj dina tjänster, så sköter vi resten."
+      },
+      "pricing": {
+        "question": "Vilka är prisalternativen?",
+        "answer": "Vi erbjuder konkurrenskraftiga priser per plagg för alla tjänster inklusive tvätt & vikning, kemtvätt, strykning och mer. Kolla vår sektion Tjänster & Priser för detaljerade priser."
+      },
+      "turnaround": {
+        "question": "Hur lång tid tar det?",
+        "answer": "Standard leveranstid är 24-48 timmar. Expressservice finns tillgänglig för leverans samma dag mot extra kostnad."
+      },
+      "insurance": {
+        "question": "Är min tvätt försäkrad?",
+        "answer": "Ja, alla plagg är försäkrade under tvättprocessen. Vi tar fullt ansvar för dina kläder från hämtning till leverans."
+      },
+      "payment": {
+        "question": "Hur betalar jag?",
+        "answer": "Vi accepterar alla större kreditkort och digitala betalningar via vår säkra Stripe-integration. Betalning behandlas efter att din beställning är klar."
+      },
+      "cancellation": {
+        "question": "Kan jag avboka min beställning?",
+        "answer": "Du kan avboka din beställning gratis innan tvättaren hämtar din tvätt. Efter hämtning kan avbokningsavgifter tillkomma."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Integritetspolicy",
+    "lastUpdated": "Senast uppdaterad: 3 januari 2026",
+    "sections": {
+      "infoCollect": {
+        "title": "1. Information vi samlar in",
+        "intro": "NordWash samlar in information som du ger oss direkt, inklusive:",
+        "items": [
+          "Kontoinformation (namn, e-postadress, telefonnummer)",
+          "Hämtnings- och leveransadresser",
+          "Betalningsinformation (behandlas säkert via Stripe)",
+          "Beställningshistorik och preferenser",
+          "Kommunikation med vårt team eller tvättare"
+        ]
+      },
+      "howUse": {
+        "title": "2. Hur vi använder din information",
+        "intro": "Vi använder informationen vi samlar in för att:",
+        "items": [
+          "Bearbeta och utföra dina tvättbeställningar",
+          "Kommunicera med dig om dina beställningar",
+          "Skicka dig tjänsteuppdateringar och kampanjerbjudanden",
+          "Förbättra våra tjänster och användarupplevelse",
+          "Säkerställa säkerheten på vår plattform"
+        ]
+      },
+      "infoSharing": {
+        "title": "3. Informationsdelning",
+        "intro": "Vi delar din information endast när det är nödvändigt för att tillhandahålla våra tjänster:",
+        "items": [
+          "Med tvättare för att utföra dina beställningar (hämtningsadress och beställningsuppgifter)",
+          "Med betalningsprocessorer för att slutföra transaktioner",
+          "När det krävs enligt lag eller för att skydda våra rättigheter"
+        ],
+        "noSell": "Vi säljer inte din personliga information till tredje part."
+      },
+      "dataSecurity": {
+        "title": "4. Datasäkerhet",
+        "content": "Vi implementerar lämpliga tekniska och organisatoriska åtgärder för att skydda din personliga information mot obehörig åtkomst, ändring, avslöjande eller förstörelse."
+      },
+      "yourRights": {
+        "title": "5. Dina rättigheter",
+        "intro": "Du har rätt att:",
+        "items": [
+          "Få tillgång till dina personuppgifter",
+          "Begära korrigering av felaktiga uppgifter",
+          "Begära radering av dina uppgifter",
+          "Avregistrera dig från marknadsföringskommunikation"
+        ]
+      },
+      "contact": {
+        "title": "6. Kontakta oss",
+        "content": "Om du har frågor om denna integritetspolicy, kontakta oss via hjälpsektionen i vår app."
+      }
+    }
+  },
+  "terms": {
+    "title": "Användarvillkor",
+    "lastUpdated": "Senast uppdaterad: 3 januari 2026",
+    "sections": {
+      "acceptance": {
+        "title": "1. Godkännande av villkor",
+        "content": "Genom att använda NordWash accepterar du och förbinder dig att följa dessa användarvillkor. Om du inte godkänner dessa villkor, vänligen använd inte våra tjänster."
+      },
+      "description": {
+        "title": "2. Beskrivning av tjänsten",
+        "content": "NordWash är en plattform som kopplar samman kunder med tvättleverantörer (tvättare). Vi underlättar hämtning, rengöring och leverans av tvättartiklar."
+      },
+      "userAccounts": {
+        "title": "3. Användarkonton",
+        "content": "För att använda våra tjänster måste du skapa ett konto med korrekt och fullständig information. Du ansvarar för att upprätthålla sekretessen för dina kontouppgifter och för alla aktiviteter på ditt konto."
+      },
+      "ordersPayments": {
+        "title": "4. Beställningar och betalningar",
+        "items": [
+          "Alla priser visas i appen och kan ändras",
+          "Betalning behandlas säkert via vår betalningsleverantör",
+          "Du godkänner att betala för alla beställningar som görs via ditt konto",
+          "Återbetalningar hanteras från fall till fall"
+        ]
+      },
+      "liability": {
+        "title": "5. Ansvar",
+        "content": "Även om vi tar hand om att säkerställa kvalitetstjänster, ansvarar NordWash inte för skador på föremål som är naturligt ömtåliga eller felaktigt märkta. Vi rekommenderar att du anger eventuella särskilda vårdkrav när du lägger beställningar."
+      },
+      "userConduct": {
+        "title": "6. Användarbeteende",
+        "content": "Du godkänner att använda våra tjänster respektfullt och lagligt. Missbruk av plattformen, inklusive trakasserier av tvättare eller bedräglig aktivitet, kan leda till kontouppsägning."
+      },
+      "changesToTerms": {
+        "title": "7. Ändringar av villkor",
+        "content": "Vi förbehåller oss rätten att ändra dessa villkor när som helst. Fortsatt användning av tjänsten efter ändringar innebär godkännande av de nya villkoren."
+      },
+      "contact": {
+        "title": "8. Kontakt",
+        "content": "För frågor om dessa användarvillkor, kontakta oss via hjälpsektionen i vår app."
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Hoppsan! Sidan hittades inte",
+    "returnHome": "Tillbaka till startsidan"
   },
   "footer": {
     "termsOfService": "Användarvillkor",

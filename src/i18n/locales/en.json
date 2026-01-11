@@ -29,7 +29,17 @@
     "total": "Total",
     "specialInstructions": "Special Instructions",
     "paidOn": "Paid on",
-    "note": "Note"
+    "note": "Note",
+    "continue": "Continue",
+    "review": "Review",
+    "date": "Date",
+    "time": "Time",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "notes": "Notes",
+    "backToDashboard": "Back to Dashboard",
+    "completedOn": "Completed on"
   },
   "nav": {
     "schedulePickup": "Schedule Pickup",
@@ -64,8 +74,11 @@
   "pickup": {
     "title": "Schedule Pickup",
     "selectServices": "Select Services",
+    "selectServicesDesc": "Select the services you need and specify the quantity in kilograms.",
     "contactDetails": "Contact Details",
+    "contactDetailsDesc": "Enter your pickup address and contact information.",
     "reviewOrder": "Review Order",
+    "reviewOrderDesc": "Please review your order details before confirming.",
     "payment": "Payment",
     "selectDate": "Select Date",
     "selectTime": "Select Time Slot",
@@ -76,6 +89,7 @@
     "city": "City",
     "postalCode": "Postal Code",
     "specialInstructions": "Special Instructions",
+    "specialInstructionsPlaceholder": "Gate code, delivery notes, etc.",
     "quantity": "Quantity (kg)",
     "subtotal": "Subtotal (Services)",
     "total": "Total",
@@ -85,7 +99,18 @@
     "proceedToPayment": "Proceed to Payment",
     "placeOrder": "Place Order",
     "orderSuccess": "Order placed successfully!",
-    "orderSuccessDesc": "Your pickup has been scheduled."
+    "orderSuccessDesc": "Your pickup has been scheduled.",
+    "pickupSchedule": "Pickup Schedule",
+    "pickupDate": "Pickup Date",
+    "pickupTime": "Pickup Time",
+    "personalInfo": "Personal Information",
+    "pickupAddress": "Pickup Address",
+    "streetAddress": "Street Address",
+    "backToServices": "Back to Services",
+    "backToDetails": "Back to Details",
+    "orderSummary": "Order Summary",
+    "pickupDetails": "Pickup Details",
+    "contactInfo": "Contact Information"
   },
   "orders": {
     "title": "Order History",
@@ -185,6 +210,170 @@
       "iron-only": "Iron Only",
       "dry-clean": "Dry Clean"
     }
+  },
+  "earnings": {
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "totalEarned": "Total Earned",
+    "pending": "Pending",
+    "jobsCompleted": "Jobs Completed",
+    "avgPerJob": "Avg. per Job",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "noCompletedJobs": "No completed jobs yet",
+    "completeFirstJob": "Complete your first job to start earning!",
+    "viewAvailableJobs": "View Available Jobs",
+    "noPendingJobs": "No pending jobs",
+    "acceptJobsFromDashboard": "Accept jobs from the dashboard to see them here.",
+    "customer": "Customer",
+    "servicesProvided": "Services Provided",
+    "earningsBreakdown": "Your Earnings Breakdown",
+    "transportFeeYours": "Transport Fee (yours)",
+    "serviceShare": "Service Share (90%)",
+    "yourTotal": "Your Total"
+  },
+  "help": {
+    "title": "Help Center",
+    "subtitle": "Find answers to common questions or get in touch with us.",
+    "faq": "Frequently Asked Questions",
+    "contactUs": "Contact Us",
+    "email": "Email",
+    "emailResponse": "Get a response within 24 hours",
+    "phone": "Phone",
+    "phoneHours": "Mon-Fri 9am-6pm",
+    "liveChat": "Live Chat",
+    "liveChatAvailable": "Available 24/7",
+    "startChat": "Start Chat",
+    "faqItems": {
+      "howItWorks": {
+        "question": "How does NordWash work?",
+        "answer": "NordWash connects you with local washers who pick up your laundry, clean it professionally, and deliver it back to you. Simply create an order, choose your services, and we'll handle the rest."
+      },
+      "pricing": {
+        "question": "What are the pricing options?",
+        "answer": "We offer competitive per-item pricing for all services including wash & fold, dry cleaning, ironing, and more. Check our Services & Pricing section for detailed rates."
+      },
+      "turnaround": {
+        "question": "How long does it take?",
+        "answer": "Standard turnaround is 24-48 hours. Express service is available for same-day delivery at an additional charge."
+      },
+      "insurance": {
+        "question": "Is my laundry insured?",
+        "answer": "Yes, all items are insured during the wash process. We take full responsibility for your clothes from pickup to delivery."
+      },
+      "payment": {
+        "question": "How do I pay?",
+        "answer": "We accept all major credit cards and digital payments through our secure Stripe integration. Payment is processed after your order is complete."
+      },
+      "cancellation": {
+        "question": "Can I cancel my order?",
+        "answer": "You can cancel your order for free before the washer picks up your laundry. After pickup, cancellation fees may apply."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: January 3, 2026",
+    "sections": {
+      "infoCollect": {
+        "title": "1. Information We Collect",
+        "intro": "NordWash collects information you provide directly to us, including:",
+        "items": [
+          "Account information (name, email address, phone number)",
+          "Pickup and delivery addresses",
+          "Payment information (processed securely through Stripe)",
+          "Order history and preferences",
+          "Communications with our team or washers"
+        ]
+      },
+      "howUse": {
+        "title": "2. How We Use Your Information",
+        "intro": "We use the information we collect to:",
+        "items": [
+          "Process and fulfill your laundry orders",
+          "Communicate with you about your orders",
+          "Send you service updates and promotional offers",
+          "Improve our services and user experience",
+          "Ensure the security of our platform"
+        ]
+      },
+      "infoSharing": {
+        "title": "3. Information Sharing",
+        "intro": "We share your information only as necessary to provide our services:",
+        "items": [
+          "With washers to fulfill your orders (pickup address and order details)",
+          "With payment processors to complete transactions",
+          "When required by law or to protect our rights"
+        ],
+        "noSell": "We do not sell your personal information to third parties."
+      },
+      "dataSecurity": {
+        "title": "4. Data Security",
+        "content": "We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction."
+      },
+      "yourRights": {
+        "title": "5. Your Rights",
+        "intro": "You have the right to:",
+        "items": [
+          "Access your personal data",
+          "Request correction of inaccurate data",
+          "Request deletion of your data",
+          "Opt-out of marketing communications"
+        ]
+      },
+      "contact": {
+        "title": "6. Contact Us",
+        "content": "If you have questions about this Privacy Policy, please contact us through the Help section of our app."
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: January 3, 2026",
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "content": "By accessing and using NordWash, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services."
+      },
+      "description": {
+        "title": "2. Description of Service",
+        "content": "NordWash is a platform that connects customers with laundry service providers (washers). We facilitate the pickup, cleaning, and delivery of laundry items."
+      },
+      "userAccounts": {
+        "title": "3. User Accounts",
+        "content": "To use our services, you must create an account with accurate and complete information. You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account."
+      },
+      "ordersPayments": {
+        "title": "4. Orders and Payments",
+        "items": [
+          "All prices are displayed in the app and may be subject to change",
+          "Payment is processed securely through our payment provider",
+          "You agree to pay for all orders placed through your account",
+          "Refunds are handled on a case-by-case basis"
+        ]
+      },
+      "liability": {
+        "title": "5. Liability",
+        "content": "While we take care to ensure quality service, NordWash is not liable for damages to items that are inherently delicate or improperly labeled. We recommend declaring any special care requirements when placing orders."
+      },
+      "userConduct": {
+        "title": "6. User Conduct",
+        "content": "You agree to use our services respectfully and lawfully. Abuse of the platform, including harassment of washers or fraudulent activity, may result in account termination."
+      },
+      "changesToTerms": {
+        "title": "7. Changes to Terms",
+        "content": "We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms."
+      },
+      "contact": {
+        "title": "8. Contact",
+        "content": "For questions regarding these Terms of Service, please contact us through the Help section of our app."
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "returnHome": "Return to Home"
   },
   "footer": {
     "termsOfService": "Terms of Service",

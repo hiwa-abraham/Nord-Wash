@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { Header } from '@/components/Header';
 
 export default function PrivacyPolicy() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -8,83 +11,76 @@ export default function PrivacyPolicy() {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
           <h1 className="text-3xl md:text-4xl font-display font-bold mb-8">
-            Privacy Policy
+            {t('privacy.title')}
           </h1>
           
           <div className="prose prose-neutral dark:prose-invert max-w-none space-y-6">
             <p className="text-muted-foreground">
-              Last updated: January 3, 2026
+              {t('privacy.lastUpdated')}
             </p>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold">1. Information We Collect</h2>
+              <h2 className="text-2xl font-semibold">{t('privacy.sections.infoCollect.title')}</h2>
               <p className="text-muted-foreground">
-                NordWash collects information you provide directly to us, including:
+                {t('privacy.sections.infoCollect.intro')}
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                <li>Account information (name, email address, phone number)</li>
-                <li>Pickup and delivery addresses</li>
-                <li>Payment information (processed securely through Stripe)</li>
-                <li>Order history and preferences</li>
-                <li>Communications with our team or washers</li>
+                {(t('privacy.sections.infoCollect.items', { returnObjects: true }) as string[]).map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold">2. How We Use Your Information</h2>
+              <h2 className="text-2xl font-semibold">{t('privacy.sections.howUse.title')}</h2>
               <p className="text-muted-foreground">
-                We use the information we collect to:
+                {t('privacy.sections.howUse.intro')}
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                <li>Process and fulfill your laundry orders</li>
-                <li>Communicate with you about your orders</li>
-                <li>Send you service updates and promotional offers</li>
-                <li>Improve our services and user experience</li>
-                <li>Ensure the security of our platform</li>
+                {(t('privacy.sections.howUse.items', { returnObjects: true }) as string[]).map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold">3. Information Sharing</h2>
+              <h2 className="text-2xl font-semibold">{t('privacy.sections.infoSharing.title')}</h2>
               <p className="text-muted-foreground">
-                We share your information only as necessary to provide our services:
+                {t('privacy.sections.infoSharing.intro')}
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                <li>With washers to fulfill your orders (pickup address and order details)</li>
-                <li>With payment processors to complete transactions</li>
-                <li>When required by law or to protect our rights</li>
+                {(t('privacy.sections.infoSharing.items', { returnObjects: true }) as string[]).map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
               </ul>
               <p className="text-muted-foreground">
-                We do not sell your personal information to third parties.
+                {t('privacy.sections.infoSharing.noSell')}
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold">4. Data Security</h2>
+              <h2 className="text-2xl font-semibold">{t('privacy.sections.dataSecurity.title')}</h2>
               <p className="text-muted-foreground">
-                We implement appropriate technical and organizational measures to protect your personal 
-                information against unauthorized access, alteration, disclosure, or destruction.
+                {t('privacy.sections.dataSecurity.content')}
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold">5. Your Rights</h2>
+              <h2 className="text-2xl font-semibold">{t('privacy.sections.yourRights.title')}</h2>
               <p className="text-muted-foreground">
-                You have the right to:
+                {t('privacy.sections.yourRights.intro')}
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                <li>Access your personal data</li>
-                <li>Request correction of inaccurate data</li>
-                <li>Request deletion of your data</li>
-                <li>Opt-out of marketing communications</li>
+                {(t('privacy.sections.yourRights.items', { returnObjects: true }) as string[]).map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold">6. Contact Us</h2>
+              <h2 className="text-2xl font-semibold">{t('privacy.sections.contact.title')}</h2>
               <p className="text-muted-foreground">
-                If you have questions about this Privacy Policy, please contact us through the Help 
-                section of our app.
+                {t('privacy.sections.contact.content')}
               </p>
             </section>
           </div>
