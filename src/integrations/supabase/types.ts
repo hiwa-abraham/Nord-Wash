@@ -395,6 +395,17 @@ export type Database = {
         }
         Returns: boolean
       }
+      log_security_event: {
+        Args: {
+          _description: string
+          _event_type: string
+          _ip_address?: string
+          _metadata?: Json
+          _severity: string
+          _user_id?: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "customer" | "washer" | "admin"

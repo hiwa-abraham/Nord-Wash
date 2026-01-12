@@ -40,6 +40,7 @@ import Help from "./pages/Help";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
+import AdminSecurity from "./pages/AdminSecurity";
 
 // Create a QueryClient instance for TanStack Query
 // This manages caching, background updates, and stale data for API requests
@@ -73,6 +74,9 @@ const App = () => (
               <Route path="/washer/earnings" element={<WasherEarnings />} />
               <Route path="/schedule-pickup" element={<SchedulePickup />} />
               <Route path="/orders" element={<Orders />} />
+              
+              {/* Admin routes */}
+              <Route path="/admin/security" element={<AdminSecurity />} />
               
               {/* Catch-all for 404 */}
               <Route path="*" element={<NotFound />} />
