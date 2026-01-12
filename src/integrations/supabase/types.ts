@@ -208,6 +208,45 @@ export type Database = {
         }
         Relationships: []
       }
+      security_events: {
+        Row: {
+          acknowledged_at: string | null
+          acknowledged_by: string | null
+          created_at: string
+          description: string
+          event_type: string
+          id: string
+          ip_address: string | null
+          metadata: Json | null
+          severity: string
+          user_id: string | null
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          created_at?: string
+          description: string
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          severity?: string
+          user_id?: string | null
+        }
+        Update: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          created_at?: string
+          description?: string
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          severity?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           created_at: string
