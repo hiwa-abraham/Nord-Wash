@@ -291,9 +291,93 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      washer_order_view: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          customer_id: string | null
+          customer_name_masked: string | null
+          id: string | null
+          owner_amount: number | null
+          paid_at: string | null
+          payment_status: string | null
+          pickup_city: string | null
+          pickup_date: string | null
+          pickup_location: string | null
+          pickup_time: string | null
+          service_fee: number | null
+          services: Json | null
+          services_total: number | null
+          special_instructions: string | null
+          status: string | null
+          total_amount: number | null
+          transport_fee: number | null
+          updated_at: string | null
+          washer_amount: number | null
+          washer_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          customer_id?: string | null
+          customer_name_masked?: never
+          id?: string | null
+          owner_amount?: number | null
+          paid_at?: string | null
+          payment_status?: string | null
+          pickup_city?: string | null
+          pickup_date?: string | null
+          pickup_location?: string | null
+          pickup_time?: string | null
+          service_fee?: number | null
+          services?: Json | null
+          services_total?: number | null
+          special_instructions?: string | null
+          status?: string | null
+          total_amount?: number | null
+          transport_fee?: number | null
+          updated_at?: string | null
+          washer_amount?: number | null
+          washer_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          customer_id?: string | null
+          customer_name_masked?: never
+          id?: string | null
+          owner_amount?: number | null
+          paid_at?: string | null
+          payment_status?: string | null
+          pickup_city?: string | null
+          pickup_date?: string | null
+          pickup_location?: string | null
+          pickup_time?: string | null
+          service_fee?: number | null
+          services?: Json | null
+          services_total?: number | null
+          special_instructions?: string | null
+          status?: string | null
+          total_amount?: number | null
+          transport_fee?: number | null
+          updated_at?: string | null
+          washer_amount?: number | null
+          washer_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      get_limited_public_profile: {
+        Args: { _user_id: string }
+        Returns: {
+          avatar_url: string
+          completed_jobs: number
+          full_name: string
+          rating: number
+          user_id: string
+        }[]
+      }
       get_public_profile: {
         Args: { _user_id: string }
         Returns: {
