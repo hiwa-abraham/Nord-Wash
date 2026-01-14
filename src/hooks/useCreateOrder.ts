@@ -1,19 +1,32 @@
 /**
  * useCreateOrder Hook
  * 
- * Handles order creation with payment processing.
+ * Handles order creation with payment processing and idempotency.
  * Creates orders in the database with proper payment distribution:
  * - Service fee ($5) goes to owner
  * - 10% of services goes to owner
  * - 90% of services + transport fee ($10) goes to washer
+ * 
+ * Features:
+ * - Idempotency: Prevents duplicate orders during network issues
+ * - Rate limiting: Prevents spam order creation
+ * - Validation: Server-side validation of order data
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import type { PaymentMethod } from '@/components/payment/PaymentStep';
+import { 
+  generateIdempotencyKey, 
+  checkIdempotencyKey, 
+  setIdempotencyPending,
+  setIdempotencyCompleted,
+  setIdempotencyFailed 
+} from '@/lib/idempotency';
+import { rateLimitPresets } from '@/lib/rate-limit';
 
 // ============================================
 // Types
@@ -77,9 +90,13 @@ export function useCreateOrder() {
   // Processing state
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Track current idempotency key to prevent duplicate submissions
+  const currentKeyRef = useRef<string | null>(null);
 
   /**
    * Create a new order with payment
+   * Includes idempotency protection and rate limiting
    * @param params - Order creation parameters
    * @returns Created order ID or null on failure
    */
@@ -95,8 +112,57 @@ export function useCreateOrder() {
       return null;
     }
 
+    // Rate limit check
+    const rateLimitResult = rateLimitPresets.paymentOperation(`order_${user.id}`);
+    if (rateLimitResult.limited) {
+      toast({
+        title: 'Too Many Requests',
+        description: `Please wait ${Math.ceil(rateLimitResult.resetIn / 1000)} seconds before trying again.`,
+        variant: 'destructive',
+      });
+      return null;
+    }
+
+    // Generate idempotency key based on order details
+    const idempotencyKey = generateIdempotencyKey(user.id, 'create_order', {
+      services: params.services.map(s => s.serviceId).sort(),
+      pickupDate: params.pickupDate.toISOString().split('T')[0],
+      pickupTime: params.pickupTime,
+      email: params.contactDetails.email,
+    });
+
+    // Check for existing operation
+    const existingOperation = checkIdempotencyKey(idempotencyKey);
+    if (existingOperation) {
+      if (existingOperation.status === 'pending') {
+        toast({
+          title: 'Order In Progress',
+          description: 'Your order is already being processed. Please wait.',
+        });
+        return null;
+      }
+      if (existingOperation.status === 'completed' && existingOperation.resultId) {
+        toast({
+          title: 'Order Already Created',
+          description: 'This order was already submitted successfully.',
+        });
+        return existingOperation.resultId;
+      }
+    }
+
+    // Prevent duplicate submissions while processing
+    if (currentKeyRef.current) {
+      toast({
+        title: 'Please Wait',
+        description: 'An order is already being processed.',
+      });
+      return null;
+    }
+
     setIsProcessing(true);
     setError(null);
+    currentKeyRef.current = idempotencyKey;
+    setIdempotencyPending(idempotencyKey);
 
     try {
       // Convert services total to cents
@@ -154,6 +220,9 @@ export function useCreateOrder() {
         throw new Error(insertError.message);
       }
 
+      // Mark idempotency key as completed
+      setIdempotencyCompleted(idempotencyKey, order.id);
+
       // Show success message
       toast({
         title: 'Order Created!',
@@ -168,6 +237,9 @@ export function useCreateOrder() {
       const message = err instanceof Error ? err.message : 'Failed to create order';
       setError(message);
       
+      // Mark idempotency as failed so user can retry
+      setIdempotencyFailed(idempotencyKey);
+      
       toast({
         title: 'Order Failed',
         description: message,
@@ -177,6 +249,7 @@ export function useCreateOrder() {
       return null;
     } finally {
       setIsProcessing(false);
+      currentKeyRef.current = null;
     }
   };
 

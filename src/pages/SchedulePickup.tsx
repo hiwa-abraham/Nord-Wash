@@ -37,6 +37,7 @@ import { useCreateOrder } from '@/hooks/useCreateOrder';
 import { useSettings } from '@/hooks/useSettings';
 import { PaymentStep, type PaymentMethod } from '@/components/payment/PaymentStep';
 import { cn } from '@/lib/utils';
+import { contactDetailsSchema, validateForm, getFirstError } from '@/lib/validations';
 import { format } from 'date-fns';
 import { 
   CalendarIcon, 
@@ -49,7 +50,8 @@ import {
   Phone,
   User,
   Mail,
-  CreditCard
+  CreditCard,
+  AlertCircle
 } from 'lucide-react';
 
 interface ServiceSelection {
@@ -92,6 +94,7 @@ export default function SchedulePickup() {
     postalCode: '',
     specialInstructions: '',
   });
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const updateQuantity = (serviceId: string, delta: number) => {
     setSelections((prev) => {
@@ -133,6 +136,36 @@ export default function SchedulePickup() {
   const hasSelections = selections.length > 0;
 
   const canProceedToDetails = hasSelections && pickupDate && pickupTime;
+
+  /**
+   * Validate contact details before proceeding
+   * Returns true if valid, false otherwise
+   */
+  const validateContactDetails = (): boolean => {
+    const result = validateForm(contactDetailsSchema, contactDetails);
+    
+    if (result.success === false) {
+      setValidationErrors(result.errors);
+      toast({
+        title: 'Validation Error',
+        description: getFirstError(result.errors),
+        variant: 'destructive',
+      });
+      return false;
+    }
+    
+    setValidationErrors({});
+    return true;
+  };
+
+  /**
+   * Handle proceeding to confirm step with validation
+   */
+  const handleProceedToConfirm = () => {
+    if (validateContactDetails()) {
+      setStep('confirm');
+    }
+  };
 
   // Check if contact details are complete for proceeding to confirm
   const canProceedToConfirm =
@@ -544,7 +577,7 @@ export default function SchedulePickup() {
                     size="lg"
                     className="bg-gradient-primary hover:opacity-90"
                     disabled={!canProceedToConfirm}
-                    onClick={() => setStep('confirm')}
+                    onClick={handleProceedToConfirm}
                   >
                     Review Order
                     <ArrowRight className="w-4 h-4 ml-2" />
