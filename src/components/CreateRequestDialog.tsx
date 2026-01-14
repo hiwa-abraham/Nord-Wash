@@ -5,9 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 import { LaundryRequest, LaundryType, ServiceType } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { createRequestSchema, validateForm, getFirstError } from '@/lib/validations';
 
 interface CreateRequestDialogProps {
   open: boolean;
@@ -44,6 +47,7 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
     pickupDate: '',
     specialInstructions: '',
   });
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const calculatePrice = () => {
     if (!formData.weight || !formData.serviceType) return 0;
@@ -51,26 +55,53 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
     return Math.round(parseFloat(formData.weight) * BASE_PRICE_PER_KG * (service?.priceMultiplier || 1));
   };
 
+  const validateFormData = (): boolean => {
+    // Transform form data for validation
+    const dataToValidate = {
+      ...formData,
+      weight: formData.weight ? parseFloat(formData.weight) : 0,
+    };
+
+    const result = validateForm(createRequestSchema, dataToValidate);
+    
+    if (result.success === false) {
+      setValidationErrors(result.errors);
+      toast.error(getFirstError(result.errors));
+      return false;
+    }
+    
+    setValidationErrors({});
+    return true;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!user) return;
+    if (!user) {
+      toast.error('Please sign in to create a request');
+      return;
+    }
+
+    // Validate form data
+    if (!validateFormData()) {
+      return;
+    }
 
     const newRequest: LaundryRequest = {
       id: `req-${Date.now()}`,
       customerId: user.id,
       customerName: profile?.full_name || 'Customer',
-      title: formData.title,
-      description: formData.description,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
       laundryType: formData.laundryType,
       serviceType: formData.serviceType,
       weight: parseFloat(formData.weight),
       price: calculatePrice(),
       status: 'pending',
-      pickupAddress: formData.pickupAddress,
-      deliveryAddress: formData.deliveryAddress || formData.pickupAddress,
+      pickupAddress: formData.pickupAddress.trim(),
+      deliveryAddress: formData.deliveryAddress.trim() || formData.pickupAddress.trim(),
       pickupDate: new Date(formData.pickupDate),
-      specialInstructions: formData.specialInstructions,
+      specialInstructions: formData.specialInstructions.trim(),
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -90,7 +121,10 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
       pickupDate: '',
       specialInstructions: '',
     });
+    setValidationErrors({});
   };
+
+  const getFieldError = (field: string) => validationErrors[field];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -102,6 +136,15 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
           </DialogDescription>
         </DialogHeader>
 
+        {Object.keys(validationErrors).length > 0 && (
+          <Alert variant="destructive" className="mt-2">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Please fix the errors below before submitting.
+            </AlertDescription>
+          </Alert>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div className="space-y-2">
             <Label htmlFor="title">Request Title</Label>
@@ -110,8 +153,12 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
               placeholder="e.g., Weekly laundry"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+              className={getFieldError('title') ? 'border-destructive' : ''}
               required
             />
+            {getFieldError('title') && (
+              <p className="text-sm text-destructive">{getFieldError('title')}</p>
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -121,7 +168,7 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
                 value={formData.laundryType} 
                 onValueChange={(v: LaundryType) => setFormData(prev => ({ ...prev, laundryType: v }))}
               >
-                <SelectTrigger>
+                <SelectTrigger className={getFieldError('laundryType') ? 'border-destructive' : ''}>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -132,6 +179,9 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
                   ))}
                 </SelectContent>
               </Select>
+              {getFieldError('laundryType') && (
+                <p className="text-sm text-destructive">{getFieldError('laundryType')}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -140,7 +190,7 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
                 value={formData.serviceType} 
                 onValueChange={(v: ServiceType) => setFormData(prev => ({ ...prev, serviceType: v }))}
               >
-                <SelectTrigger>
+                <SelectTrigger className={getFieldError('serviceType') ? 'border-destructive' : ''}>
                   <SelectValue placeholder="Select service" />
                 </SelectTrigger>
                 <SelectContent>
@@ -151,6 +201,9 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
                   ))}
                 </SelectContent>
               </Select>
+              {getFieldError('serviceType') && (
+                <p className="text-sm text-destructive">{getFieldError('serviceType')}</p>
+              )}
             </div>
           </div>
 
@@ -162,11 +215,16 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
                 type="number"
                 min="0.5"
                 step="0.5"
+                max="50"
                 placeholder="e.g., 5"
                 value={formData.weight}
                 onChange={(e) => setFormData(prev => ({ ...prev, weight: e.target.value }))}
+                className={getFieldError('weight') ? 'border-destructive' : ''}
                 required
               />
+              {getFieldError('weight') && (
+                <p className="text-sm text-destructive">{getFieldError('weight')}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -184,8 +242,13 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
               placeholder="Enter your pickup address"
               value={formData.pickupAddress}
               onChange={(e) => setFormData(prev => ({ ...prev, pickupAddress: e.target.value }))}
+              className={getFieldError('pickupAddress') ? 'border-destructive' : ''}
+              maxLength={200}
               required
             />
+            {getFieldError('pickupAddress') && (
+              <p className="text-sm text-destructive">{getFieldError('pickupAddress')}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -195,6 +258,7 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
               placeholder="Same as pickup if empty"
               value={formData.deliveryAddress}
               onChange={(e) => setFormData(prev => ({ ...prev, deliveryAddress: e.target.value }))}
+              maxLength={200}
             />
           </div>
 
@@ -205,8 +269,12 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
               type="datetime-local"
               value={formData.pickupDate}
               onChange={(e) => setFormData(prev => ({ ...prev, pickupDate: e.target.value }))}
+              className={getFieldError('pickupDate') ? 'border-destructive' : ''}
               required
             />
+            {getFieldError('pickupDate') && (
+              <p className="text-sm text-destructive">{getFieldError('pickupDate')}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -216,8 +284,14 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
               placeholder="Describe your laundry..."
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              className={getFieldError('description') ? 'border-destructive' : ''}
+              maxLength={500}
               required
             />
+            {getFieldError('description') && (
+              <p className="text-sm text-destructive">{getFieldError('description')}</p>
+            )}
+            <p className="text-xs text-muted-foreground">{formData.description.length}/500 characters</p>
           </div>
 
           <div className="space-y-2">
@@ -227,7 +301,9 @@ export default function CreateRequestDialog({ open, onOpenChange, onSubmit }: Cr
               placeholder="Any special care instructions..."
               value={formData.specialInstructions}
               onChange={(e) => setFormData(prev => ({ ...prev, specialInstructions: e.target.value }))}
+              maxLength={1000}
             />
+            <p className="text-xs text-muted-foreground">{formData.specialInstructions.length}/1000 characters</p>
           </div>
 
           <div className="flex gap-3 pt-4">
