@@ -3,12 +3,15 @@
  * 
  * Handles push notification registration and permission requests for native apps.
  * Falls back gracefully in web browsers.
+ * 
+ * Security: Uses secure logging to prevent token leakage
  */
 
 import { useEffect, useState, useCallback } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { PushNotifications, Token, PushNotificationSchema, ActionPerformed } from '@capacitor/push-notifications';
 import { toast } from 'sonner';
+import { secureLog, truncateId } from '@/lib/secure-logger';
 
 interface UsePushNotificationsReturn {
   isSupported: boolean;
@@ -27,7 +30,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 
   const requestPermission = useCallback(async (): Promise<boolean> => {
     if (!isSupported) {
-      console.log('Push notifications not supported on web');
+      secureLog.debug('Push notifications not supported on web');
       return false;
     }
 
@@ -54,7 +57,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
         return false;
       }
     } catch (error) {
-      console.error('Error requesting push notification permission:', error);
+      secureLog.error('Error requesting push notification permission:', error);
       return false;
     }
   }, [isSupported]);
@@ -67,22 +70,26 @@ export function usePushNotifications(): UsePushNotificationsReturn {
       setPermissionStatus(result.receive as 'prompt' | 'granted' | 'denied');
     });
 
-    // Set up listeners
+    // Set up listeners - tokens are sensitive, use secure logging
     const registrationListener = PushNotifications.addListener('registration', (token: Token) => {
-      console.log('Push notification registration successful:', token.value);
+      secureLog.debug('Push notification registration successful');
       setToken(token.value);
       setIsRegistered(true);
     });
 
     const registrationErrorListener = PushNotifications.addListener('registrationError', (error) => {
-      console.error('Push notification registration error:', error);
+      secureLog.error('Push notification registration error:', error);
       setIsRegistered(false);
     });
 
     const notificationReceivedListener = PushNotifications.addListener(
       'pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        console.log('Push notification received:', notification);
+        // Only log non-sensitive notification metadata
+        secureLog.debug('Push notification received:', { 
+          title: notification.title,
+          hasBody: !!notification.body 
+        });
         // Show in-app notification when app is in foreground
         toast.info(notification.title || 'New notification', {
           description: notification.body,
@@ -93,12 +100,12 @@ export function usePushNotifications(): UsePushNotificationsReturn {
     const notificationActionListener = PushNotifications.addListener(
       'pushNotificationActionPerformed',
       (action: ActionPerformed) => {
-        console.log('Push notification action performed:', action);
+        secureLog.debug('Push notification action performed');
         // Handle notification tap - could navigate to relevant screen
         const data = action.notification.data;
         if (data?.orderId) {
-          // Navigation could be handled here
-          console.log('Navigate to order:', data.orderId);
+          // Log truncated ID for debugging
+          secureLog.debug('Navigate to order:', truncateId(data.orderId));
         }
       }
     );
