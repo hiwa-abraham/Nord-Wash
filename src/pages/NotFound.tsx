@@ -1,13 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { secureLog } from "@/lib/secure-logger";
 
 const NotFound = () => {
   const location = useLocation();
   const { t } = useTranslation();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+    // Log only the path, not query params which may contain sensitive data
+    secureLog.warn("404 Error: Non-existent route accessed:", location.pathname.split('?')[0]);
   }, [location.pathname]);
 
   return (

@@ -22,6 +22,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { secureLog } from '@/lib/secure-logger';
 
 // Application roles - stored in user_roles table with RLS
 type AppRole = 'customer' | 'washer' | 'admin';
@@ -90,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .single();
 
       if (profileError) {
-        console.error('Error fetching profile:', profileError);
+        secureLog.error('Error fetching profile:', profileError.message);
       } else {
         setProfile(profileData);
       }
@@ -104,12 +105,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .single();
 
       if (roleError) {
-        console.error('Error fetching role:', roleError);
+        secureLog.error('Error fetching role:', roleError.message);
       } else {
         setRole(roleData?.role as AppRole);
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      secureLog.error('Error fetching user data');
     }
   };
 

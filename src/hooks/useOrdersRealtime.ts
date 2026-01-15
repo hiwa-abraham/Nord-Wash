@@ -3,6 +3,8 @@
  * 
  * Provides real-time updates for orders, filtering by customer or washer ID.
  * Integrates with push notifications for native app support.
+ * 
+ * Security: Uses secure logging to prevent PII leakage
  */
 
 import { useEffect, useState, useCallback } from 'react';
@@ -12,6 +14,7 @@ import { toast } from 'sonner';
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { getOrderStatusNotification } from './usePushNotifications';
+import { secureLog, truncateId } from '@/lib/secure-logger';
 
 type Order = Tables<'orders'>;
 
@@ -39,7 +42,7 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching orders:', error);
+      secureLog.error('Error fetching orders:', error.message);
     } else {
       setOrders(data || []);
     }
@@ -53,7 +56,7 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
 
     // Set up realtime subscription
     const channel = supabase
-      .channel(`orders-${role}-${userId}`)
+      .channel(`orders-${role}-${truncateId(userId)}`)
       .on(
         'postgres_changes',
         {
@@ -68,7 +71,7 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
             : newOrder.washer_id === userId;
           
           if (isRelevant) {
-            console.log('New order received:', newOrder.id);
+            secureLog.debug('New order received:', truncateId(newOrder.id));
             setOrders(prev => [newOrder, ...prev]);
             toast.success('New order received!');
           }
@@ -88,7 +91,7 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
             : updatedOrder.washer_id === userId;
           
           if (isRelevant) {
-            console.log('Order updated:', updatedOrder.id, 'Status:', updatedOrder.status);
+            secureLog.debug('Order updated:', truncateId(updatedOrder.id), 'Status:', updatedOrder.status);
             setOrders(prev => 
               prev.map(order => 
                 order.id === updatedOrder.id ? updatedOrder : order
@@ -115,7 +118,7 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
                       body: notification.body,
                       extra: { orderId: updatedOrder.id },
                     }],
-                  }).catch(err => console.error('Local notification error:', err));
+                  }).catch(err => secureLog.error('Local notification error:', err));
                 }
               } else {
                 toast.info(`Order status: ${updatedOrder.status}`);
@@ -133,16 +136,16 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
         },
         (payload) => {
           const deletedOrder = payload.old as Order;
-          console.log('Order deleted:', deletedOrder.id);
+          secureLog.debug('Order deleted:', truncateId(deletedOrder.id));
           setOrders(prev => prev.filter(order => order.id !== deletedOrder.id));
         }
       )
       .subscribe((status) => {
-        console.log('Realtime subscription status:', status);
+        secureLog.debug('Realtime subscription status:', status);
       });
 
     return () => {
-      console.log('Cleaning up realtime subscription');
+      secureLog.debug('Cleaning up realtime subscription');
       supabase.removeChannel(channel);
     };
   }, [userId, role, enabled, fetchOrders]);
