@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: string | null
+          new_data: Json | null
+          old_data: Json | null
+          operation: string
+          record_id: string | null
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          new_data?: Json | null
+          old_data?: Json | null
+          operation: string
+          record_id?: string | null
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          new_data?: Json | null
+          old_data?: Json | null
+          operation?: string
+          record_id?: string | null
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string
@@ -333,6 +369,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_old_audit_logs: {
+        Args: { days_to_keep?: number }
+        Returns: number
+      }
       get_limited_public_profile: {
         Args: { _user_id: string }
         Returns: {
@@ -405,6 +445,44 @@ export type Database = {
           _user_id?: string
         }
         Returns: string
+      }
+      safe_query_orders: {
+        Args: { _customer_id?: string; _limit?: number; _status?: string }
+        Returns: {
+          completed_at: string | null
+          created_at: string
+          customer_email: string
+          customer_id: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          owner_amount: number
+          paid_at: string | null
+          payment_method: string | null
+          payment_status: string
+          pickup_address: string
+          pickup_city: string
+          pickup_date: string
+          pickup_postal_code: string | null
+          pickup_time: string
+          service_fee: number
+          services: Json
+          services_total: number
+          special_instructions: string | null
+          status: string
+          stripe_payment_intent_id: string | null
+          total_amount: number
+          transport_fee: number
+          updated_at: string
+          washer_amount: number
+          washer_id: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "orders"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
     }
     Enums: {
