@@ -1,7 +1,7 @@
 /**
  * AdminSecurity - Security Incident Response Dashboard
  * 
- * Admin-only page for viewing security events and incident response procedures.
+ * Admin-only page for viewing security events, audit logs, and session settings.
  */
 
 import { useState, useEffect } from 'react';
@@ -25,10 +25,14 @@ import {
   FileText,
   Clock,
   User,
-  RefreshCw
+  RefreshCw,
+  Database,
+  Settings
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import { AuditLogsTab } from '@/components/admin/AuditLogsTab';
+import { SessionSettingsTab } from '@/components/admin/SessionSettingsTab';
 
 interface SecurityEvent {
   id: string;
@@ -179,17 +183,29 @@ export default function AdminSecurity() {
         </div>
 
         <Tabs defaultValue="events" className="space-y-4">
-          <TabsList>
+          <TabsList className="flex-wrap h-auto gap-1">
             <TabsTrigger value="events" className="flex items-center gap-2">
               <Bell className="h-4 w-4" />
-              Security Events
+              <span className="hidden sm:inline">Security Events</span>
+              <span className="sm:hidden">Events</span>
               {unacknowledgedCount > 0 && (
                 <Badge variant="destructive" className="ml-1">{unacknowledgedCount}</Badge>
               )}
             </TabsTrigger>
+            <TabsTrigger value="audit" className="flex items-center gap-2">
+              <Database className="h-4 w-4" />
+              <span className="hidden sm:inline">Audit Logs</span>
+              <span className="sm:hidden">Audit</span>
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              <span className="hidden sm:inline">Session Settings</span>
+              <span className="sm:hidden">Settings</span>
+            </TabsTrigger>
             <TabsTrigger value="playbook" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              Incident Response Playbook
+              <span className="hidden sm:inline">Incident Playbook</span>
+              <span className="sm:hidden">Playbook</span>
             </TabsTrigger>
           </TabsList>
 
@@ -271,6 +287,14 @@ export default function AdminSecurity() {
                 </ScrollArea>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="audit">
+            <AuditLogsTab />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <SessionSettingsTab />
           </TabsContent>
 
           <TabsContent value="playbook">
