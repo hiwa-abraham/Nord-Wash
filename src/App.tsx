@@ -41,6 +41,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 import AdminSecurity from "./pages/AdminSecurity";
+import { SessionManager } from "@/components/SessionManager";
 
 // Create a QueryClient instance for TanStack Query
 // This manages caching, background updates, and stale data for API requests
@@ -58,6 +59,8 @@ const App = () => (
         <Sonner />
         {/* Client-side routing */}
         <BrowserRouter>
+          {/* Session timeout management - auto-logout after 15 min inactivity */}
+          <SessionManager timeoutMinutes={15} warningMinutes={2} />
           <Layout>
             <Routes>
               {/* Public routes */}
