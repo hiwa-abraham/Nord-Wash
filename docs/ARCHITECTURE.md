@@ -349,6 +349,202 @@ src/
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
+## Infrastructure & Cloud Security
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                    INFRASTRUCTURE SECURITY ARCHITECTURE                       │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                      NETWORK LAYER (Platform-Managed)                   │ │
+│  ├────────────────────────────────────────────────────────────────────────┤ │
+│  │                                                                        │ │
+│  │  ✓ Private Networking (VPC)                                            │ │
+│  │    • Lovable Cloud runs on isolated VPC infrastructure                 │ │
+│  │    • Database not exposed to public internet                           │ │
+│  │    • Service-to-service communication via private endpoints            │ │
+│  │                                                                        │ │
+│  │  ✓ Firewall / Security Groups                                          │ │
+│  │    • Only ports 443 (HTTPS) exposed                                    │ │
+│  │    • Edge functions accessible only via API gateway                    │ │
+│  │    • Database accessible only from authorized services                 │ │
+│  │                                                                        │ │
+│  │  ✓ DDoS Protection                                                     │ │
+│  │    • Cloudflare-level protection at edge                               │ │
+│  │    • Application-level rate limiting (see below)                       │ │
+│  │    • Automatic traffic analysis and mitigation                         │ │
+│  │                                                                        │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                      ENVIRONMENT SEPARATION                             │ │
+│  ├────────────────────────────────────────────────────────────────────────┤ │
+│  │                                                                        │ │
+│  │  ┌─────────────────┐    ┌─────────────────┐                            │ │
+│  │  │   TEST ENV      │    │   LIVE ENV      │                            │ │
+│  │  │   (Staging)     │    │  (Production)   │                            │ │
+│  │  ├─────────────────┤    ├─────────────────┤                            │ │
+│  │  │ • Preview URL   │    │ • Published URL │                            │ │
+│  │  │ • Dev data      │    │ • Real data     │                            │ │
+│  │  │ • Safe testing  │    │ • User-facing   │                            │ │
+│  │  └─────────────────┘    └─────────────────┘                            │ │
+│  │                                                                        │ │
+│  │  • Changes tested in TEST before deployment to LIVE                    │ │
+│  │  • Database writes in TEST don't affect LIVE                           │ │
+│  │  • Publishing deploys code + schema from TEST to LIVE                  │ │
+│  │                                                                        │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                      MINIMAL IAM PERMISSIONS                            │ │
+│  ├────────────────────────────────────────────────────────────────────────┤ │
+│  │                                                                        │ │
+│  │  Database Access (RLS Policies):                                       │ │
+│  │  ┌───────────────────┬─────────────────────────────────────────────┐  │ │
+│  │  │ Table             │ Access Rules                                │  │ │
+│  │  ├───────────────────┼─────────────────────────────────────────────┤  │ │
+│  │  │ profiles          │ Own data only (auth.uid() = user_id)       │  │ │
+│  │  │ orders            │ Customer: own orders, Washer: assigned     │  │ │
+│  │  │ conversations     │ Participants only                          │  │ │
+│  │  │ messages          │ Inherited from conversation                │  │ │
+│  │  │ audit_logs        │ Admin only                                 │  │ │
+│  │  │ security_events   │ Admin only                                 │  │ │
+│  │  │ user_roles        │ Own data only                              │  │ │
+│  │  │ services          │ Public read, admin write                   │  │ │
+│  │  │ settings          │ Public read, admin write                   │  │ │
+│  │  └───────────────────┴─────────────────────────────────────────────┘  │ │
+│  │                                                                        │ │
+│  │  Service Keys:                                                         │ │
+│  │  • anon key: Limited, respects RLS                                     │ │
+│  │  • service_role key: Edge functions only, never client-side            │ │
+│  │                                                                        │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                      ZERO-TRUST NETWORKING                              │ │
+│  ├────────────────────────────────────────────────────────────────────────┤ │
+│  │                                                                        │ │
+│  │  Principle: "Never trust, always verify"                               │ │
+│  │                                                                        │ │
+│  │  Implementation (supabase/functions/_shared/):                         │ │
+│  │  ├── security-middleware.ts                                            │ │
+│  │  │   • JWT validation on every request                                 │ │
+│  │  │   • Rate limiting by IP and user                                    │ │
+│  │  │   • Origin validation                                               │ │
+│  │  │   • Request body size limits                                        │ │
+│  │  │                                                                     │ │
+│  │  ├── zero-trust.ts                                                     │ │
+│  │  │   • Token age verification                                          │ │
+│  │  │   • User existence verification                                     │ │
+│  │  │   • Permission verification                                         │ │
+│  │  │   • Device fingerprinting                                           │ │
+│  │  │   • Audit logging                                                   │ │
+│  │  │                                                                     │ │
+│  │  └── ip-validation.ts                                                  │ │
+│  │      • IP allowlist/blocklist                                          │ │
+│  │      • Data center IP detection                                        │ │
+│  │      • Request pattern analysis                                        │ │
+│  │      • Temporary IP blocking                                           │ │
+│  │                                                                        │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                      RATE LIMITING                                      │ │
+│  ├────────────────────────────────────────────────────────────────────────┤ │
+│  │                                                                        │ │
+│  │  Client-side (src/lib/rate-limit.ts):                                  │ │
+│  │  ├── Form submissions: 5/minute                                        │ │
+│  │  ├── API calls: 30/minute                                              │ │
+│  │  ├── Auth attempts: 5/5 minutes                                        │ │
+│  │  ├── Payment operations: 3/minute                                      │ │
+│  │  └── Search queries: 20/minute                                         │ │
+│  │                                                                        │ │
+│  │  Server-side (supabase/functions/_shared/rate-limit.ts):               │ │
+│  │  ├── standard: 60/minute                                               │ │
+│  │  ├── strict: 10/minute                                                 │ │
+│  │  ├── auth: 5/5 minutes                                                 │ │
+│  │  ├── payment: 5/minute                                                 │ │
+│  │  └── webhook: 100/minute                                               │ │
+│  │                                                                        │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                      SECURITY HEADERS                                   │ │
+│  ├────────────────────────────────────────────────────────────────────────┤ │
+│  │                                                                        │ │
+│  │  Content Security Policy (CSP):                                        │ │
+│  │  • default-src 'self'                                                  │ │
+│  │  • script-src 'self' 'unsafe-inline' https://cdn.gpteng.co            │ │
+│  │  • connect-src 'self' https://*.supabase.co wss://*.supabase.co       │ │
+│  │  • frame-ancestors 'self' https://lovable.dev https://*.lovable.app   │ │
+│  │  • upgrade-insecure-requests                                           │ │
+│  │                                                                        │ │
+│  │  Additional Headers:                                                    │ │
+│  │  • X-Frame-Options: SAMEORIGIN                                         │ │
+│  │  • X-Content-Type-Options: nosniff                                     │ │
+│  │  • X-XSS-Protection: 1; mode=block                                     │ │
+│  │  • Referrer-Policy: strict-origin-when-cross-origin                    │ │
+│  │  • Permissions-Policy: geolocation=(self), camera=(), etc.             │ │
+│  │                                                                        │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Using Security Middleware in Edge Functions
+
+```typescript
+// Example: Secure edge function with zero-trust validation
+
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { 
+  applySecurityMiddleware, 
+  secureResponse, 
+  logSecurityEvent 
+} from "../_shared/security-middleware.ts";
+import { requireZeroTrust } from "../_shared/zero-trust.ts";
+
+serve(async (req) => {
+  // Apply security middleware
+  const security = await applySecurityMiddleware(req, {
+    requireAuth: true,
+    requiredRoles: ["admin"],
+    rateLimit: "strict",
+    validateOrigin: true,
+  });
+
+  if (!security.allowed) {
+    return security.error;
+  }
+
+  // Additional zero-trust verification
+  const zt = await requireZeroTrust(req, {
+    verifyUserExists: true,
+    verifySession: true,
+    auditLog: true,
+  });
+
+  if ("error" in zt) {
+    return zt.error;
+  }
+
+  // Proceed with business logic
+  const { userId, supabaseClient } = security.context!;
+
+  // Log the action
+  await logSecurityEvent(supabaseClient, {
+    eventType: "admin_action",
+    description: "Admin performed sensitive action",
+    severity: "info",
+    userId,
+    ipAddress: security.context!.ipAddress,
+  });
+
+  return secureResponse({ success: true });
+});
+```
+
 ## Technology Stack
 
 | Layer | Technology |
@@ -361,3 +557,4 @@ src/
 | Database | PostgreSQL |
 | Auth | Supabase Auth |
 | Realtime | Supabase Realtime |
+| Security | CSP, RLS, Zero-Trust, Rate Limiting |
