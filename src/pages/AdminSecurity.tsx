@@ -33,6 +33,7 @@ import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { AuditLogsTab } from '@/components/admin/AuditLogsTab';
 import { SessionSettingsTab } from '@/components/admin/SessionSettingsTab';
+import { SecurityMetricsWidget } from '@/components/admin/SecurityMetricsWidget';
 
 interface SecurityEvent {
   id: string;
@@ -138,6 +139,11 @@ export default function AdminSecurity() {
             <RefreshCw className="h-4 w-4 mr-2" />
             Refresh
           </Button>
+        </div>
+
+        {/* Real-Time Security Metrics Widget */}
+        <div className="mb-8">
+          <SecurityMetricsWidget />
         </div>
 
         {/* Alert Summary */}
