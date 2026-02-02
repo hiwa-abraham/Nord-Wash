@@ -15,7 +15,8 @@ import {
   ChevronRight,
   Home,
   Settings,
-  LogOut
+  LogOut,
+  Shield
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -59,11 +60,13 @@ const routeNames: Record<string, string> = {
   'auth': 'Sign In',
   'privacy': 'Privacy Policy',
   'terms': 'Terms of Service',
+  'admin': 'Admin',
+  'security': 'Security Dashboard',
 };
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, logout, user } = useAuth();
+  const { isAuthenticated, logout, user, isAdmin } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -294,6 +297,15 @@ export function Header() {
                     <HelpCircle className="mr-2 h-4 w-4" />
                     <span>{t('nav.helpSupport')}</span>
                   </DropdownMenuItem>
+                  {isAdmin && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => navigate('/admin/security')} className="cursor-pointer">
+                        <Shield className="mr-2 h-4 w-4" />
+                        <span>Security Dashboard</span>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />
