@@ -28,6 +28,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Layout } from "@/components/Layout";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import CustomerDashboard from "./pages/CustomerDashboard";
@@ -48,47 +49,50 @@ import { SessionManager } from "@/components/SessionManager";
 const queryClient = new QueryClient();
 
 const App = () => (
-  // QueryClientProvider enables React Query hooks throughout the app
-  <QueryClientProvider client={queryClient}>
-    {/* AuthProvider manages user authentication state globally */}
-    <AuthProvider>
-      {/* TooltipProvider enables Radix UI tooltips */}
-      <TooltipProvider>
-        {/* Toast notifications for user feedback */}
-        <Toaster />
-        <Sonner />
-        {/* Client-side routing */}
-        <BrowserRouter>
-          {/* Session timeout management - auto-logout after 15 min inactivity */}
-          <SessionManager timeoutMinutes={15} warningMinutes={2} />
-          <Layout>
-            <Routes>
-              {/* Public routes */}
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/help" element={<Help />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<TermsOfService />} />
-              
-              {/* Protected routes - require authentication */}
-              <Route path="/customer" element={<CustomerDashboard />} />
-              <Route path="/washer" element={<WasherDashboard />} />
-              <Route path="/washer/earnings" element={<WasherEarnings />} />
-              <Route path="/schedule-pickup" element={<SchedulePickup />} />
-              <Route path="/orders" element={<Orders />} />
-              
-              {/* Admin routes */}
-              <Route path="/admin/security" element={<AdminSecurity />} />
-              
-              {/* Catch-all for 404 */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+  // ErrorBoundary catches React errors and logs them
+  <ErrorBoundary componentName="App">
+    {/* QueryClientProvider enables React Query hooks throughout the app */}
+    <QueryClientProvider client={queryClient}>
+      {/* AuthProvider manages user authentication state globally */}
+      <AuthProvider>
+        {/* TooltipProvider enables Radix UI tooltips */}
+        <TooltipProvider>
+          {/* Toast notifications for user feedback */}
+          <Toaster />
+          <Sonner />
+          {/* Client-side routing */}
+          <BrowserRouter>
+            {/* Session timeout management - auto-logout after 15 min inactivity */}
+            <SessionManager timeoutMinutes={15} warningMinutes={2} />
+            <Layout>
+              <Routes>
+                {/* Public routes */}
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/help" element={<Help />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                
+                {/* Protected routes - require authentication */}
+                <Route path="/customer" element={<CustomerDashboard />} />
+                <Route path="/washer" element={<WasherDashboard />} />
+                <Route path="/washer/earnings" element={<WasherEarnings />} />
+                <Route path="/schedule-pickup" element={<SchedulePickup />} />
+                <Route path="/orders" element={<Orders />} />
+                
+                {/* Admin routes */}
+                <Route path="/admin/security" element={<AdminSecurity />} />
+                
+                {/* Catch-all for 404 */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

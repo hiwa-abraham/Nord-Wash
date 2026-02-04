@@ -2,6 +2,7 @@
  * useSecurityLogger - Hook for logging security events
  * 
  * Provides functions to log various security events to the database.
+ * Integrates with the centralized monitoring system for alert generation.
  * 
  * Security: All logged data is sanitized to prevent PII leakage in logs.
  * Emails are masked, and sensitive data is redacted before storage.
@@ -11,6 +12,7 @@ import { useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { Json } from '@/integrations/supabase/types';
 import { secureLog, maskEmail } from '@/lib/secure-logger';
+import { checkAlertThreshold, logAlert, DEFAULT_ALERT_THRESHOLDS } from '@/lib/security-monitoring';
 
 type SecuritySeverity = 'info' | 'warning' | 'error' | 'critical';
 
@@ -102,6 +104,26 @@ export function useSecurityLogger() {
   }, []);
 
   const logFailedLogin = useCallback((email: string, reason: string) => {
+    // Check alert thresholds for failed logins
+    const failedLoginThreshold = DEFAULT_ALERT_THRESHOLDS.find(t => t.type === 'failed_login_threshold');
+    const bruteForceThreshold = DEFAULT_ALERT_THRESHOLDS.find(t => t.type === 'brute_force_detected');
+    
+    if (failedLoginThreshold) {
+      const result = checkAlertThreshold('FAILED_LOGIN', failedLoginThreshold);
+      if (result.shouldAlert) {
+        logAlert('failed_login_threshold', 'warning', 
+          `Multiple failed login attempts detected: ${result.count} in window`);
+      }
+    }
+    
+    if (bruteForceThreshold) {
+      const result = checkAlertThreshold('FAILED_LOGIN', bruteForceThreshold);
+      if (result.shouldAlert) {
+        logAlert('brute_force_detected', 'critical', 
+          `Potential brute force attack: ${result.count} failed attempts`);
+      }
+    }
+    
     return logEvent({
       eventType: 'FAILED_LOGIN',
       severity: 'warning',
