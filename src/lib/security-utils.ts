@@ -1,13 +1,15 @@
 /**
  * Security Utilities
  * 
- * Central security utilities combining XSS, CSRF, and other protections.
+ * Central security utilities combining XSS, CSRF, secrets management, and other protections.
  * Import this single module for all security-related operations.
  */
 
 export * from './xss-protection';
 export * from './csrf-protection';
 export * from './secure-cookies';
+export * from './secrets-audit';
+export * from './secrets-rotation';
 
 /**
  * Check if the current context is secure (HTTPS or localhost)
