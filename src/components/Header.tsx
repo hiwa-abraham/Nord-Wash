@@ -7,26 +7,14 @@ import {
   User, 
   DollarSign, 
   Droplets, 
-  CreditCard, 
   History, 
   HelpCircle,
   Menu,
-  ChevronLeft,
-  ChevronRight,
   Home,
-  Settings,
   LogOut,
   Shield
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,30 +27,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const menuItems = [
-  { label: 'NordWash', href: '/', icon: Droplets },
-  { label: 'Service & Pricing', href: '/services', icon: DollarSign },
-  { label: 'Profile', href: '/customer', icon: User },
-  { label: 'Billing', href: '/customer', icon: CreditCard },
-  { label: 'Order History', href: '/orders', icon: History },
+  { label: 'Home', href: '/', icon: Home },
+  { label: 'Services', href: '/services', icon: DollarSign },
+  { label: 'Orders', href: '/orders', icon: History },
   { label: 'Help', href: '/help', icon: HelpCircle },
 ];
-
-// Route to readable name mapping
-const routeNames: Record<string, string> = {
-  '': 'Home',
-  'services': 'Services & Pricing',
-  'customer': 'Customer Dashboard',
-  'washer': 'Washer Dashboard',
-  'washer-earnings': 'Washer Earnings',
-  'orders': 'Order History',
-  'schedule': 'Schedule Pickup',
-  'help': 'Help & Support',
-  'auth': 'Sign In',
-  'privacy': 'Privacy Policy',
-  'terms': 'Terms of Service',
-  'admin': 'Admin',
-  'security': 'Security Dashboard',
-};
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,45 +39,16 @@ export function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  
-  // Check if we're on the home page - don't show back button there
-  const isHomePage = location.pathname === '/';
-  
-  // Generate breadcrumbs from current path
-  const pathSegments = location.pathname.split('/').filter(Boolean);
-  const breadcrumbs = pathSegments.map((segment, index) => {
-    const path = '/' + pathSegments.slice(0, index + 1).join('/');
-    const name = routeNames[segment] || segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
-    return { path, name };
-  });
 
   // Get user initials for avatar fallback
   const getUserInitials = () => {
     if (!user?.email) return 'U';
     return user.email.charAt(0).toUpperCase();
   };
-  
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
-    if (href.includes('#')) {
-      const [path, hash] = href.split('#');
-      if (window.location.pathname === path || path === '/') {
-        const element = document.getElementById(hash);
-        element?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        navigate(path);
-        setTimeout(() => {
-          const element = document.getElementById(hash);
-          element?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    } else {
-      navigate(href);
-    }
+    navigate(href);
   };
 
   const handleLogout = () => {
@@ -117,198 +57,96 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex items-center h-16 gap-4">
-          {/* Mobile Menu - Now on LEFT */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="shrink-0">
-                <Menu className="w-5 h-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-72">
-              <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-2">
-                    <Droplets className="w-6 h-6 text-primary" />
-                    <span className="font-display font-bold">NordWash</span>
-                  </div>
-                </div>
-
-                <nav className="flex flex-col gap-1">
-                  {menuItems.map((item) => (
-                    <Button
-                      key={item.label}
-                      variant="ghost"
-                      className="justify-start text-muted-foreground hover:text-foreground"
-                      onClick={() => handleNavClick(item.href)}
-                    >
-                      <item.icon className="w-5 h-5 mr-3" />
-                      {item.label}
-                    </Button>
-                  ))}
-                </nav>
-
-                <div className="mt-auto pt-4 border-t border-border">
-                  {isAuthenticated ? (
-                    <Button 
-                      variant="outline" 
-                      className="w-full" 
-                      onClick={() => {
-                        logout();
-                        setIsOpen(false);
-                      }}
-                    >
-                      Log out
-                    </Button>
-                  ) : (
-                    <Button 
-                      className="w-full bg-gradient-primary hover:opacity-90"
-                      onClick={() => {
-                        navigate('/auth');
-                        setIsOpen(false);
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                  )}
-                </div>
+        <div className="flex items-center justify-between h-16">
+          {/* Left Section: Logo + Navigation */}
+          <div className="flex items-center gap-6">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2.5 shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-sm">
+                <Droplets className="w-5 h-5 text-primary-foreground" />
               </div>
-            </SheetContent>
-          </Sheet>
+              <span className="font-display font-bold text-lg hidden sm:block">NordWash</span>
+            </Link>
 
-          {/* Back Button */}
-          {!isHomePage && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleBack}
-              className="text-muted-foreground hover:text-foreground shrink-0"
-              aria-label="Go back"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
-          )}
-
-          {/* Breadcrumb Navigation */}
-          <div className="flex-1 min-w-0">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  {isHomePage ? (
-                    <BreadcrumbPage className="flex items-center gap-1">
-                      <Home className="w-4 h-4" />
-                      <span className="hidden sm:inline">Home</span>
-                    </BreadcrumbPage>
-                  ) : (
-                    <BreadcrumbLink asChild>
-                      <Link to="/" className="flex items-center gap-1">
-                        <Home className="w-4 h-4" />
-                        <span className="hidden sm:inline">Home</span>
-                      </Link>
-                    </BreadcrumbLink>
-                  )}
-                </BreadcrumbItem>
-                {breadcrumbs.map((crumb, index) => (
-                  <BreadcrumbItem key={crumb.path}>
-                    <BreadcrumbSeparator>
-                      <ChevronRight className="w-4 h-4" />
-                    </BreadcrumbSeparator>
-                    {index === breadcrumbs.length - 1 ? (
-                      <BreadcrumbPage className="truncate max-w-[150px] sm:max-w-none">
-                        {crumb.name}
-                      </BreadcrumbPage>
-                    ) : (
-                      <BreadcrumbLink asChild>
-                        <Link to={crumb.path} className="truncate max-w-[100px] sm:max-w-none">
-                          {crumb.name}
-                        </Link>
-                      </BreadcrumbLink>
-                    )}
-                  </BreadcrumbItem>
-                ))}
-              </BreadcrumbList>
-            </Breadcrumb>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center">
+              {menuItems.map((item) => {
+                const isActive = location.pathname === item.href;
+                return (
+                  <Button
+                    key={item.label}
+                    variant="ghost"
+                    size="sm"
+                    className={`text-sm font-medium transition-colors ${
+                      isActive 
+                        ? 'text-foreground bg-muted' 
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
+                    onClick={() => handleNavClick(item.href)}
+                  >
+                    {item.label}
+                  </Button>
+                );
+              })}
+            </nav>
           </div>
 
-          {/* Logo - Desktop only */}
-          <Link to="/" className="hidden md:flex items-center gap-2 shrink-0">
-            <Droplets className="w-8 h-8 text-primary" />
-            <span className="font-display font-bold text-xl">NordWash</span>
-          </Link>
+          {/* Right Section: Actions */}
+          <div className="flex items-center gap-2">
+            {/* Language Switcher */}
+            <div className="hidden sm:block">
+              <LanguageSwitcher />
+            </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            {menuItems.slice(1, -1).map((item) => (
-              <Button
-                key={item.label}
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-foreground"
-                onClick={() => handleNavClick(item.href)}
-              >
-                <item.icon className="w-4 h-4 mr-2" />
-                {item.label}
-              </Button>
-            ))}
-          </nav>
-
-          {/* Language Switcher */}
-          <LanguageSwitcher />
-
-          {/* Profile Dropdown or Sign In */}
-          <div className="shrink-0">
+            {/* Profile Dropdown or Sign In */}
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                    <Avatar className="h-9 w-9">
+                  <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-muted">
+                    <Avatar className="h-9 w-9 ring-2 ring-border">
                       <AvatarImage src="" alt="Profile" />
-                      <AvatarFallback className="bg-primary text-primary-foreground">
+                      <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">
                         {getUserInitials()}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-background border border-border shadow-lg z-[60]" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
+                <DropdownMenuContent className="w-56 bg-card border border-border shadow-lg" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal px-3 py-2">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{t('common.profile')}</p>
-                      <p className="text-xs leading-none text-muted-foreground">
+                      <p className="text-sm font-semibold">{t('common.profile')}</p>
+                      <p className="text-xs text-muted-foreground truncate">
                         {user?.email || 'user@example.com'}
                       </p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => navigate('/customer')} className="cursor-pointer">
-                    <User className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={() => navigate('/customer')} className="cursor-pointer px-3">
+                    <User className="mr-3 h-4 w-4 text-muted-foreground" />
                     <span>{t('common.profile')}</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate('/orders')} className="cursor-pointer">
-                    <History className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={() => navigate('/orders')} className="cursor-pointer px-3">
+                    <History className="mr-3 h-4 w-4 text-muted-foreground" />
                     <span>{t('nav.orderHistory')}</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate('/customer')} className="cursor-pointer">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>{t('common.settings')}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate('/help')} className="cursor-pointer">
-                    <HelpCircle className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={() => navigate('/help')} className="cursor-pointer px-3">
+                    <HelpCircle className="mr-3 h-4 w-4 text-muted-foreground" />
                     <span>{t('nav.helpSupport')}</span>
                   </DropdownMenuItem>
                   {isAdmin && (
                     <>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => navigate('/admin/security')} className="cursor-pointer">
-                        <Shield className="mr-2 h-4 w-4" />
+                      <DropdownMenuItem onClick={() => navigate('/admin/security')} className="cursor-pointer px-3">
+                        <Shield className="mr-3 h-4 w-4 text-muted-foreground" />
                         <span>Security Dashboard</span>
                       </DropdownMenuItem>
                     </>
                   )}
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
-                    <LogOut className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer px-3 text-destructive focus:text-destructive focus:bg-destructive/10">
+                    <LogOut className="mr-3 h-4 w-4" />
                     <span>{t('common.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -316,12 +154,111 @@ export function Header() {
             ) : (
               <Button 
                 size="sm" 
-                className="bg-gradient-primary hover:opacity-90"
+                className="bg-gradient-primary hover:opacity-90 shadow-sm font-medium"
                 onClick={() => navigate('/auth')}
               >
                 {t('common.login')}
               </Button>
             )}
+
+            {/* Mobile Menu */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild className="lg:hidden">
+                <Button variant="ghost" size="icon" className="shrink-0">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-80 p-0">
+                <div className="flex flex-col h-full">
+                  {/* Mobile Header */}
+                  <div className="flex items-center gap-3 p-4 border-b border-border">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center">
+                      <Droplets className="w-5 h-5 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <p className="font-display font-bold">NordWash</p>
+                      <p className="text-xs text-muted-foreground">Laundry Service</p>
+                    </div>
+                  </div>
+
+                  {/* Mobile Navigation */}
+                  <nav className="flex-1 p-4 space-y-1">
+                    {menuItems.map((item) => {
+                      const isActive = location.pathname === item.href;
+                      return (
+                        <Button
+                          key={item.label}
+                          variant={isActive ? "secondary" : "ghost"}
+                          className={`w-full justify-start h-12 ${
+                            isActive ? 'bg-primary/10 text-primary' : 'text-muted-foreground'
+                          }`}
+                          onClick={() => handleNavClick(item.href)}
+                        >
+                          <item.icon className="w-5 h-5 mr-3" />
+                          {item.label}
+                        </Button>
+                      );
+                    })}
+                    
+                    {isAuthenticated && (
+                      <>
+                        <div className="pt-4 pb-2">
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3">Account</p>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start h-12 text-muted-foreground"
+                          onClick={() => handleNavClick('/customer')}
+                        >
+                          <User className="w-5 h-5 mr-3" />
+                          Profile
+                        </Button>
+                        {isAdmin && (
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start h-12 text-muted-foreground"
+                            onClick={() => handleNavClick('/admin/security')}
+                          >
+                            <Shield className="w-5 h-5 mr-3" />
+                            Security
+                          </Button>
+                        )}
+                      </>
+                    )}
+                  </nav>
+
+                  {/* Mobile Footer */}
+                  <div className="p-4 border-t border-border space-y-3">
+                    <div className="sm:hidden">
+                      <LanguageSwitcher />
+                    </div>
+                    {isAuthenticated ? (
+                      <Button 
+                        variant="outline" 
+                        className="w-full h-12" 
+                        onClick={() => {
+                          logout();
+                          setIsOpen(false);
+                        }}
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Log out
+                      </Button>
+                    ) : (
+                      <Button 
+                        className="w-full h-12 bg-gradient-primary hover:opacity-90"
+                        onClick={() => {
+                          navigate('/auth');
+                          setIsOpen(false);
+                        }}
+                      >
+                        Sign In
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
