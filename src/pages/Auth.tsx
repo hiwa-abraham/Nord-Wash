@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -199,7 +199,18 @@ export default function Auth() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
+            {isLogin && (
+              <div className="mt-4 text-center">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            )}
+
+            <div className="mt-4 text-center">
               <button
                 type="button"
                 onClick={() => setIsLogin(!isLogin)}
