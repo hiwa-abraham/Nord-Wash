@@ -20,6 +20,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Separator } from '@/components/ui/separator';
+import { BackButton } from '@/components/BackButton';
 
 const menuItems = [
   { label: 'Home', href: '/', icon: Home },
@@ -54,13 +55,14 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/40">
       <div className="flex items-center justify-between h-14 px-4">
-        {/* Left: Hamburger */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0">
-              <Menu className="w-5 h-5" />
-            </Button>
-          </SheetTrigger>
+        {/* Left: Hamburger + Back */}
+        <div className="flex items-center gap-0.5 shrink-0">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0">
+                <Menu className="w-5 h-5" />
+              </Button>
+            </SheetTrigger>
           <SheetContent side="left" className="w-72 p-0 gap-0">
             <div className="flex flex-col h-full">
               {/* Sidebar Header */}
@@ -163,7 +165,9 @@ export function Header() {
               </div>
             </div>
           </SheetContent>
-        </Sheet>
+          </Sheet>
+          <BackButton />
+        </div>
 
         {/* Center: Logo */}
         <Link to="/" className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
