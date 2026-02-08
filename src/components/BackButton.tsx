@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const ROOT_PATHS = ['/', '/index'];
+const ROOT_PATHS = ['/', '/index', '/auth', '/forgot-password', '/reset-password'];
 
 export function BackButton() {
   const navigate = useNavigate();

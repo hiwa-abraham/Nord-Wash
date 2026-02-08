@@ -42,6 +42,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 import AdminSecurity from "./pages/AdminSecurity";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import { SessionManager } from "@/components/SessionManager";
 
 // Create a QueryClient instance for TanStack Query
@@ -69,6 +71,8 @@ const App = () => (
                 {/* Public routes */}
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
