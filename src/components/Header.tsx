@@ -15,6 +15,7 @@ import {
   Sparkles,
   ChevronRight,
   Globe,
+  Settings,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -27,6 +28,7 @@ const menuItems = [
   { label: 'Services', href: '/services', icon: Sparkles },
   { label: 'Orders', href: '/orders', icon: History },
   { label: 'Help', href: '/help', icon: HelpCircle },
+  { label: 'Settings', href: '/settings', icon: Settings, requiresAuth: true },
 ];
 
 export function Header() {
@@ -101,7 +103,9 @@ export function Header() {
 
               {/* Navigation */}
               <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
-                {menuItems.map((item) => {
+                {menuItems
+                  .filter((item) => !item.requiresAuth || isAuthenticated)
+                  .map((item) => {
                   const isActive = location.pathname === item.href;
                   return (
                     <button
