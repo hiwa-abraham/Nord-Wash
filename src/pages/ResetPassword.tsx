@@ -39,23 +39,48 @@ export default function ResetPassword() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Supabase automatically handles the token exchange from the URL hash
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+    let settled = false;
+
+    const settle = (valid: boolean) => {
+      if (settled) return;
+      settled = true;
+      setIsValidSession(valid);
+      setChecking(false);
+    };
+
+    // Listen for auth events — PASSWORD_RECOVERY (implicit) or SIGNED_IN (PKCE)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
-        setIsValidSession(true);
-        setChecking(false);
+        settle(true);
+      } else if (event === 'SIGNED_IN' && session) {
+        // PKCE recovery flow fires SIGNED_IN; we're on /reset-password so treat as valid
+        settle(true);
       }
     });
 
-    // Also check if user already has a session (e.g., page refresh)
+    // Check for existing session (handles page refresh or fast token exchange)
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
-        setIsValidSession(true);
+        settle(true);
       }
-      setChecking(false);
     });
 
-    return () => subscription.unsubscribe();
+    // If nothing settles within 3s, check URL for code/token params and give up if none
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash;
+      if (params.has('code') || hash.includes('access_token')) {
+        // Still processing — wait a bit more
+        setTimeout(() => settle(false), 3000);
+      } else {
+        settle(false);
+      }
+    }, 3000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
