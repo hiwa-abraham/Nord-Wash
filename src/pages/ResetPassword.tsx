@@ -48,50 +48,55 @@ export default function ResetPassword() {
       setChecking(false);
     };
 
-    // Listen for auth events — PASSWORD_RECOVERY (implicit) or SIGNED_IN (PKCE)
+    // 1. Listen for auth events FIRST (before any async calls)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('[ResetPassword] auth event:', event);
       if (event === 'PASSWORD_RECOVERY') {
         settle(true);
       } else if (event === 'SIGNED_IN' && session) {
+        // On /reset-password page, SIGNED_IN means recovery flow completed
         settle(true);
       }
     });
 
-    // Explicitly handle PKCE code exchange from URL
+    // 2. Handle PKCE code exchange
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
-    const hash = window.location.hash;
 
     if (code) {
       supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
         if (data?.session && !error) {
           settle(true);
         } else {
-          console.error('Code exchange failed:', error?.message);
-          settle(false);
-        }
-      });
-    } else if (hash.includes('access_token')) {
-      // Implicit flow — session will be picked up by onAuthStateChange
-      // Give it a moment
-      setTimeout(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-          settle(!!session);
-        });
-      }, 1000);
-    } else {
-      // No code or token in URL — check for existing session
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          settle(true);
-        } else {
-          settle(false);
+          console.error('[ResetPassword] Code exchange failed:', error?.message);
+          // Don't settle false yet — onAuthStateChange may still fire
         }
       });
     }
 
+    // 3. Check for hash fragments (implicit flow) or existing session
+    // getSession() also processes hash fragments in the URL
+    const checkSession = () => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          settle(true);
+        }
+      });
+    };
+
+    // Check immediately and again after a delay to handle async token processing
+    checkSession();
+    const t1 = setTimeout(checkSession, 1500);
+    const t2 = setTimeout(checkSession, 4000);
+
+    // Final fallback — give up after 6s
+    const tFinal = setTimeout(() => settle(false), 6000);
+
     return () => {
       subscription.unsubscribe();
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(tFinal);
     };
   }, []);
 
