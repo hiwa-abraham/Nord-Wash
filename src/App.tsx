@@ -44,6 +44,7 @@ import NotFound from "./pages/NotFound";
 import AdminSecurity from "./pages/AdminSecurity";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Settings from "./pages/Settings";
 import { SessionManager } from "@/components/SessionManager";
 
 // Create a QueryClient instance for TanStack Query
@@ -84,6 +85,7 @@ const App = () => (
                 <Route path="/washer/earnings" element={<WasherEarnings />} />
                 <Route path="/schedule-pickup" element={<SchedulePickup />} />
                 <Route path="/orders" element={<Orders />} />
+                <Route path="/settings" element={<Settings />} />
                 
                 {/* Admin routes */}
                 <Route path="/admin/security" element={<AdminSecurity />} />
