@@ -53,33 +53,45 @@ export default function ResetPassword() {
       if (event === 'PASSWORD_RECOVERY') {
         settle(true);
       } else if (event === 'SIGNED_IN' && session) {
-        // PKCE recovery flow fires SIGNED_IN; we're on /reset-password so treat as valid
         settle(true);
       }
     });
 
-    // Check for existing session (handles page refresh or fast token exchange)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        settle(true);
-      }
-    });
+    // Explicitly handle PKCE code exchange from URL
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const hash = window.location.hash;
 
-    // If nothing settles within 3s, check URL for code/token params and give up if none
-    const timeout = setTimeout(() => {
-      const params = new URLSearchParams(window.location.search);
-      const hash = window.location.hash;
-      if (params.has('code') || hash.includes('access_token')) {
-        // Still processing — wait a bit more
-        setTimeout(() => settle(false), 3000);
-      } else {
-        settle(false);
-      }
-    }, 3000);
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
+        if (data?.session && !error) {
+          settle(true);
+        } else {
+          console.error('Code exchange failed:', error?.message);
+          settle(false);
+        }
+      });
+    } else if (hash.includes('access_token')) {
+      // Implicit flow — session will be picked up by onAuthStateChange
+      // Give it a moment
+      setTimeout(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          settle(!!session);
+        });
+      }, 1000);
+    } else {
+      // No code or token in URL — check for existing session
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          settle(true);
+        } else {
+          settle(false);
+        }
+      });
+    }
 
     return () => {
       subscription.unsubscribe();
-      clearTimeout(timeout);
     };
   }, []);
 
