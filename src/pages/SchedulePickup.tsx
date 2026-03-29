@@ -235,7 +235,7 @@ export default function SchedulePickup() {
               )}>
                 {step !== 'services' ? <CheckCircle2 className="w-5 h-5" /> : '1'}
               </div>
-              <span className="text-sm font-medium hidden sm:inline">Services</span>
+              <span className="text-sm font-medium hidden sm:inline">{t('pickup.steps.services')}</span>
             </div>
             <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
             
