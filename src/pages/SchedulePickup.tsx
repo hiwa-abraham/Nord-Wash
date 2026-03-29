@@ -682,7 +682,7 @@ export default function SchedulePickup() {
                   onClick={() => setStep('payment')}
                 >
                   <CreditCard className="w-5 h-5 mr-2" />
-                  Proceed to Payment - €{totalWithFees.toFixed(2)}
+                  {t('pickup.proceedToPayment')} - €{totalWithFees.toFixed(2)}
                 </Button>
               </div>
             </>
