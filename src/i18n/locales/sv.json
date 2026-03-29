@@ -39,7 +39,11 @@
     "email": "E-post",
     "notes": "Anteckningar",
     "backToDashboard": "Tillbaka till instrumentpanelen",
-    "completedOn": "Slutförd den"
+    "completedOn": "Slutförd den",
+    "admin": "Admin",
+    "security": "Säkerhet",
+    "password": "Lösenord",
+    "processing": "Bearbetar..."
   },
   "nav": {
     "schedulePickup": "Boka hämtning",
@@ -69,7 +73,9 @@
     "serviceFee": "Serviceavgift",
     "pickupFee": "Hämtningsavgift",
     "serviceFeeDesc": "Avgift för hantering av varje beställning",
-    "pickupFeeDesc": "Avgift för hämtning och leverans"
+    "pickupFeeDesc": "Avgift för hämtning och leverans",
+    "ourServices": "Våra tjänster",
+    "ourServicesDesc": "Professionell tvättvård till konkurrenskraftiga priser. Kvalitetstjänst du kan lita på."
   },
   "pickup": {
     "title": "Boka hämtning",
@@ -110,7 +116,23 @@
     "backToDetails": "Tillbaka till uppgifter",
     "orderSummary": "Beställningsöversikt",
     "pickupDetails": "Hämtningsuppgifter",
-    "contactInfo": "Kontaktinformation"
+    "contactInfo": "Kontaktinformation",
+    "steps": {
+      "services": "Tjänster",
+      "details": "Uppgifter",
+      "review": "Granska",
+      "payment": "Betalning"
+    },
+    "fullName": "Fullständigt namn *",
+    "phoneNumber": "Telefonnummer *",
+    "emailAddress": "E-postadress *",
+    "streetAddressRequired": "Gatuadress *",
+    "cityRequired": "Stad *",
+    "reviewYourOrder": "Granska din beställning",
+    "subtotalServices": "Delsumma (tjänster)",
+    "pickupFee": "Hämtningsavgift",
+    "proceedToPaymentAmount": "Fortsätt till betalning - €{{amount}}",
+    "validationError": "Valideringsfel"
   },
   "orders": {
     "title": "Beställningshistorik",
@@ -165,6 +187,47 @@
     "invalidCredentials": "Ogiltig e-post eller lösenord",
     "emailRegistered": "Denna e-post är redan registrerad. Vänligen logga in.",
     "somethingWrong": "Något gick fel. Försök igen."
+  },
+  "forgotPassword": {
+    "title": "Återställ ditt lösenord",
+    "subtitle": "Ange din e-post så skickar vi en återställningslänk.",
+    "checkEmail": "Kontrollera din e-post",
+    "checkEmailDesc": "Om ett konto finns med den e-posten får du en länk för lösenordsåterställning inom kort.",
+    "backToLogin": "Tillbaka till inloggning",
+    "sendResetLink": "Skicka återställningslänk"
+  },
+  "resetPassword": {
+    "invalidLink": "Ogiltig eller utgången länk",
+    "invalidLinkDesc": "Denna länk för lösenordsåterställning är inte längre giltig. Begär en ny.",
+    "requestNewLink": "Begär ny länk",
+    "setNewPassword": "Ange nytt lösenord",
+    "setNewPasswordDesc": "Välj ett starkt lösenord för ditt konto.",
+    "newPassword": "Nytt lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "resetPassword": "Återställ lösenord",
+    "passwordResetSuccess": "Lösenordet har återställts. Logga in med ditt nya lösenord.",
+    "passwordsNoMatch": "Lösenorden matchar inte",
+    "rules": {
+      "minLength": "Minst 8 tecken",
+      "uppercase": "1 stor bokstav",
+      "lowercase": "1 liten bokstav",
+      "number": "1 siffra"
+    }
+  },
+  "settings": {
+    "title": "Inställningar",
+    "account": "Konto",
+    "dangerZone": "Farozon",
+    "dangerZoneDesc": "Radera permanent ditt konto och all associerad data. Denna åtgärd kan inte ångras.",
+    "deleteAccount": "Radera konto",
+    "deleteAccountTitle": "Radera ditt konto?",
+    "deleteAccountDesc": "Detta kommer permanent radera ditt konto, profil och all beställningshistorik. Denna åtgärd <strong>kan inte ångras</strong>.",
+    "enterPasswordConfirm": "Ange ditt lösenord för att bekräfta.",
+    "deletePermanently": "Radera permanent",
+    "accountDeleted": "Ditt konto har raderats permanent.",
+    "enterPassword": "Ange ditt lösenord",
+    "sessionExpired": "Sessionen har gått ut. Logga in igen.",
+    "deleteFailed": "Kunde inte radera kontot"
   },
   "customerDashboard": {
     "hello": "Hej, {{name}}!",
@@ -232,6 +295,88 @@
     "serviceShare": "Tjänsteandel (90%)",
     "yourTotal": "Din totalsumma"
   },
+  "payment": {
+    "title": "Betalning",
+    "completePayment": "Slutför din betalning för att bekräfta hämtningen.",
+    "priceBreakdown": "Prisuppdelning",
+    "transparentPricing": "Transparent prissättning med alla avgifter inkluderade",
+    "servicesSubtotal": "Tjänster delsumma",
+    "serviceFee": "Serviceavgift",
+    "platform": "Plattform",
+    "transportFee": "Transportavgift",
+    "pickupDelivery": "Hämtning & Leverans",
+    "paymentMethod": "Betalningsmetod",
+    "choosePayment": "Välj hur du vill betala",
+    "creditDebitCard": "Kredit-/Betalkort",
+    "cardDesc": "Betala säkert med Visa, Mastercard eller andra",
+    "bankTransfer": "Banköverföring",
+    "bankTransferDesc": "Överför direkt till vårt bankkonto",
+    "cardSetupInfo": "Kortbetalningar håller på att konfigureras. Din beställning skapas och du kan slutföra betalningen när du är redo.",
+    "bankTransferInfo": "Efter att du lagt din beställning får du bankuppgifter för att slutföra överföringen. Din hämtning bekräftas när betalningen mottagits.",
+    "paymentDistribution": "Hur din betalning fördelas",
+    "platformFeeCommission": "Plattformsavgift + provision ({{percent}}%)",
+    "washerEarnings": "Tvättarens intäkter ({{percent}}% + transport)",
+    "payAmount": "Betala €{{amount}}",
+    "backToReview": "Tillbaka till granskning",
+    "securePayment": "🔒 Din betalning är säker och krypterad"
+  },
+  "chat": {
+    "chatWith": "Chatt med {{name}}",
+    "noMessages": "Inga meddelanden än",
+    "startConversation": "Starta konversationen!",
+    "typeMessage": "Skriv ett meddelande...",
+    "failedToSend": "Kunde inte skicka meddelande",
+    "failedToStart": "Kunde inte starta konversation"
+  },
+  "notifications": {
+    "enableTitle": "Aktivera aviseringar",
+    "enableDesc": "Få omedelbara uppdateringar när din beställningsstatus ändras.",
+    "enable": "Aktivera",
+    "enabling": "Aktiverar...",
+    "notNow": "Inte nu"
+  },
+  "createRequest": {
+    "title": "Skapa tvättförfrågan",
+    "subtitle": "Fyll i detaljerna så hämtar en tvättare dina kläder",
+    "fixErrors": "Vänligen åtgärda felen nedan innan du skickar.",
+    "requestTitle": "Förfråganstitel",
+    "laundryType": "Tvättyp",
+    "serviceType": "Tjänsttyp",
+    "selectType": "Välj typ",
+    "selectService": "Välj tjänst",
+    "estimatedWeight": "Uppskattad vikt (kg)",
+    "estimatedPrice": "Uppskattat pris",
+    "pickupAddress": "Hämtningsadress",
+    "deliveryAddress": "Leveransadress (valfritt)",
+    "deliveryAddressPlaceholder": "Samma som hämtning om tom",
+    "preferredPickupDate": "Önskat hämtningsdatum & tid",
+    "description": "Beskrivning",
+    "descriptionPlaceholder": "Beskriv din tvätt...",
+    "characters": "tecken",
+    "specialInstructions": "Särskilda instruktioner (valfritt)",
+    "specialInstructionsPlaceholder": "Eventuella särskilda vårdanvisningar...",
+    "requestCreated": "Förfrågan skapad!",
+    "signInRequired": "Logga in för att skapa en förfrågan",
+    "laundryTypes": {
+      "regular": "Vanliga kläder",
+      "delicate": "Ömtåliga plagg",
+      "heavy": "Tunga plagg (Sängkläder, Gardiner)",
+      "mixed": "Blandat"
+    },
+    "serviceTypes": {
+      "wash": "Endast tvätt",
+      "wash-iron": "Tvätt & Strykning",
+      "iron-only": "Endast strykning",
+      "dry-clean": "Kemtvätt"
+    }
+  },
+  "sessionTimeout": {
+    "title": "Sessionen går snart ut",
+    "message": "Din session upphör om <strong>{{time}}</strong> på grund av inaktivitet.",
+    "stayQuestion": "Vill du förbli inloggad?",
+    "logOutNow": "Logga ut nu",
+    "stayLoggedIn": "Förbli inloggad"
+  },
   "help": {
     "title": "Hjälpcenter",
     "subtitle": "Hitta svar på vanliga frågor eller kontakta oss.",
@@ -278,33 +423,17 @@
       "infoCollect": {
         "title": "1. Information vi samlar in",
         "intro": "NordWash samlar in information som du ger oss direkt, inklusive:",
-        "items": [
-          "Kontoinformation (namn, e-postadress, telefonnummer)",
-          "Hämtnings- och leveransadresser",
-          "Betalningsinformation (behandlas säkert via Stripe)",
-          "Beställningshistorik och preferenser",
-          "Kommunikation med vårt team eller tvättare"
-        ]
+        "items": ["Kontoinformation (namn, e-postadress, telefonnummer)", "Hämtnings- och leveransadresser", "Betalningsinformation (behandlas säkert via Stripe)", "Beställningshistorik och preferenser", "Kommunikation med vårt team eller tvättare"]
       },
       "howUse": {
         "title": "2. Hur vi använder din information",
         "intro": "Vi använder informationen vi samlar in för att:",
-        "items": [
-          "Bearbeta och utföra dina tvättbeställningar",
-          "Kommunicera med dig om dina beställningar",
-          "Skicka dig tjänsteuppdateringar och kampanjerbjudanden",
-          "Förbättra våra tjänster och användarupplevelse",
-          "Säkerställa säkerheten på vår plattform"
-        ]
+        "items": ["Bearbeta och utföra dina tvättbeställningar", "Kommunicera med dig om dina beställningar", "Skicka dig tjänsteuppdateringar och kampanjerbjudanden", "Förbättra våra tjänster och användarupplevelse", "Säkerställa säkerheten på vår plattform"]
       },
       "infoSharing": {
         "title": "3. Informationsdelning",
         "intro": "Vi delar din information endast när det är nödvändigt för att tillhandahålla våra tjänster:",
-        "items": [
-          "Med tvättare för att utföra dina beställningar (hämtningsadress och beställningsuppgifter)",
-          "Med betalningsprocessorer för att slutföra transaktioner",
-          "När det krävs enligt lag eller för att skydda våra rättigheter"
-        ],
+        "items": ["Med tvättare för att utföra dina beställningar (hämtningsadress och beställningsuppgifter)", "Med betalningsprocessorer för att slutföra transaktioner", "När det krävs enligt lag eller för att skydda våra rättigheter"],
         "noSell": "Vi säljer inte din personliga information till tredje part."
       },
       "dataSecurity": {
@@ -314,12 +443,7 @@
       "yourRights": {
         "title": "5. Dina rättigheter",
         "intro": "Du har rätt att:",
-        "items": [
-          "Få tillgång till dina personuppgifter",
-          "Begära korrigering av felaktiga uppgifter",
-          "Begära radering av dina uppgifter",
-          "Avregistrera dig från marknadsföringskommunikation"
-        ]
+        "items": ["Få tillgång till dina personuppgifter", "Begära korrigering av felaktiga uppgifter", "Begära radering av dina uppgifter", "Avregistrera dig från marknadsföringskommunikation"]
       },
       "contact": {
         "title": "6. Kontakta oss",
@@ -331,53 +455,16 @@
     "title": "Användarvillkor",
     "lastUpdated": "Senast uppdaterad: 3 januari 2026",
     "sections": {
-      "acceptance": {
-        "title": "1. Godkännande av villkor",
-        "content": "Genom att använda NordWash accepterar du och förbinder dig att följa dessa användarvillkor. Om du inte godkänner dessa villkor, vänligen använd inte våra tjänster."
-      },
-      "description": {
-        "title": "2. Beskrivning av tjänsten",
-        "content": "NordWash är en plattform som kopplar samman kunder med tvättleverantörer (tvättare). Vi underlättar hämtning, rengöring och leverans av tvättartiklar."
-      },
-      "userAccounts": {
-        "title": "3. Användarkonton",
-        "content": "För att använda våra tjänster måste du skapa ett konto med korrekt och fullständig information. Du ansvarar för att upprätthålla sekretessen för dina kontouppgifter och för alla aktiviteter på ditt konto."
-      },
-      "ordersPayments": {
-        "title": "4. Beställningar och betalningar",
-        "items": [
-          "Alla priser visas i appen och kan ändras",
-          "Betalning behandlas säkert via vår betalningsleverantör",
-          "Du godkänner att betala för alla beställningar som görs via ditt konto",
-          "Återbetalningar hanteras från fall till fall"
-        ]
-      },
-      "liability": {
-        "title": "5. Ansvar",
-        "content": "Även om vi tar hand om att säkerställa kvalitetstjänster, ansvarar NordWash inte för skador på föremål som är naturligt ömtåliga eller felaktigt märkta. Vi rekommenderar att du anger eventuella särskilda vårdkrav när du lägger beställningar."
-      },
-      "userConduct": {
-        "title": "6. Användarbeteende",
-        "content": "Du godkänner att använda våra tjänster respektfullt och lagligt. Missbruk av plattformen, inklusive trakasserier av tvättare eller bedräglig aktivitet, kan leda till kontouppsägning."
-      },
-      "changesToTerms": {
-        "title": "7. Ändringar av villkor",
-        "content": "Vi förbehåller oss rätten att ändra dessa villkor när som helst. Fortsatt användning av tjänsten efter ändringar innebär godkännande av de nya villkoren."
-      },
-      "contact": {
-        "title": "8. Kontakt",
-        "content": "För frågor om dessa användarvillkor, kontakta oss via hjälpsektionen i vår app."
-      }
+      "acceptance": { "title": "1. Godkännande av villkor", "content": "Genom att använda NordWash accepterar du och förbinder dig att följa dessa användarvillkor. Om du inte godkänner dessa villkor, vänligen använd inte våra tjänster." },
+      "description": { "title": "2. Beskrivning av tjänsten", "content": "NordWash är en plattform som kopplar samman kunder med tvättleverantörer (tvättare). Vi underlättar hämtning, rengöring och leverans av tvättartiklar." },
+      "userAccounts": { "title": "3. Användarkonton", "content": "För att använda våra tjänster måste du skapa ett konto med korrekt och fullständig information. Du ansvarar för att upprätthålla sekretessen för dina kontouppgifter och för alla aktiviteter på ditt konto." },
+      "ordersPayments": { "title": "4. Beställningar och betalningar", "items": ["Alla priser visas i appen och kan ändras", "Betalning behandlas säkert via vår betalningsleverantör", "Du godkänner att betala för alla beställningar som görs via ditt konto", "Återbetalningar hanteras från fall till fall"] },
+      "liability": { "title": "5. Ansvar", "content": "Även om vi tar hand om att säkerställa kvalitetstjänster, ansvarar NordWash inte för skador på föremål som är naturligt ömtåliga eller felaktigt märkta." },
+      "userConduct": { "title": "6. Användarbeteende", "content": "Du godkänner att använda våra tjänster respektfullt och lagligt. Missbruk av plattformen kan leda till kontouppsägning." },
+      "changesToTerms": { "title": "7. Ändringar av villkor", "content": "Vi förbehåller oss rätten att ändra dessa villkor när som helst. Fortsatt användning innebär godkännande av de nya villkoren." },
+      "contact": { "title": "8. Kontakt", "content": "För frågor om dessa användarvillkor, kontakta oss via hjälpsektionen i vår app." }
     }
   },
-  "notFound": {
-    "title": "404",
-    "message": "Hoppsan! Sidan hittades inte",
-    "returnHome": "Tillbaka till startsidan"
-  },
-  "footer": {
-    "termsOfService": "Användarvillkor",
-    "privacyPolicy": "Integritetspolicy",
-    "allRightsReserved": "Alla rättigheter förbehållna"
-  }
+  "notFound": { "title": "404", "message": "Hoppsan! Sidan hittades inte", "returnHome": "Tillbaka till startsidan" },
+  "footer": { "termsOfService": "Användarvillkor", "privacyPolicy": "Integritetspolicy", "allRightsReserved": "Alla rättigheter förbehållna" }
 }
