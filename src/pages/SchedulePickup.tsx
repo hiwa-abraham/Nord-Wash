@@ -651,7 +651,7 @@ export default function SchedulePickup() {
                 {/* Pickup Details */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Pickup Details</CardTitle>
+                    <CardTitle className="text-lg">{t('pickup.pickupDetails')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
                     <p><strong>Date:</strong> {pickupDate && format(pickupDate, 'PPP')}</p>
