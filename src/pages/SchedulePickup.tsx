@@ -654,9 +654,9 @@ export default function SchedulePickup() {
                     <CardTitle className="text-lg">{t('pickup.pickupDetails')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
-                    <p><strong>Date:</strong> {pickupDate && format(pickupDate, 'PPP')}</p>
-                    <p><strong>Time:</strong> {pickupTime}</p>
-                    <p><strong>Address:</strong> {contactDetails.address}, {contactDetails.city} {contactDetails.postalCode}</p>
+                     <p><strong>{t('common.date')}:</strong> {pickupDate && format(pickupDate, 'PPP')}</p>
+                    <p><strong>{t('common.time')}:</strong> {pickupTime}</p>
+                    <p><strong>{t('pickup.address')}:</strong> {contactDetails.address}, {contactDetails.city} {contactDetails.postalCode}</p>
                   </CardContent>
                 </Card>
 
