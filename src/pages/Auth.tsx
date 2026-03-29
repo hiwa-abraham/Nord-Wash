@@ -43,7 +43,6 @@ export default function Auth() {
     e.preventDefault();
     
     try {
-      // Validate input
       const validation = authSchema.safeParse({
         email,
         password,
@@ -86,7 +85,6 @@ export default function Auth() {
   return (
     <div className="min-h-[calc(100vh-4rem)] pt-16 flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-slide-up">
-        {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-primary shadow-glow mb-4">
             <Shirt className="w-8 h-8 text-primary-foreground" />
@@ -95,7 +93,6 @@ export default function Auth() {
           <p className="text-muted-foreground mt-2">{t('auth.tagline')}</p>
         </div>
 
-        {/* Role Selection */}
         <div className="mb-6">
           <Tabs value={role} onValueChange={(v) => setRole(v as AppRole)} className="w-full">
             <TabsList className="grid w-full grid-cols-2 h-14 bg-card">
@@ -117,7 +114,6 @@ export default function Auth() {
           </Tabs>
         </div>
 
-        {/* Auth Card */}
         <Card className="border-0 shadow-lg">
           <CardHeader className="text-center pb-4">
             <CardTitle className="text-xl">
@@ -205,7 +201,7 @@ export default function Auth() {
                   to="/forgot-password"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Forgot password?
+                  {t('auth.forgotPassword')}
                 </Link>
               </div>
             )}
