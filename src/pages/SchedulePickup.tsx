@@ -663,7 +663,7 @@ export default function SchedulePickup() {
                 {/* Contact Info */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Contact Information</CardTitle>
+                    <CardTitle className="text-lg">{t('pickup.contactInfo')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
                     <p><strong>Name:</strong> {contactDetails.name}</p>
