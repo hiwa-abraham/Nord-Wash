@@ -1,11 +1,10 @@
 /**
  * WasherEarnings.tsx - Washer Earnings Dashboard
- * 
- * Displays completed orders, earnings breakdown, and statistics for washers.
  */
 
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { 
   DollarSign,
@@ -15,12 +14,10 @@ import {
   ArrowLeft,
   Loader2,
   Package,
-  Wallet,
   PiggyBank,
-  ChevronRight,
-  Wifi
+  ChevronRight
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -38,11 +35,11 @@ interface ServiceItem {
 }
 
 export default function WasherEarnings() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, profile, isAuthenticated, isLoading: authLoading, role } = useAuth();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
-  // Use realtime hook for live updates
   const { orders, isLoading } = useOrdersRealtime({
     userId: user?.id,
     role: 'washer',
@@ -67,10 +64,8 @@ export default function WasherEarnings() {
   const monthStart = startOfMonth(now);
   const monthEnd = endOfMonth(now);
 
-  // Filter completed orders
   const completedOrders = orders.filter(o => o.status === 'completed');
   
-  // Calculate earnings
   const weeklyOrders = completedOrders.filter(o => 
     o.completed_at && isWithinInterval(new Date(o.completed_at), { start: weekStart, end: weekEnd })
   );
@@ -82,7 +77,6 @@ export default function WasherEarnings() {
   const monthlyEarnings = monthlyOrders.reduce((sum, o) => sum + o.washer_amount, 0);
   const totalEarnings = completedOrders.reduce((sum, o) => sum + o.washer_amount, 0);
 
-  // Pending earnings (orders in progress)
   const pendingOrders = orders.filter(o => ['assigned', 'in_progress', 'paid'].includes(o.status));
   const pendingEarnings = pendingOrders.reduce((sum, o) => sum + o.washer_amount, 0);
 
@@ -96,7 +90,6 @@ export default function WasherEarnings() {
 
   return (
     <main className="container mx-auto px-4 py-8 pt-24 max-w-4xl">
-        {/* Earnings Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Card className="border-0 shadow-md bg-gradient-to-br from-success/10 to-success/5">
             <CardContent className="p-5">
@@ -106,7 +99,7 @@ export default function WasherEarnings() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{formatCurrency(weeklyEarnings)}</p>
-                  <p className="text-xs text-muted-foreground">This Week</p>
+                  <p className="text-xs text-muted-foreground">{t('earnings.thisWeek')}</p>
                 </div>
               </div>
             </CardContent>
@@ -120,7 +113,7 @@ export default function WasherEarnings() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{formatCurrency(monthlyEarnings)}</p>
-                  <p className="text-xs text-muted-foreground">This Month</p>
+                  <p className="text-xs text-muted-foreground">{t('earnings.thisMonth')}</p>
                 </div>
               </div>
             </CardContent>
@@ -134,7 +127,7 @@ export default function WasherEarnings() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{formatCurrency(totalEarnings)}</p>
-                  <p className="text-xs text-muted-foreground">Total Earned</p>
+                  <p className="text-xs text-muted-foreground">{t('earnings.totalEarned')}</p>
                 </div>
               </div>
             </CardContent>
@@ -148,25 +141,24 @@ export default function WasherEarnings() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{formatCurrency(pendingEarnings)}</p>
-                  <p className="text-xs text-muted-foreground">Pending</p>
+                  <p className="text-xs text-muted-foreground">{t('earnings.pending')}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Stats Row */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <Card>
             <CardContent className="p-4 text-center">
               <p className="text-3xl font-bold text-primary">{completedOrders.length}</p>
-              <p className="text-sm text-muted-foreground">Jobs Completed</p>
+              <p className="text-sm text-muted-foreground">{t('earnings.jobsCompleted')}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
               <p className="text-3xl font-bold text-primary">{weeklyOrders.length}</p>
-              <p className="text-sm text-muted-foreground">This Week</p>
+              <p className="text-sm text-muted-foreground">{t('earnings.thisWeek')}</p>
             </CardContent>
           </Card>
           <Card>
@@ -177,21 +169,20 @@ export default function WasherEarnings() {
                   : '€0.00'
                 }
               </p>
-              <p className="text-sm text-muted-foreground">Avg. per Job</p>
+              <p className="text-sm text-muted-foreground">{t('earnings.avgPerJob')}</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Orders Tabs */}
         <Tabs defaultValue="completed" className="space-y-4">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="completed" className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4" />
-              Completed ({completedOrders.length})
+              {t('earnings.completed')} ({completedOrders.length})
             </TabsTrigger>
             <TabsTrigger value="pending" className="flex items-center gap-2">
               <Package className="w-4 h-4" />
-              In Progress ({pendingOrders.length})
+              {t('earnings.inProgress')} ({pendingOrders.length})
             </TabsTrigger>
           </TabsList>
 
@@ -200,12 +191,12 @@ export default function WasherEarnings() {
               <Card className="border-dashed">
                 <CardContent className="py-12 text-center">
                   <CheckCircle2 className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No completed jobs yet</h3>
+                  <h3 className="text-lg font-medium mb-2">{t('earnings.noCompletedJobs')}</h3>
                   <p className="text-muted-foreground mb-4">
-                    Complete your first job to start earning!
+                    {t('earnings.completeFirstJob')}
                   </p>
                   <Button onClick={() => navigate('/washer')}>
-                    View Available Jobs
+                    {t('earnings.viewAvailableJobs')}
                   </Button>
                 </CardContent>
               </Card>
@@ -227,9 +218,9 @@ export default function WasherEarnings() {
               <Card className="border-dashed">
                 <CardContent className="py-12 text-center">
                   <Package className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No pending jobs</h3>
+                  <h3 className="text-lg font-medium mb-2">{t('earnings.noPendingJobs')}</h3>
                   <p className="text-muted-foreground">
-                    Accept jobs from the dashboard to see them here.
+                    {t('earnings.acceptJobsFromDashboard')}
                   </p>
                 </CardContent>
               </Card>
@@ -248,12 +239,11 @@ export default function WasherEarnings() {
           </TabsContent>
         </Tabs>
 
-        {/* Back Button */}
         <div className="mt-8 text-center">
           <Link to="/washer">
             <Button variant="outline">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Dashboard
+              {t('common.backToDashboard')}
             </Button>
           </Link>
         </div>
@@ -270,13 +260,14 @@ interface OrderCardProps {
 }
 
 function OrderCard({ order, isExpanded, onToggle, formatCurrency, isPending }: OrderCardProps) {
+  const { t } = useTranslation();
   const services = (Array.isArray(order.services) ? order.services : []) as unknown as ServiceItem[];
 
   const statusConfig: Record<string, { label: string; color: string }> = {
-    paid: { label: 'Paid', color: 'bg-primary/10 text-primary' },
-    assigned: { label: 'Assigned', color: 'bg-secondary/10 text-secondary' },
-    in_progress: { label: 'In Progress', color: 'bg-warning/10 text-warning' },
-    completed: { label: 'Completed', color: 'bg-success/10 text-success' },
+    paid: { label: t('orders.status.paid'), color: 'bg-primary/10 text-primary' },
+    assigned: { label: t('orders.status.assigned'), color: 'bg-secondary/10 text-secondary' },
+    in_progress: { label: t('orders.status.in_progress'), color: 'bg-warning/10 text-warning' },
+    completed: { label: t('orders.status.completed'), color: 'bg-success/10 text-success' },
   };
 
   const status = statusConfig[order.status] || statusConfig.assigned;
@@ -298,7 +289,7 @@ function OrderCard({ order, isExpanded, onToggle, formatCurrency, isPending }: O
             </div>
             <div>
               <CardTitle className="text-base font-medium">
-                Order #{order.id.slice(0, 8).toUpperCase()}
+                {t('orders.orderNumber')}{order.id.slice(0, 8).toUpperCase()}
               </CardTitle>
               <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
                 <Calendar className="w-3.5 h-3.5" />
@@ -329,17 +320,15 @@ function OrderCard({ order, isExpanded, onToggle, formatCurrency, isPending }: O
       {isExpanded && (
         <CardContent className="pt-0 border-t">
           <div className="pt-4 space-y-4">
-            {/* Customer Info */}
             <div className="bg-muted/30 rounded-lg p-4">
-              <p className="text-sm font-medium mb-1">Customer</p>
+              <p className="text-sm font-medium mb-1">{t('earnings.customer')}</p>
               <p className="text-sm text-muted-foreground">{order.customer_name}</p>
               <p className="text-sm text-muted-foreground">{order.pickup_address}, {order.pickup_city}</p>
             </div>
 
-            {/* Services */}
             {services.length > 0 && (
               <div>
-                <p className="text-sm font-medium mb-2">Services Provided</p>
+                <p className="text-sm font-medium mb-2">{t('earnings.servicesProvided')}</p>
                 <div className="space-y-1">
                   {services.map((service, idx) => (
                     <div key={idx} className="flex justify-between text-sm">
@@ -355,30 +344,28 @@ function OrderCard({ order, isExpanded, onToggle, formatCurrency, isPending }: O
 
             <Separator />
 
-            {/* Earnings Breakdown */}
             <div>
-              <p className="text-sm font-medium mb-2">Your Earnings Breakdown</p>
+              <p className="text-sm font-medium mb-2">{t('earnings.earningsBreakdown')}</p>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Transport Fee (yours)</span>
+                  <span>{t('earnings.transportFeeYours')}</span>
                   <span>{formatCurrency(order.transport_fee)}</span>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Service Share (90%)</span>
+                  <span>{t('earnings.serviceShare')}</span>
                   <span>{formatCurrency(order.washer_amount - order.transport_fee)}</span>
                 </div>
                 <Separator className="my-2" />
                 <div className="flex justify-between font-semibold">
-                  <span>Your Total</span>
+                  <span>{t('earnings.yourTotal')}</span>
                   <span className="text-success">{formatCurrency(order.washer_amount)}</span>
                 </div>
               </div>
             </div>
 
-            {/* Completed Date */}
             {order.completed_at && (
               <div className="text-xs text-muted-foreground">
-                Completed on {format(new Date(order.completed_at), 'MMM d, yyyy at h:mm a')}
+                {t('common.completedOn')} {format(new Date(order.completed_at), 'MMM d, yyyy at h:mm a')}
               </div>
             )}
           </div>
