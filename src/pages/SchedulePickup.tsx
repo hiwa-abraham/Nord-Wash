@@ -461,7 +461,7 @@ export default function SchedulePickup() {
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                       <User className="w-5 h-5 text-primary" />
-                      Personal Information
+                      {t('pickup.personalInfo')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
