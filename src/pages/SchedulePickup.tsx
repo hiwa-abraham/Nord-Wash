@@ -302,8 +302,8 @@ export default function SchedulePickup() {
                             <div className="flex items-center gap-2">
                               <h3 className="font-semibold">{service.name}</h3>
                               {hasDiscount && (
-                                <span className="text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-medium">
-                                  {service.discountPercent}% OFF
+                                 <span className="text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-medium">
+                                  {service.discountPercent}% {t('services.off')}
                                 </span>
                               )}
                             </div>
