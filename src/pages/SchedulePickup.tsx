@@ -666,11 +666,11 @@ export default function SchedulePickup() {
                     <CardTitle className="text-lg">{t('pickup.contactInfo')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
-                    <p><strong>Name:</strong> {contactDetails.name}</p>
-                    <p><strong>Phone:</strong> {contactDetails.phone}</p>
-                    <p><strong>Email:</strong> {contactDetails.email}</p>
+                     <p><strong>{t('common.name')}:</strong> {contactDetails.name}</p>
+                    <p><strong>{t('common.phone')}:</strong> {contactDetails.phone}</p>
+                    <p><strong>{t('common.email')}:</strong> {contactDetails.email}</p>
                     {contactDetails.specialInstructions && (
-                      <p><strong>Notes:</strong> {contactDetails.specialInstructions}</p>
+                      <p><strong>{t('common.notes')}:</strong> {contactDetails.specialInstructions}</p>
                     )}
                   </CardContent>
                 </Card>
