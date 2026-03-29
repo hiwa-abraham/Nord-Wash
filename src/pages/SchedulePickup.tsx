@@ -601,9 +601,9 @@ export default function SchedulePickup() {
                 {t('pickup.backToDetails')}
               </Button>
 
-              <h1 className="text-3xl font-display font-bold mb-2">Review Your Order</h1>
+               <h1 className="text-3xl font-display font-bold mb-2">{t('pickup.reviewYourOrder')}</h1>
               <p className="text-muted-foreground mb-8">
-                Please review your order details before confirming.
+                {t('pickup.reviewOrderDesc')}
               </p>
 
               <div className="space-y-6">
