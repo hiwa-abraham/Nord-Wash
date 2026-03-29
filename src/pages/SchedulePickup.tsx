@@ -273,7 +273,7 @@ export default function SchedulePickup() {
               )}>
                 <CreditCard className="w-4 h-4" />
               </div>
-              <span className="text-sm font-medium hidden sm:inline">Payment</span>
+              <span className="text-sm font-medium hidden sm:inline">{t('pickup.steps.payment')}</span>
             </div>
           </div>
 
