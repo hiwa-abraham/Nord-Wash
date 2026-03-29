@@ -23,20 +23,20 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Separator } from '@/components/ui/separator';
 import { BackButton } from '@/components/BackButton';
 
-const menuItems = [
-  { label: 'Home', href: '/', icon: Home },
-  { label: 'Services', href: '/services', icon: Sparkles },
-  { label: 'Orders', href: '/orders', icon: History },
-  { label: 'Help', href: '/help', icon: HelpCircle },
-  { label: 'Settings', href: '/settings', icon: Settings, requiresAuth: true },
-];
-
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, logout, user, isAdmin } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const menuItems = [
+    { label: t('common.home'), href: '/', icon: Home },
+    { label: t('common.services'), href: '/services', icon: Sparkles },
+    { label: t('common.orders'), href: '/orders', icon: History },
+    { label: t('common.help'), href: '/help', icon: HelpCircle },
+    { label: t('common.settings'), href: '/settings', icon: Settings, requiresAuth: true },
+  ];
 
   const getUserInitials = () => {
     if (!user?.email) return 'U';
@@ -57,7 +57,6 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/40">
       <div className="flex items-center justify-between h-14 px-4">
-        {/* Left: Hamburger + Back */}
         <div className="flex items-center gap-0.5 shrink-0">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -67,7 +66,6 @@ export function Header() {
             </SheetTrigger>
           <SheetContent side="left" className="w-72 p-0 gap-0">
             <div className="flex flex-col h-full">
-              {/* Sidebar Header */}
               <div className="flex items-center gap-3 px-5 py-4 border-b border-border/50">
                 <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center">
                   <Droplets className="w-5 h-5 text-primary-foreground" />
@@ -75,7 +73,6 @@ export function Header() {
                 <span className="font-display font-bold text-lg">NordWash</span>
               </div>
 
-              {/* User Card (if authenticated) */}
               {isAuthenticated && (
                 <div className="px-4 py-3 border-b border-border/30">
                   <button 
@@ -101,7 +98,6 @@ export function Header() {
                 </div>
               )}
 
-              {/* Navigation */}
               <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
                 {menuItems
                   .filter((item) => !item.requiresAuth || isAuthenticated)
@@ -109,7 +105,7 @@ export function Header() {
                   const isActive = location.pathname === item.href;
                   return (
                     <button
-                      key={item.label}
+                      key={item.href}
                       className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                         isActive
                           ? 'bg-primary/10 text-primary'
@@ -127,7 +123,7 @@ export function Header() {
                   <>
                     <Separator className="my-2" />
                     <p className="px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
-                      Admin
+                      {t('common.admin')}
                     </p>
                     <button
                       className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
@@ -138,13 +134,12 @@ export function Header() {
                       onClick={() => handleNavClick('/admin/security')}
                     >
                       <Shield className="w-[18px] h-[18px] shrink-0" />
-                      <span>Security</span>
+                      <span>{t('common.security')}</span>
                     </button>
                   </>
                 )}
               </nav>
 
-              {/* Footer */}
               <div className="px-3 pb-4 pt-2 border-t border-border/40 space-y-2">
                 <div className="flex items-center gap-2 px-3 py-2">
                   <Globe className="w-4 h-4 text-muted-foreground" />
@@ -173,7 +168,6 @@ export function Header() {
           <BackButton />
         </div>
 
-        {/* Center: Logo */}
         <Link to="/" className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
           <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
             <Droplets className="w-4 h-4 text-primary-foreground" />
@@ -181,7 +175,6 @@ export function Header() {
           <span className="font-display font-bold text-base">NordWash</span>
         </Link>
 
-        {/* Right: Avatar or Login */}
         {isAuthenticated ? (
           <button onClick={() => navigate('/customer')} className="h-9 w-9 shrink-0">
             <Avatar className="h-8 w-8 ring-1 ring-border/50">

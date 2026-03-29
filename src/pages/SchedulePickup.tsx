@@ -16,6 +16,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -70,6 +71,7 @@ interface ContactDetails {
 }
 
 export default function SchedulePickup() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { activeServices } = useServices();
@@ -147,7 +149,7 @@ export default function SchedulePickup() {
     if (result.success === false) {
       setValidationErrors(result.errors);
       toast({
-        title: 'Validation Error',
+        title: t('pickup.validationError'),
         description: getFirstError(result.errors),
         variant: 'destructive',
       });
@@ -233,7 +235,7 @@ export default function SchedulePickup() {
               )}>
                 {step !== 'services' ? <CheckCircle2 className="w-5 h-5" /> : '1'}
               </div>
-              <span className="text-sm font-medium hidden sm:inline">Services</span>
+              <span className="text-sm font-medium hidden sm:inline">{t('pickup.steps.services')}</span>
             </div>
             <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
             
@@ -246,7 +248,7 @@ export default function SchedulePickup() {
               )}>
                 {['confirm', 'payment'].includes(step) ? <CheckCircle2 className="w-5 h-5" /> : '2'}
               </div>
-              <span className="text-sm font-medium hidden sm:inline">Details</span>
+              <span className="text-sm font-medium hidden sm:inline">{t('pickup.steps.details')}</span>
             </div>
             <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
             
@@ -259,7 +261,7 @@ export default function SchedulePickup() {
               )}>
                 {step === 'payment' ? <CheckCircle2 className="w-5 h-5" /> : '3'}
               </div>
-              <span className="text-sm font-medium hidden sm:inline">Review</span>
+              <span className="text-sm font-medium hidden sm:inline">{t('pickup.steps.review')}</span>
             </div>
             <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
             
@@ -271,16 +273,16 @@ export default function SchedulePickup() {
               )}>
                 <CreditCard className="w-4 h-4" />
               </div>
-              <span className="text-sm font-medium hidden sm:inline">Payment</span>
+              <span className="text-sm font-medium hidden sm:inline">{t('pickup.steps.payment')}</span>
             </div>
           </div>
 
           {/* Step 1: Service Selection */}
           {step === 'services' && (
             <>
-              <h1 className="text-3xl font-display font-bold mb-2">Schedule Pickup</h1>
+              <h1 className="text-3xl font-display font-bold mb-2">{t('pickup.title')}</h1>
               <p className="text-muted-foreground mb-8">
-                Select the services you need and specify the quantity in kilograms.
+                {t('pickup.selectServicesDesc')}
               </p>
 
               <div className="space-y-4 mb-8">
@@ -300,8 +302,8 @@ export default function SchedulePickup() {
                             <div className="flex items-center gap-2">
                               <h3 className="font-semibold">{service.name}</h3>
                               {hasDiscount && (
-                                <span className="text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-medium">
-                                  {service.discountPercent}% OFF
+                                 <span className="text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-medium">
+                                  {service.discountPercent}% {t('services.off')}
                                 </span>
                               )}
                             </div>
@@ -359,12 +361,12 @@ export default function SchedulePickup() {
               {/* Pickup Date & Time */}
               <Card className="mb-8">
                 <CardHeader>
-                  <CardTitle className="text-lg">Pickup Schedule</CardTitle>
+                  <CardTitle className="text-lg">{t('pickup.pickupSchedule')}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Pickup Date</Label>
+                      <Label>{t('pickup.pickupDate')}</Label>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -375,7 +377,7 @@ export default function SchedulePickup() {
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {pickupDate ? format(pickupDate, "PPP") : "Select date"}
+                            {pickupDate ? format(pickupDate, "PPP") : t('pickup.selectDate')}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
@@ -391,10 +393,10 @@ export default function SchedulePickup() {
                       </Popover>
                     </div>
                     <div className="space-y-2">
-                      <Label>Pickup Time</Label>
+                      <Label>{t('pickup.pickupTime')}</Label>
                       <Select value={pickupTime} onValueChange={setPickupTime}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select time slot" />
+                          <SelectValue placeholder={t('pickup.selectTime')} />
                         </SelectTrigger>
                         <SelectContent>
                           {timeSlots.map((slot) => (
@@ -414,7 +416,7 @@ export default function SchedulePickup() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Total (incl. fees)</p>
+                      <p className="text-sm text-muted-foreground">{t('pickup.totalInclFees')}</p>
                       <p className="text-2xl font-bold">€{totalWithFees.toFixed(2)}</p>
                       {hasSelections && (
                         <p className="text-xs text-muted-foreground">
@@ -428,7 +430,7 @@ export default function SchedulePickup() {
                       disabled={!canProceedToDetails}
                       onClick={() => setStep('details')}
                     >
-                      Continue
+                       {t('common.continue')}
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
@@ -445,13 +447,13 @@ export default function SchedulePickup() {
                 className="mb-4"
                 onClick={() => setStep('services')}
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Services
+                 <ArrowLeft className="w-4 h-4 mr-2" />
+                {t('pickup.backToServices')}
               </Button>
 
-              <h1 className="text-3xl font-display font-bold mb-2">Contact Details</h1>
+               <h1 className="text-3xl font-display font-bold mb-2">{t('pickup.contactDetails')}</h1>
               <p className="text-muted-foreground mb-8">
-                Enter your pickup address and contact information.
+                {t('pickup.contactDetailsDesc')}
               </p>
 
               <div className="space-y-6">
@@ -459,13 +461,13 @@ export default function SchedulePickup() {
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                       <User className="w-5 h-5 text-primary" />
-                      Personal Information
+                      {t('pickup.personalInfo')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="name">Full Name *</Label>
+                        <Label htmlFor="name">{t('pickup.fullName')}</Label>
                         <Input
                           id="name"
                           placeholder="John Doe"
@@ -476,7 +478,7 @@ export default function SchedulePickup() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Label htmlFor="phone">{t('pickup.phoneNumber')}</Label>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <Input
@@ -492,7 +494,7 @@ export default function SchedulePickup() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email Address *</Label>
+                      <Label htmlFor="email">{t('pickup.emailAddress')}</Label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <Input
@@ -514,12 +516,12 @@ export default function SchedulePickup() {
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-primary" />
-                      Pickup Address
+                      {t('pickup.pickupAddress')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="address">Street Address *</Label>
+                      <Label htmlFor="address">{t('pickup.streetAddressRequired')}</Label>
                       <Input
                         id="address"
                         placeholder="123 Main Street, Apt 4B"
@@ -531,7 +533,7 @@ export default function SchedulePickup() {
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="city">City *</Label>
+                        <Label htmlFor="city">{t('pickup.cityRequired')}</Label>
                         <Input
                           id="city"
                           placeholder="Oslo"
@@ -542,7 +544,7 @@ export default function SchedulePickup() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="postalCode">Postal Code</Label>
+                        <Label htmlFor="postalCode">{t('pickup.postalCode')}</Label>
                         <Input
                           id="postalCode"
                           placeholder="0123"
@@ -554,10 +556,10 @@ export default function SchedulePickup() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="instructions">Special Instructions</Label>
+                      <Label htmlFor="instructions">{t('pickup.specialInstructions')}</Label>
                       <Textarea
                         id="instructions"
-                        placeholder="Gate code, delivery notes, etc."
+                        placeholder={t('pickup.specialInstructionsPlaceholder')}
                         rows={3}
                         value={contactDetails.specialInstructions}
                         onChange={(e) =>
@@ -579,7 +581,7 @@ export default function SchedulePickup() {
                     disabled={!canProceedToConfirm}
                     onClick={handleProceedToConfirm}
                   >
-                    Review Order
+                     {t('pickup.proceedToReview')}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
@@ -595,20 +597,20 @@ export default function SchedulePickup() {
                 className="mb-4"
                 onClick={() => setStep('details')}
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Details
+                 <ArrowLeft className="w-4 h-4 mr-2" />
+                {t('pickup.backToDetails')}
               </Button>
 
-              <h1 className="text-3xl font-display font-bold mb-2">Review Your Order</h1>
+               <h1 className="text-3xl font-display font-bold mb-2">{t('pickup.reviewYourOrder')}</h1>
               <p className="text-muted-foreground mb-8">
-                Please review your order details before confirming.
+                {t('pickup.reviewOrderDesc')}
               </p>
 
               <div className="space-y-6">
                 {/* Order Summary */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Order Summary</CardTitle>
+                    <CardTitle className="text-lg">{t('pickup.orderSummary')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {selections.map((sel) => {
@@ -627,20 +629,20 @@ export default function SchedulePickup() {
                     })}
                     <Separator />
                     <div className="flex justify-between text-muted-foreground">
-                      <span>Subtotal (Services)</span>
+                      <span>{t('pickup.subtotalServices')}</span>
                       <span>€{totalPrice.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-muted-foreground">
-                      <span>Pickup Fee</span>
+                      <span>{t('pickup.pickupFee')}</span>
                       <span>€{TRANSPORT_FEE.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-muted-foreground">
-                      <span>Service Fee</span>
+                      <span>{t('common.serviceFee')}</span>
                       <span>€{SERVICE_FEE.toFixed(2)}</span>
                     </div>
                     <Separator />
                     <div className="flex justify-between text-lg font-bold">
-                      <span>Total</span>
+                      <span>{t('common.total')}</span>
                       <span className="text-primary">€{totalWithFees.toFixed(2)}</span>
                     </div>
                   </CardContent>
@@ -649,26 +651,26 @@ export default function SchedulePickup() {
                 {/* Pickup Details */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Pickup Details</CardTitle>
+                    <CardTitle className="text-lg">{t('pickup.pickupDetails')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
-                    <p><strong>Date:</strong> {pickupDate && format(pickupDate, 'PPP')}</p>
-                    <p><strong>Time:</strong> {pickupTime}</p>
-                    <p><strong>Address:</strong> {contactDetails.address}, {contactDetails.city} {contactDetails.postalCode}</p>
+                     <p><strong>{t('common.date')}:</strong> {pickupDate && format(pickupDate, 'PPP')}</p>
+                    <p><strong>{t('common.time')}:</strong> {pickupTime}</p>
+                    <p><strong>{t('pickup.address')}:</strong> {contactDetails.address}, {contactDetails.city} {contactDetails.postalCode}</p>
                   </CardContent>
                 </Card>
 
                 {/* Contact Info */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Contact Information</CardTitle>
+                    <CardTitle className="text-lg">{t('pickup.contactInfo')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
-                    <p><strong>Name:</strong> {contactDetails.name}</p>
-                    <p><strong>Phone:</strong> {contactDetails.phone}</p>
-                    <p><strong>Email:</strong> {contactDetails.email}</p>
+                     <p><strong>{t('common.name')}:</strong> {contactDetails.name}</p>
+                    <p><strong>{t('common.phone')}:</strong> {contactDetails.phone}</p>
+                    <p><strong>{t('common.email')}:</strong> {contactDetails.email}</p>
                     {contactDetails.specialInstructions && (
-                      <p><strong>Notes:</strong> {contactDetails.specialInstructions}</p>
+                      <p><strong>{t('common.notes')}:</strong> {contactDetails.specialInstructions}</p>
                     )}
                   </CardContent>
                 </Card>
@@ -680,7 +682,7 @@ export default function SchedulePickup() {
                   onClick={() => setStep('payment')}
                 >
                   <CreditCard className="w-5 h-5 mr-2" />
-                  Proceed to Payment - €{totalWithFees.toFixed(2)}
+                  {t('pickup.proceedToPayment')} - €{totalWithFees.toFixed(2)}
                 </Button>
               </div>
             </>

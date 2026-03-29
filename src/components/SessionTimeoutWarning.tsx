@@ -2,6 +2,7 @@
  * SessionTimeoutWarning - Warning dialog before automatic logout
  */
 
+import { useTranslation } from 'react-i18next';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,6 +28,7 @@ export function SessionTimeoutWarning({
   onExtend,
   onLogout,
 }: SessionTimeoutWarningProps) {
+  const { t } = useTranslation();
   const minutes = Math.floor(remainingSeconds / 60);
   const seconds = remainingSeconds % 60;
   
@@ -40,15 +42,11 @@ export function SessionTimeoutWarning({
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5 text-warning" />
-            Session Expiring Soon
+            {t('sessionTimeout.title')}
           </AlertDialogTitle>
           <AlertDialogDescription className="space-y-2">
-            <p>
-              Your session will expire in <strong className="text-foreground">{timeDisplay}</strong> due to inactivity.
-            </p>
-            <p>
-              Would you like to stay logged in?
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t('sessionTimeout.message', { time: timeDisplay }) }} />
+            <p>{t('sessionTimeout.stayQuestion')}</p>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -57,13 +55,13 @@ export function SessionTimeoutWarning({
             className="gap-2"
           >
             <LogOut className="h-4 w-4" />
-            Log Out Now
+            {t('sessionTimeout.logOutNow')}
           </AlertDialogCancel>
           <AlertDialogAction 
             onClick={onExtend}
             className="bg-primary hover:bg-primary/90"
           >
-            Stay Logged In
+            {t('sessionTimeout.stayLoggedIn')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

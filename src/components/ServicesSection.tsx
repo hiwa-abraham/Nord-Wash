@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Service } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles } from 'lucide-react';
@@ -7,6 +8,8 @@ interface ServicesSectionProps {
 }
 
 export function ServicesSection({ services }: ServicesSectionProps) {
+  const { t } = useTranslation();
+
   const calculateDiscountedPrice = (price: number, discount: number) => {
     return price - (price * discount) / 100;
   };
@@ -16,10 +19,10 @@ export function ServicesSection({ services }: ServicesSectionProps) {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Our Services
+            {t('services.ourServices')}
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Professional laundry care at competitive prices. Quality service you can trust.
+            {t('services.ourServicesDesc')}
           </p>
         </div>
 
@@ -31,7 +34,7 @@ export function ServicesSection({ services }: ServicesSectionProps) {
             >
               {service.discountPercent > 0 && (
                 <Badge className="absolute top-4 right-4 bg-destructive text-destructive-foreground">
-                  {service.discountPercent}% OFF
+                  {service.discountPercent}% {t('services.off')}
                 </Badge>
               )}
               
@@ -53,14 +56,14 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                     <span className="text-sm text-muted-foreground line-through">
                       ${service.pricePerKg.toFixed(2)}
                     </span>
-                    <span className="text-sm text-muted-foreground">/kg</span>
+                    <span className="text-sm text-muted-foreground">{t('services.perKg')}</span>
                   </>
                 ) : (
                   <>
                     <span className="text-2xl font-bold text-primary">
                       ${service.pricePerKg.toFixed(2)}
                     </span>
-                    <span className="text-sm text-muted-foreground">/kg</span>
+                    <span className="text-sm text-muted-foreground">{t('services.perKg')}</span>
                   </>
                 )}
               </div>

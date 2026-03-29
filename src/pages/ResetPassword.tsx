@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,19 +18,8 @@ const passwordSchema = z
   .regex(/[a-z]/, 'Must contain at least 1 lowercase letter')
   .regex(/[0-9]/, 'Must contain at least 1 number');
 
-interface PasswordRule {
-  label: string;
-  test: (v: string) => boolean;
-}
-
-const rules: PasswordRule[] = [
-  { label: 'At least 8 characters', test: (v) => v.length >= 8 },
-  { label: '1 uppercase letter', test: (v) => /[A-Z]/.test(v) },
-  { label: '1 lowercase letter', test: (v) => /[a-z]/.test(v) },
-  { label: '1 number', test: (v) => /[0-9]/.test(v) },
-];
-
 export default function ResetPassword() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -37,6 +27,13 @@ export default function ResetPassword() {
   const [error, setError] = useState('');
   const [isValidSession, setIsValidSession] = useState(false);
   const [checking, setChecking] = useState(true);
+
+  const rules = [
+    { label: t('resetPassword.rules.minLength'), test: (v: string) => v.length >= 8 },
+    { label: t('resetPassword.rules.uppercase'), test: (v: string) => /[A-Z]/.test(v) },
+    { label: t('resetPassword.rules.lowercase'), test: (v: string) => /[a-z]/.test(v) },
+    { label: t('resetPassword.rules.number'), test: (v: string) => /[0-9]/.test(v) },
+  ];
 
   useEffect(() => {
     let settled = false;
@@ -48,18 +45,14 @@ export default function ResetPassword() {
       setChecking(false);
     };
 
-    // 1. Listen for auth events FIRST (before any async calls)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('[ResetPassword] auth event:', event);
       if (event === 'PASSWORD_RECOVERY') {
         settle(true);
       } else if (event === 'SIGNED_IN' && session) {
-        // On /reset-password page, SIGNED_IN means recovery flow completed
         settle(true);
       }
     });
 
-    // 2. Handle PKCE code exchange
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
 
@@ -67,15 +60,10 @@ export default function ResetPassword() {
       supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
         if (data?.session && !error) {
           settle(true);
-        } else {
-          console.error('[ResetPassword] Code exchange failed:', error?.message);
-          // Don't settle false yet — onAuthStateChange may still fire
         }
       });
     }
 
-    // 3. Check for hash fragments (implicit flow) or existing session
-    // getSession() also processes hash fragments in the URL
     const checkSession = () => {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session) {
@@ -84,12 +72,9 @@ export default function ResetPassword() {
       });
     };
 
-    // Check immediately and again after a delay to handle async token processing
     checkSession();
     const t1 = setTimeout(checkSession, 1500);
     const t2 = setTimeout(checkSession, 4000);
-
-    // Final fallback — give up after 6s
     const tFinal = setTimeout(() => settle(false), 6000);
 
     return () => {
@@ -111,7 +96,7 @@ export default function ResetPassword() {
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('resetPassword.passwordsNoMatch'));
       return;
     }
 
@@ -124,12 +109,11 @@ export default function ResetPassword() {
         return;
       }
 
-      // Sign out to invalidate all sessions after password reset
       await supabase.auth.signOut();
-      toast.success('Password reset successfully. Please log in with your new password.');
+      toast.success(t('resetPassword.passwordResetSuccess'));
       navigate('/auth');
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError(t('auth.somethingWrong'));
     } finally {
       setIsLoading(false);
     }
@@ -148,9 +132,9 @@ export default function ResetPassword() {
       <div className="min-h-[calc(100vh-4rem)] pt-16 flex items-center justify-center p-4">
         <Card className="w-full max-w-md border-0 shadow-lg">
           <CardHeader className="text-center">
-            <CardTitle className="text-xl">Invalid or expired link</CardTitle>
+            <CardTitle className="text-xl">{t('resetPassword.invalidLink')}</CardTitle>
             <CardDescription>
-              This password reset link is no longer valid. Please request a new one.
+              {t('resetPassword.invalidLinkDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -158,7 +142,7 @@ export default function ResetPassword() {
               className="w-full h-12"
               onClick={() => navigate('/forgot-password')}
             >
-              Request new link
+              {t('resetPassword.requestNewLink')}
             </Button>
           </CardContent>
         </Card>
@@ -169,7 +153,6 @@ export default function ResetPassword() {
   return (
     <div className="min-h-[calc(100vh-4rem)] pt-16 flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-slide-up">
-        {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-primary shadow-glow mb-4">
             <Shirt className="w-8 h-8 text-primary-foreground" />
@@ -179,15 +162,15 @@ export default function ResetPassword() {
 
         <Card className="border-0 shadow-lg">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="text-xl">Set new password</CardTitle>
+            <CardTitle className="text-xl">{t('resetPassword.setNewPassword')}</CardTitle>
             <CardDescription>
-              Choose a strong password for your account.
+              {t('resetPassword.setNewPasswordDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="password">New password</Label>
+                <Label htmlFor="password">{t('resetPassword.newPassword')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -202,7 +185,6 @@ export default function ResetPassword() {
                   />
                 </div>
 
-                {/* Inline validation */}
                 {password.length > 0 && (
                   <div className="space-y-1 pt-1">
                     {rules.map((rule) => {
@@ -225,7 +207,7 @@ export default function ResetPassword() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm password</Label>
+                <Label htmlFor="confirm-password">{t('resetPassword.confirmPassword')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -253,7 +235,7 @@ export default function ResetPassword() {
                 {isLoading ? (
                   <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
                 ) : (
-                  'Reset password'
+                  t('resetPassword.resetPassword')
                 )}
               </Button>
             </form>
