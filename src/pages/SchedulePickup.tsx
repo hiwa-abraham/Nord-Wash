@@ -248,7 +248,7 @@ export default function SchedulePickup() {
               )}>
                 {['confirm', 'payment'].includes(step) ? <CheckCircle2 className="w-5 h-5" /> : '2'}
               </div>
-              <span className="text-sm font-medium hidden sm:inline">Details</span>
+              <span className="text-sm font-medium hidden sm:inline">{t('pickup.steps.details')}</span>
             </div>
             <Separator className="w-4 sm:w-8 mx-1 sm:mx-2" />
             
