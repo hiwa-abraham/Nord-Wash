@@ -393,7 +393,7 @@ export default function SchedulePickup() {
                       </Popover>
                     </div>
                     <div className="space-y-2">
-                      <Label>Pickup Time</Label>
+                      <Label>{t('pickup.pickupTime')}</Label>
                       <Select value={pickupTime} onValueChange={setPickupTime}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select time slot" />
