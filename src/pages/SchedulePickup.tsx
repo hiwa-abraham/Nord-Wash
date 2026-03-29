@@ -396,7 +396,7 @@ export default function SchedulePickup() {
                       <Label>{t('pickup.pickupTime')}</Label>
                       <Select value={pickupTime} onValueChange={setPickupTime}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select time slot" />
+                          <SelectValue placeholder={t('pickup.selectTime')} />
                         </SelectTrigger>
                         <SelectContent>
                           {timeSlots.map((slot) => (
