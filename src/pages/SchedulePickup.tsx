@@ -71,6 +71,7 @@ interface ContactDetails {
 }
 
 export default function SchedulePickup() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { activeServices } = useServices();
