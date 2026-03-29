@@ -556,7 +556,7 @@ export default function SchedulePickup() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="instructions">Special Instructions</Label>
+                      <Label htmlFor="instructions">{t('pickup.specialInstructions')}</Label>
                       <Textarea
                         id="instructions"
                         placeholder="Gate code, delivery notes, etc."
