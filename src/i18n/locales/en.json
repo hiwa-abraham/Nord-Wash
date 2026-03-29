@@ -39,7 +39,11 @@
     "email": "Email",
     "notes": "Notes",
     "backToDashboard": "Back to Dashboard",
-    "completedOn": "Completed on"
+    "completedOn": "Completed on",
+    "admin": "Admin",
+    "security": "Security",
+    "password": "Password",
+    "processing": "Processing..."
   },
   "nav": {
     "schedulePickup": "Schedule Pickup",
@@ -69,7 +73,9 @@
     "serviceFee": "Service Fee",
     "pickupFee": "Pickup Fee",
     "serviceFeeDesc": "Fee charged for processing each order",
-    "pickupFeeDesc": "Fee charged for pickup and delivery"
+    "pickupFeeDesc": "Fee charged for pickup and delivery",
+    "ourServices": "Our Services",
+    "ourServicesDesc": "Professional laundry care at competitive prices. Quality service you can trust."
   },
   "pickup": {
     "title": "Schedule Pickup",
@@ -110,7 +116,23 @@
     "backToDetails": "Back to Details",
     "orderSummary": "Order Summary",
     "pickupDetails": "Pickup Details",
-    "contactInfo": "Contact Information"
+    "contactInfo": "Contact Information",
+    "steps": {
+      "services": "Services",
+      "details": "Details",
+      "review": "Review",
+      "payment": "Payment"
+    },
+    "fullName": "Full Name *",
+    "phoneNumber": "Phone Number *",
+    "emailAddress": "Email Address *",
+    "streetAddressRequired": "Street Address *",
+    "cityRequired": "City *",
+    "reviewYourOrder": "Review Your Order",
+    "subtotalServices": "Subtotal (Services)",
+    "pickupFee": "Pickup Fee",
+    "proceedToPaymentAmount": "Proceed to Payment - €{{amount}}",
+    "validationError": "Validation Error"
   },
   "orders": {
     "title": "Order History",
@@ -165,6 +187,47 @@
     "invalidCredentials": "Invalid email or password",
     "emailRegistered": "This email is already registered. Please sign in.",
     "somethingWrong": "Something went wrong. Please try again."
+  },
+  "forgotPassword": {
+    "title": "Reset your password",
+    "subtitle": "Enter your email and we'll send you a reset link.",
+    "checkEmail": "Check your email",
+    "checkEmailDesc": "If an account exists with that email, you'll receive a password reset link shortly.",
+    "backToLogin": "Back to login",
+    "sendResetLink": "Send reset link"
+  },
+  "resetPassword": {
+    "invalidLink": "Invalid or expired link",
+    "invalidLinkDesc": "This password reset link is no longer valid. Please request a new one.",
+    "requestNewLink": "Request new link",
+    "setNewPassword": "Set new password",
+    "setNewPasswordDesc": "Choose a strong password for your account.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "resetPassword": "Reset password",
+    "passwordResetSuccess": "Password reset successfully. Please log in with your new password.",
+    "passwordsNoMatch": "Passwords do not match",
+    "rules": {
+      "minLength": "At least 8 characters",
+      "uppercase": "1 uppercase letter",
+      "lowercase": "1 lowercase letter",
+      "number": "1 number"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "dangerZone": "Danger Zone",
+    "dangerZoneDesc": "Permanently delete your account and all associated data. This action cannot be undone.",
+    "deleteAccount": "Delete Account",
+    "deleteAccountTitle": "Delete your account?",
+    "deleteAccountDesc": "This will permanently delete your account, profile, and all order history. This action <strong>cannot be undone</strong>.",
+    "enterPasswordConfirm": "Enter your password to confirm.",
+    "deletePermanently": "Delete permanently",
+    "accountDeleted": "Your account has been permanently deleted.",
+    "enterPassword": "Please enter your password",
+    "sessionExpired": "Session expired. Please log in again.",
+    "deleteFailed": "Failed to delete account"
   },
   "customerDashboard": {
     "hello": "Hello, {{name}}!",
@@ -231,6 +294,88 @@
     "transportFeeYours": "Transport Fee (yours)",
     "serviceShare": "Service Share (90%)",
     "yourTotal": "Your Total"
+  },
+  "payment": {
+    "title": "Payment",
+    "completePayment": "Complete your payment to confirm the pickup.",
+    "priceBreakdown": "Price Breakdown",
+    "transparentPricing": "Transparent pricing with all fees included",
+    "servicesSubtotal": "Services Subtotal",
+    "serviceFee": "Service Fee",
+    "platform": "Platform",
+    "transportFee": "Transport Fee",
+    "pickupDelivery": "Pickup & Delivery",
+    "paymentMethod": "Payment Method",
+    "choosePayment": "Choose how you'd like to pay",
+    "creditDebitCard": "Credit/Debit Card",
+    "cardDesc": "Pay securely with Visa, Mastercard, or others",
+    "bankTransfer": "Bank Transfer",
+    "bankTransferDesc": "Transfer directly to our bank account",
+    "cardSetupInfo": "Card payments are being set up. Your order will be created and you can complete payment when ready.",
+    "bankTransferInfo": "After placing your order, you'll receive bank details to complete the transfer. Your pickup will be confirmed once payment is received.",
+    "paymentDistribution": "How your payment is distributed",
+    "platformFeeCommission": "Platform fee + commission ({{percent}}%)",
+    "washerEarnings": "Washer earnings ({{percent}}% + transport)",
+    "payAmount": "Pay €{{amount}}",
+    "backToReview": "Back to Review",
+    "securePayment": "🔒 Your payment is secure and encrypted"
+  },
+  "chat": {
+    "chatWith": "Chat with {{name}}",
+    "noMessages": "No messages yet",
+    "startConversation": "Start the conversation!",
+    "typeMessage": "Type a message...",
+    "failedToSend": "Failed to send message",
+    "failedToStart": "Failed to start conversation"
+  },
+  "notifications": {
+    "enableTitle": "Enable Notifications",
+    "enableDesc": "Get instant updates when your order status changes.",
+    "enable": "Enable",
+    "enabling": "Enabling...",
+    "notNow": "Not now"
+  },
+  "createRequest": {
+    "title": "Create Laundry Request",
+    "subtitle": "Fill in the details and a washer will pick up your clothes",
+    "fixErrors": "Please fix the errors below before submitting.",
+    "requestTitle": "Request Title",
+    "laundryType": "Laundry Type",
+    "serviceType": "Service Type",
+    "selectType": "Select type",
+    "selectService": "Select service",
+    "estimatedWeight": "Estimated Weight (kg)",
+    "estimatedPrice": "Estimated Price",
+    "pickupAddress": "Pickup Address",
+    "deliveryAddress": "Delivery Address (optional)",
+    "deliveryAddressPlaceholder": "Same as pickup if empty",
+    "preferredPickupDate": "Preferred Pickup Date & Time",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe your laundry...",
+    "characters": "characters",
+    "specialInstructions": "Special Instructions (optional)",
+    "specialInstructionsPlaceholder": "Any special care instructions...",
+    "requestCreated": "Request created successfully!",
+    "signInRequired": "Please sign in to create a request",
+    "laundryTypes": {
+      "regular": "Regular Clothes",
+      "delicate": "Delicate Items",
+      "heavy": "Heavy Items (Bedding, Curtains)",
+      "mixed": "Mixed Load"
+    },
+    "serviceTypes": {
+      "wash": "Wash Only",
+      "wash-iron": "Wash & Iron",
+      "iron-only": "Iron Only",
+      "dry-clean": "Dry Clean"
+    }
+  },
+  "sessionTimeout": {
+    "title": "Session Expiring Soon",
+    "message": "Your session will expire in <strong>{{time}}</strong> due to inactivity.",
+    "stayQuestion": "Would you like to stay logged in?",
+    "logOutNow": "Log Out Now",
+    "stayLoggedIn": "Stay Logged In"
   },
   "help": {
     "title": "Help Center",
