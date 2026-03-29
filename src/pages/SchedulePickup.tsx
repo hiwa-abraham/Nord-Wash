@@ -610,7 +610,7 @@ export default function SchedulePickup() {
                 {/* Order Summary */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Order Summary</CardTitle>
+                    <CardTitle className="text-lg">{t('pickup.orderSummary')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {selections.map((sel) => {
