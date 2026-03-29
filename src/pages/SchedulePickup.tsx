@@ -559,7 +559,7 @@ export default function SchedulePickup() {
                       <Label htmlFor="instructions">{t('pickup.specialInstructions')}</Label>
                       <Textarea
                         id="instructions"
-                        placeholder="Gate code, delivery notes, etc."
+                        placeholder={t('pickup.specialInstructionsPlaceholder')}
                         rows={3}
                         value={contactDetails.specialInstructions}
                         onChange={(e) =>
