@@ -361,7 +361,7 @@ export default function SchedulePickup() {
               {/* Pickup Date & Time */}
               <Card className="mb-8">
                 <CardHeader>
-                  <CardTitle className="text-lg">Pickup Schedule</CardTitle>
+                  <CardTitle className="text-lg">{t('pickup.pickupSchedule')}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
