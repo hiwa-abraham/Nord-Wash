@@ -149,7 +149,7 @@ export default function SchedulePickup() {
     if (result.success === false) {
       setValidationErrors(result.errors);
       toast({
-        title: 'Validation Error',
+        title: t('pickup.validationError'),
         description: getFirstError(result.errors),
         variant: 'destructive',
       });
