@@ -642,7 +642,7 @@ export default function SchedulePickup() {
                     </div>
                     <Separator />
                     <div className="flex justify-between text-lg font-bold">
-                      <span>Total</span>
+                      <span>{t('common.total')}</span>
                       <span className="text-primary">€{totalWithFees.toFixed(2)}</span>
                     </div>
                   </CardContent>
