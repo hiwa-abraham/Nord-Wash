@@ -597,8 +597,8 @@ export default function SchedulePickup() {
                 className="mb-4"
                 onClick={() => setStep('details')}
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Details
+                 <ArrowLeft className="w-4 h-4 mr-2" />
+                {t('pickup.backToDetails')}
               </Button>
 
               <h1 className="text-3xl font-display font-bold mb-2">Review Your Order</h1>
