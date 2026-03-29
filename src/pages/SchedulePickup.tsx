@@ -637,7 +637,7 @@ export default function SchedulePickup() {
                       <span>€{TRANSPORT_FEE.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-muted-foreground">
-                      <span>Service Fee</span>
+                      <span>{t('common.serviceFee')}</span>
                       <span>€{SERVICE_FEE.toFixed(2)}</span>
                     </div>
                     <Separator />
