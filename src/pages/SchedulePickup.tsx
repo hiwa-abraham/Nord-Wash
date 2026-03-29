@@ -581,7 +581,7 @@ export default function SchedulePickup() {
                     disabled={!canProceedToConfirm}
                     onClick={handleProceedToConfirm}
                   >
-                    Review Order
+                     {t('pickup.proceedToReview')}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
