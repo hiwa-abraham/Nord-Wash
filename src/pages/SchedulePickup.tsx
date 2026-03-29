@@ -377,7 +377,7 @@ export default function SchedulePickup() {
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {pickupDate ? format(pickupDate, "PPP") : "Select date"}
+                            {pickupDate ? format(pickupDate, "PPP") : t('pickup.selectDate')}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
