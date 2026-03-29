@@ -451,9 +451,9 @@ export default function SchedulePickup() {
                 {t('pickup.backToServices')}
               </Button>
 
-              <h1 className="text-3xl font-display font-bold mb-2">Contact Details</h1>
+               <h1 className="text-3xl font-display font-bold mb-2">{t('pickup.contactDetails')}</h1>
               <p className="text-muted-foreground mb-8">
-                Enter your pickup address and contact information.
+                {t('pickup.contactDetailsDesc')}
               </p>
 
               <div className="space-y-6">
