@@ -629,7 +629,7 @@ export default function SchedulePickup() {
                     })}
                     <Separator />
                     <div className="flex justify-between text-muted-foreground">
-                      <span>Subtotal (Services)</span>
+                      <span>{t('pickup.subtotalServices')}</span>
                       <span>€{totalPrice.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-muted-foreground">
