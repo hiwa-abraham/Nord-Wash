@@ -516,7 +516,7 @@ export default function SchedulePickup() {
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-primary" />
-                      Pickup Address
+                      {t('pickup.pickupAddress')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
