@@ -366,7 +366,7 @@ export default function SchedulePickup() {
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Pickup Date</Label>
+                      <Label>{t('pickup.pickupDate')}</Label>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
