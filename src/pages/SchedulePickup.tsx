@@ -544,7 +544,7 @@ export default function SchedulePickup() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="postalCode">Postal Code</Label>
+                        <Label htmlFor="postalCode">{t('pickup.postalCode')}</Label>
                         <Input
                           id="postalCode"
                           placeholder="0123"
