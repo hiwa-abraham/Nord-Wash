@@ -521,7 +521,7 @@ export default function SchedulePickup() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="address">Street Address *</Label>
+                      <Label htmlFor="address">{t('pickup.streetAddressRequired')}</Label>
                       <Input
                         id="address"
                         placeholder="123 Main Street, Apt 4B"
