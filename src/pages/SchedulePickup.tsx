@@ -467,7 +467,7 @@ export default function SchedulePickup() {
                   <CardContent className="space-y-4">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="name">Full Name *</Label>
+                        <Label htmlFor="name">{t('pickup.fullName')}</Label>
                         <Input
                           id="name"
                           placeholder="John Doe"
