@@ -280,9 +280,9 @@ export default function SchedulePickup() {
           {/* Step 1: Service Selection */}
           {step === 'services' && (
             <>
-              <h1 className="text-3xl font-display font-bold mb-2">Schedule Pickup</h1>
+              <h1 className="text-3xl font-display font-bold mb-2">{t('pickup.title')}</h1>
               <p className="text-muted-foreground mb-8">
-                Select the services you need and specify the quantity in kilograms.
+                {t('pickup.selectServicesDesc')}
               </p>
 
               <div className="space-y-4 mb-8">
