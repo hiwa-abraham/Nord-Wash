@@ -430,7 +430,7 @@ export default function SchedulePickup() {
                       disabled={!canProceedToDetails}
                       onClick={() => setStep('details')}
                     >
-                      Continue
+                       {t('common.continue')}
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
