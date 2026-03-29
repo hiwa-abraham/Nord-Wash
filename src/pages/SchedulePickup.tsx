@@ -533,7 +533,7 @@ export default function SchedulePickup() {
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="city">City *</Label>
+                        <Label htmlFor="city">{t('pickup.cityRequired')}</Label>
                         <Input
                           id="city"
                           placeholder="Oslo"
