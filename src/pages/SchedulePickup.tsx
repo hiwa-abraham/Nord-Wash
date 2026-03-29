@@ -416,7 +416,7 @@ export default function SchedulePickup() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Total (incl. fees)</p>
+                      <p className="text-sm text-muted-foreground">{t('pickup.totalInclFees')}</p>
                       <p className="text-2xl font-bold">€{totalWithFees.toFixed(2)}</p>
                       {hasSelections && (
                         <p className="text-xs text-muted-foreground">
