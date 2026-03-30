@@ -39,7 +39,11 @@
     "email": "E-post",
     "notes": "Notater",
     "backToDashboard": "Tilbake til dashbordet",
-    "completedOn": "Fullført den"
+    "completedOn": "Fullført den",
+    "admin": "Admin",
+    "security": "Sikkerhet",
+    "password": "Passord",
+    "processing": "Behandler..."
   },
   "nav": {
     "schedulePickup": "Planlegg henting",
@@ -69,7 +73,9 @@
     "serviceFee": "Serviceavgift",
     "pickupFee": "Henteavgift",
     "serviceFeeDesc": "Avgift for behandling av hver bestilling",
-    "pickupFeeDesc": "Avgift for henting og levering"
+    "pickupFeeDesc": "Avgift for henting og levering",
+    "ourServices": "Våre tjenester",
+    "ourServicesDesc": "Profesjonell vaskepleie til konkurransedyktige priser. Kvalitetstjeneste du kan stole på."
   },
   "pickup": {
     "title": "Planlegg henting",
@@ -110,7 +116,23 @@
     "backToDetails": "Tilbake til detaljer",
     "orderSummary": "Bestillingsoversikt",
     "pickupDetails": "Hentedetaljer",
-    "contactInfo": "Kontaktinformasjon"
+    "contactInfo": "Kontaktinformasjon",
+    "steps": {
+      "services": "Tjenester",
+      "details": "Detaljer",
+      "review": "Gjennomgå",
+      "payment": "Betaling"
+    },
+    "fullName": "Fullt navn *",
+    "phoneNumber": "Telefonnummer *",
+    "emailAddress": "E-postadresse *",
+    "streetAddressRequired": "Gateadresse *",
+    "cityRequired": "By *",
+    "reviewYourOrder": "Gjennomgå din bestilling",
+    "subtotalServices": "Delsum (tjenester)",
+    "pickupFee": "Henteavgift",
+    "proceedToPaymentAmount": "Fortsett til betaling - €{{amount}}",
+    "validationError": "Valideringsfeil"
   },
   "orders": {
     "title": "Bestillingshistorikk",
@@ -165,6 +187,47 @@
     "invalidCredentials": "Ugyldig e-post eller passord",
     "emailRegistered": "Denne e-posten er allerede registrert. Vennligst logg inn.",
     "somethingWrong": "Noe gikk galt. Vennligst prøv igjen."
+  },
+  "forgotPassword": {
+    "title": "Tilbakestill passordet ditt",
+    "subtitle": "Oppgi e-posten din, så sender vi deg en tilbakestillingslenke.",
+    "checkEmail": "Sjekk e-posten din",
+    "checkEmailDesc": "Hvis det finnes en konto med den e-posten, vil du motta en lenke for tilbakestilling av passord snart.",
+    "backToLogin": "Tilbake til innlogging",
+    "sendResetLink": "Send tilbakestillingslenke"
+  },
+  "resetPassword": {
+    "invalidLink": "Ugyldig eller utløpt lenke",
+    "invalidLinkDesc": "Denne lenken for tilbakestilling av passord er ikke lenger gyldig. Vennligst be om en ny.",
+    "requestNewLink": "Be om ny lenke",
+    "setNewPassword": "Angi nytt passord",
+    "setNewPasswordDesc": "Velg et sterkt passord for kontoen din.",
+    "newPassword": "Nytt passord",
+    "confirmPassword": "Bekreft passord",
+    "resetPassword": "Tilbakestill passord",
+    "passwordResetSuccess": "Passordet er tilbakestilt. Vennligst logg inn med ditt nye passord.",
+    "passwordsNoMatch": "Passordene samsvarer ikke",
+    "rules": {
+      "minLength": "Minst 8 tegn",
+      "uppercase": "1 stor bokstav",
+      "lowercase": "1 liten bokstav",
+      "number": "1 tall"
+    }
+  },
+  "settings": {
+    "title": "Innstillinger",
+    "account": "Konto",
+    "dangerZone": "Faresone",
+    "dangerZoneDesc": "Slett kontoen din permanent og alle tilknyttede data. Denne handlingen kan ikke angres.",
+    "deleteAccount": "Slett konto",
+    "deleteAccountTitle": "Slette kontoen din?",
+    "deleteAccountDesc": "Dette vil permanent slette kontoen din, profilen og all bestillingshistorikk. Denne handlingen <strong>kan ikke angres</strong>.",
+    "enterPasswordConfirm": "Oppgi passordet ditt for å bekrefte.",
+    "deletePermanently": "Slett permanent",
+    "accountDeleted": "Kontoen din har blitt permanent slettet.",
+    "enterPassword": "Oppgi passordet ditt",
+    "sessionExpired": "Økten er utløpt. Vennligst logg inn igjen.",
+    "deleteFailed": "Kunne ikke slette kontoen"
   },
   "customerDashboard": {
     "hello": "Hei, {{name}}!",
@@ -231,6 +294,88 @@
     "transportFeeYours": "Transportavgift (din)",
     "serviceShare": "Tjenesteandel (90%)",
     "yourTotal": "Din totalsum"
+  },
+  "payment": {
+    "title": "Betaling",
+    "completePayment": "Fullfør betalingen din for å bekrefte hentingen.",
+    "priceBreakdown": "Prisoppdeling",
+    "transparentPricing": "Gjennomsiktig prissetting med alle avgifter inkludert",
+    "servicesSubtotal": "Tjenester delsum",
+    "serviceFee": "Serviceavgift",
+    "platform": "Plattform",
+    "transportFee": "Transportavgift",
+    "pickupDelivery": "Henting & Levering",
+    "paymentMethod": "Betalingsmetode",
+    "choosePayment": "Velg hvordan du vil betale",
+    "creditDebitCard": "Kreditt-/Debetkort",
+    "cardDesc": "Betal sikkert med Visa, Mastercard eller andre",
+    "bankTransfer": "Bankoverføring",
+    "bankTransferDesc": "Overfør direkte til vår bankkonto",
+    "cardSetupInfo": "Kortbetalinger blir satt opp. Bestillingen din opprettes, og du kan fullføre betalingen når du er klar.",
+    "bankTransferInfo": "Etter at du har lagt inn bestillingen din, mottar du bankdetaljer for å fullføre overføringen. Hentingen din bekreftes når betalingen er mottatt.",
+    "paymentDistribution": "Hvordan betalingen din fordeles",
+    "platformFeeCommission": "Plattformavgift + provisjon ({{percent}}%)",
+    "washerEarnings": "Vaskerens inntekter ({{percent}}% + transport)",
+    "payAmount": "Betal €{{amount}}",
+    "backToReview": "Tilbake til gjennomgang",
+    "securePayment": "🔒 Betalingen din er sikker og kryptert"
+  },
+  "chat": {
+    "chatWith": "Chat med {{name}}",
+    "noMessages": "Ingen meldinger ennå",
+    "startConversation": "Start samtalen!",
+    "typeMessage": "Skriv en melding...",
+    "failedToSend": "Kunne ikke sende melding",
+    "failedToStart": "Kunne ikke starte samtale"
+  },
+  "notifications": {
+    "enableTitle": "Aktiver varsler",
+    "enableDesc": "Få umiddelbare oppdateringer når bestillingsstatusen din endres.",
+    "enable": "Aktiver",
+    "enabling": "Aktiverer...",
+    "notNow": "Ikke nå"
+  },
+  "createRequest": {
+    "title": "Opprett vaskeforespørsel",
+    "subtitle": "Fyll ut detaljene, så henter en vasker klærne dine",
+    "fixErrors": "Vennligst rett feilene nedenfor før innsending.",
+    "requestTitle": "Forespørselstittel",
+    "laundryType": "Vasketype",
+    "serviceType": "Tjenestetype",
+    "selectType": "Velg type",
+    "selectService": "Velg tjeneste",
+    "estimatedWeight": "Estimert vekt (kg)",
+    "estimatedPrice": "Estimert pris",
+    "pickupAddress": "Henteadresse",
+    "deliveryAddress": "Leveringsadresse (valgfritt)",
+    "deliveryAddressPlaceholder": "Samme som henting hvis tom",
+    "preferredPickupDate": "Foretrukket hentedato & tid",
+    "description": "Beskrivelse",
+    "descriptionPlaceholder": "Beskriv klærne dine...",
+    "characters": "tegn",
+    "specialInstructions": "Spesielle instruksjoner (valgfritt)",
+    "specialInstructionsPlaceholder": "Eventuelle spesielle pleieinstruksjoner...",
+    "requestCreated": "Forespørsel opprettet!",
+    "signInRequired": "Logg inn for å opprette en forespørsel",
+    "laundryTypes": {
+      "regular": "Vanlige klær",
+      "delicate": "Ømfintlige plagg",
+      "heavy": "Tunge plagg (Sengetøy, Gardiner)",
+      "mixed": "Blandet last"
+    },
+    "serviceTypes": {
+      "wash": "Kun vask",
+      "wash-iron": "Vask & Stryking",
+      "iron-only": "Kun stryking",
+      "dry-clean": "Renseri"
+    }
+  },
+  "sessionTimeout": {
+    "title": "Økten utløper snart",
+    "message": "Økten din utløper om <strong>{{time}}</strong> på grunn av inaktivitet.",
+    "stayQuestion": "Vil du forbli innlogget?",
+    "logOutNow": "Logg ut nå",
+    "stayLoggedIn": "Forbli innlogget"
   },
   "help": {
     "title": "Hjelpesenter",

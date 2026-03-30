@@ -39,7 +39,11 @@
     "email": "Correo",
     "notes": "Notas",
     "backToDashboard": "Volver al panel",
-    "completedOn": "Completado el"
+    "completedOn": "Completado el",
+    "admin": "Admin",
+    "security": "Seguridad",
+    "password": "Contraseña",
+    "processing": "Procesando..."
   },
   "nav": {
     "schedulePickup": "Programar recogida",
@@ -69,7 +73,9 @@
     "serviceFee": "Tarifa de servicio",
     "pickupFee": "Tarifa de recogida",
     "serviceFeeDesc": "Tarifa por procesar cada pedido",
-    "pickupFeeDesc": "Tarifa por recogida y entrega"
+    "pickupFeeDesc": "Tarifa por recogida y entrega",
+    "ourServices": "Nuestros servicios",
+    "ourServicesDesc": "Cuidado profesional de lavandería a precios competitivos. Servicio de calidad en el que puedes confiar."
   },
   "pickup": {
     "title": "Programar recogida",
@@ -110,7 +116,23 @@
     "backToDetails": "Volver a datos",
     "orderSummary": "Resumen del pedido",
     "pickupDetails": "Detalles de recogida",
-    "contactInfo": "Información de contacto"
+    "contactInfo": "Información de contacto",
+    "steps": {
+      "services": "Servicios",
+      "details": "Datos",
+      "review": "Revisar",
+      "payment": "Pago"
+    },
+    "fullName": "Nombre completo *",
+    "phoneNumber": "Número de teléfono *",
+    "emailAddress": "Correo electrónico *",
+    "streetAddressRequired": "Dirección *",
+    "cityRequired": "Ciudad *",
+    "reviewYourOrder": "Revisa tu pedido",
+    "subtotalServices": "Subtotal (servicios)",
+    "pickupFee": "Tarifa de recogida",
+    "proceedToPaymentAmount": "Continuar al pago - €{{amount}}",
+    "validationError": "Error de validación"
   },
   "orders": {
     "title": "Historial de pedidos",
@@ -165,6 +187,47 @@
     "invalidCredentials": "Correo o contraseña inválidos",
     "emailRegistered": "Este correo ya está registrado. Por favor inicia sesión.",
     "somethingWrong": "Algo salió mal. Por favor intenta de nuevo."
+  },
+  "forgotPassword": {
+    "title": "Restablecer tu contraseña",
+    "subtitle": "Ingresa tu correo y te enviaremos un enlace de restablecimiento.",
+    "checkEmail": "Revisa tu correo",
+    "checkEmailDesc": "Si existe una cuenta con ese correo, recibirás un enlace de restablecimiento de contraseña en breve.",
+    "backToLogin": "Volver al inicio de sesión",
+    "sendResetLink": "Enviar enlace de restablecimiento"
+  },
+  "resetPassword": {
+    "invalidLink": "Enlace inválido o expirado",
+    "invalidLinkDesc": "Este enlace de restablecimiento de contraseña ya no es válido. Por favor solicita uno nuevo.",
+    "requestNewLink": "Solicitar nuevo enlace",
+    "setNewPassword": "Establecer nueva contraseña",
+    "setNewPasswordDesc": "Elige una contraseña segura para tu cuenta.",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "resetPassword": "Restablecer contraseña",
+    "passwordResetSuccess": "Contraseña restablecida con éxito. Por favor inicia sesión con tu nueva contraseña.",
+    "passwordsNoMatch": "Las contraseñas no coinciden",
+    "rules": {
+      "minLength": "Al menos 8 caracteres",
+      "uppercase": "1 letra mayúscula",
+      "lowercase": "1 letra minúscula",
+      "number": "1 número"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "account": "Cuenta",
+    "dangerZone": "Zona de peligro",
+    "dangerZoneDesc": "Eliminar permanentemente tu cuenta y todos los datos asociados. Esta acción no se puede deshacer.",
+    "deleteAccount": "Eliminar cuenta",
+    "deleteAccountTitle": "¿Eliminar tu cuenta?",
+    "deleteAccountDesc": "Esto eliminará permanentemente tu cuenta, perfil y todo el historial de pedidos. Esta acción <strong>no se puede deshacer</strong>.",
+    "enterPasswordConfirm": "Ingresa tu contraseña para confirmar.",
+    "deletePermanently": "Eliminar permanentemente",
+    "accountDeleted": "Tu cuenta ha sido eliminada permanentemente.",
+    "enterPassword": "Ingresa tu contraseña",
+    "sessionExpired": "Sesión expirada. Inicia sesión de nuevo.",
+    "deleteFailed": "No se pudo eliminar la cuenta"
   },
   "customerDashboard": {
     "hello": "¡Hola, {{name}}!",
@@ -231,6 +294,88 @@
     "transportFeeYours": "Tarifa de transporte (tuya)",
     "serviceShare": "Participación del servicio (90%)",
     "yourTotal": "Tu total"
+  },
+  "payment": {
+    "title": "Pago",
+    "completePayment": "Completa tu pago para confirmar la recogida.",
+    "priceBreakdown": "Desglose de precio",
+    "transparentPricing": "Precios transparentes con todas las tarifas incluidas",
+    "servicesSubtotal": "Subtotal de servicios",
+    "serviceFee": "Tarifa de servicio",
+    "platform": "Plataforma",
+    "transportFee": "Tarifa de transporte",
+    "pickupDelivery": "Recogida y entrega",
+    "paymentMethod": "Método de pago",
+    "choosePayment": "Elige cómo quieres pagar",
+    "creditDebitCard": "Tarjeta de crédito/débito",
+    "cardDesc": "Paga de forma segura con Visa, Mastercard u otras",
+    "bankTransfer": "Transferencia bancaria",
+    "bankTransferDesc": "Transfiere directamente a nuestra cuenta bancaria",
+    "cardSetupInfo": "Los pagos con tarjeta se están configurando. Tu pedido se creará y podrás completar el pago cuando estés listo.",
+    "bankTransferInfo": "Después de realizar tu pedido, recibirás los datos bancarios para completar la transferencia. Tu recogida se confirmará una vez recibido el pago.",
+    "paymentDistribution": "Cómo se distribuye tu pago",
+    "platformFeeCommission": "Tarifa de plataforma + comisión ({{percent}}%)",
+    "washerEarnings": "Ganancias del lavador ({{percent}}% + transporte)",
+    "payAmount": "Pagar €{{amount}}",
+    "backToReview": "Volver a revisión",
+    "securePayment": "🔒 Tu pago es seguro y encriptado"
+  },
+  "chat": {
+    "chatWith": "Chat con {{name}}",
+    "noMessages": "Sin mensajes aún",
+    "startConversation": "¡Inicia la conversación!",
+    "typeMessage": "Escribe un mensaje...",
+    "failedToSend": "No se pudo enviar el mensaje",
+    "failedToStart": "No se pudo iniciar la conversación"
+  },
+  "notifications": {
+    "enableTitle": "Activar notificaciones",
+    "enableDesc": "Recibe actualizaciones instantáneas cuando cambie el estado de tu pedido.",
+    "enable": "Activar",
+    "enabling": "Activando...",
+    "notNow": "Ahora no"
+  },
+  "createRequest": {
+    "title": "Crear solicitud de lavandería",
+    "subtitle": "Completa los datos y un lavador recogerá tu ropa",
+    "fixErrors": "Por favor corrige los errores antes de enviar.",
+    "requestTitle": "Título de la solicitud",
+    "laundryType": "Tipo de lavandería",
+    "serviceType": "Tipo de servicio",
+    "selectType": "Seleccionar tipo",
+    "selectService": "Seleccionar servicio",
+    "estimatedWeight": "Peso estimado (kg)",
+    "estimatedPrice": "Precio estimado",
+    "pickupAddress": "Dirección de recogida",
+    "deliveryAddress": "Dirección de entrega (opcional)",
+    "deliveryAddressPlaceholder": "Igual que la recogida si está vacío",
+    "preferredPickupDate": "Fecha y hora de recogida preferida",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Describe tu ropa...",
+    "characters": "caracteres",
+    "specialInstructions": "Instrucciones especiales (opcional)",
+    "specialInstructionsPlaceholder": "Instrucciones de cuidado especial...",
+    "requestCreated": "¡Solicitud creada con éxito!",
+    "signInRequired": "Inicia sesión para crear una solicitud",
+    "laundryTypes": {
+      "regular": "Ropa regular",
+      "delicate": "Artículos delicados",
+      "heavy": "Artículos pesados (Ropa de cama, Cortinas)",
+      "mixed": "Carga mixta"
+    },
+    "serviceTypes": {
+      "wash": "Solo lavado",
+      "wash-iron": "Lavado y planchado",
+      "iron-only": "Solo planchado",
+      "dry-clean": "Tintorería"
+    }
+  },
+  "sessionTimeout": {
+    "title": "La sesión expira pronto",
+    "message": "Tu sesión expirará en <strong>{{time}}</strong> por inactividad.",
+    "stayQuestion": "¿Deseas permanecer conectado?",
+    "logOutNow": "Cerrar sesión ahora",
+    "stayLoggedIn": "Permanecer conectado"
   },
   "help": {
     "title": "Centro de ayuda",
