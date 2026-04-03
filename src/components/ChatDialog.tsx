@@ -44,6 +44,7 @@ export default function ChatDialog({
   const [isLoading, setIsLoading] = useState(false);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(conversationId);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     setCurrentConversationId(conversationId);
