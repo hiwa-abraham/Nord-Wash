@@ -173,11 +173,28 @@ export default function ChatDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md h-[600px] flex flex-col p-0">
         <DialogHeader className="p-4 border-b">
-          <DialogTitle className="flex items-center gap-2">
-            <MessageCircle className="w-5 h-5 text-primary" />
-            {t('chat.chatWith', { name: otherUserName })}
-          </DialogTitle>
+          <div className="flex items-center justify-between">
+            <DialogTitle className="flex items-center gap-2">
+              <MessageCircle className="w-5 h-5 text-primary" />
+              {t('chat.chatWith', { name: otherUserName })}
+            </DialogTitle>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowMap(true)}
+              title={t('map.viewRoute')}
+            >
+              <MapPin className="w-5 h-5 text-muted-foreground" />
+            </Button>
+          </div>
         </DialogHeader>
+
+        <RouteMapDialog
+          open={showMap}
+          onOpenChange={setShowMap}
+          originLabel={t('map.you')}
+          destinationLabel={otherUserName}
+        />
 
         <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
           {messages.length === 0 ? (
