@@ -282,6 +282,22 @@ export default function Orders() {
                           </div>
                         )}
 
+                        {/* View Route Button */}
+                        {order.pickup_address && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full flex items-center gap-2"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setMapOrder(order);
+                            }}
+                          >
+                            <Navigation className="w-4 h-4" />
+                            {t('map.viewRoute')}
+                          </Button>
+                        )}
+
                         {/* Payment Date */}
                         {order.paid_at && (
                           <div className="text-xs text-muted-foreground">
