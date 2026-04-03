@@ -520,6 +520,20 @@
     "message": "Ops! Siden ble ikke funnet",
     "returnHome": "Tilbake til hjemmesiden"
   },
+  "map": {
+    "routeTitle": "Rute & Navigasjon",
+    "viewRoute": "Vis rute",
+    "walking": "Gange",
+    "cycling": "Sykling",
+    "driving": "Kjøring",
+    "locating": "Henter posisjonen din...",
+    "locationError": "Kunne ikke hente posisjonen din. Vennligst tillat posisjonstilgang.",
+    "destinationNotFound": "Destinasjonsadressen ble ikke funnet på kartet.",
+    "tryAgain": "Prøv igjen",
+    "yourLocation": "Din posisjon",
+    "destination": "Destinasjon",
+    "you": "Deg"
+  },
   "footer": {
     "termsOfService": "Tjenestevilkår",
     "privacyPolicy": "Personvernerklæring",

@@ -466,5 +466,6 @@
     }
   },
   "notFound": { "title": "404", "message": "Hoppsan! Sidan hittades inte", "returnHome": "Tillbaka till startsidan" },
+  "map": { "routeTitle": "Rutt & Navigation", "viewRoute": "Visa rutt", "walking": "Gång", "cycling": "Cykling", "driving": "Bilkörning", "locating": "Hämtar din plats...", "locationError": "Kunde inte hämta din plats. Tillåt platsåtkomst.", "destinationNotFound": "Destinationsadressen kunde inte hittas på kartan.", "tryAgain": "Försök igen", "yourLocation": "Din plats", "destination": "Destination", "you": "Du" },
   "footer": { "termsOfService": "Användarvillkor", "privacyPolicy": "Integritetspolicy", "allRightsReserved": "Alla rättigheter förbehållna" }
 }
