@@ -312,6 +312,17 @@ export default function Orders() {
             })}
           </div>
         )}
+
+        {/* Route Map Dialog */}
+        {mapOrder && (
+          <RouteMapDialog
+            open={!!mapOrder}
+            onOpenChange={(open) => !open && setMapOrder(null)}
+            destinationAddress={`${mapOrder.pickup_address}, ${mapOrder.pickup_city}${mapOrder.pickup_postal_code ? `, ${mapOrder.pickup_postal_code}` : ''}`}
+            originLabel={t('map.you')}
+            destinationLabel={`${mapOrder.pickup_address}, ${mapOrder.pickup_city}`}
+          />
+        )}
       </div>
     </main>
   );
