@@ -7,8 +7,9 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Send, MessageCircle } from 'lucide-react';
+import { Send, MessageCircle, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
+import RouteMapDialog from '@/components/map/RouteMapDialog';
 
 interface Message {
   id: string;
