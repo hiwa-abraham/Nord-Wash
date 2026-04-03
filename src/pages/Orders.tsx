@@ -19,7 +19,8 @@ import {
   ChevronRight,
   ArrowLeft,
   Loader2,
-  Wifi
+  Wifi,
+  Navigation
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useOrdersRealtime } from '@/hooks/useOrdersRealtime';
 import type { Tables } from '@/integrations/supabase/types';
 import { PushNotificationPrompt } from '@/components/PushNotificationPrompt';
+import RouteMapDialog from '@/components/map/RouteMapDialog';
 
 type Order = Tables<'orders'>;
 
