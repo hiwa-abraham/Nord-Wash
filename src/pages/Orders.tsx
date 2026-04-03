@@ -70,6 +70,7 @@ export default function Orders() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+  const [mapOrder, setMapOrder] = useState<Order | null>(null);
 
   // Use realtime hook for live updates
   const { orders, isLoading } = useOrdersRealtime({
