@@ -520,6 +520,20 @@
     "message": "Ups! Side ikke fundet",
     "returnHome": "Tilbage til forsiden"
   },
+  "map": {
+    "routeTitle": "Rute & Navigation",
+    "viewRoute": "Vis rute",
+    "walking": "Gang",
+    "cycling": "Cykling",
+    "driving": "Kørsel",
+    "locating": "Henter din placering...",
+    "locationError": "Kunne ikke hente din placering. Tillad venligst placeringsadgang.",
+    "destinationNotFound": "Destinationsadressen kunne ikke findes på kortet.",
+    "tryAgain": "Prøv igen",
+    "yourLocation": "Din placering",
+    "destination": "Destination",
+    "you": "Dig"
+  },
   "footer": {
     "termsOfService": "Servicevilkår",
     "privacyPolicy": "Privatlivspolitik",

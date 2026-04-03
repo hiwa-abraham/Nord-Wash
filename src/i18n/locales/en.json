@@ -520,6 +520,20 @@
     "message": "Oops! Page not found",
     "returnHome": "Return to Home"
   },
+  "map": {
+    "routeTitle": "Route & Navigation",
+    "viewRoute": "View Route",
+    "walking": "Walking",
+    "cycling": "Cycling",
+    "driving": "Driving",
+    "locating": "Getting your location...",
+    "locationError": "Unable to get your location. Please allow location access.",
+    "destinationNotFound": "Destination address could not be found on the map.",
+    "tryAgain": "Try Again",
+    "yourLocation": "Your Location",
+    "destination": "Destination",
+    "you": "You"
+  },
   "footer": {
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",

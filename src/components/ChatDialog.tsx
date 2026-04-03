@@ -7,8 +7,9 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Send, MessageCircle } from 'lucide-react';
+import { Send, MessageCircle, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
+import RouteMapDialog from '@/components/map/RouteMapDialog';
 
 interface Message {
   id: string;
@@ -43,6 +44,7 @@ export default function ChatDialog({
   const [isLoading, setIsLoading] = useState(false);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(conversationId);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     setCurrentConversationId(conversationId);
@@ -171,11 +173,28 @@ export default function ChatDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md h-[600px] flex flex-col p-0">
         <DialogHeader className="p-4 border-b">
-          <DialogTitle className="flex items-center gap-2">
-            <MessageCircle className="w-5 h-5 text-primary" />
-            {t('chat.chatWith', { name: otherUserName })}
-          </DialogTitle>
+          <div className="flex items-center justify-between">
+            <DialogTitle className="flex items-center gap-2">
+              <MessageCircle className="w-5 h-5 text-primary" />
+              {t('chat.chatWith', { name: otherUserName })}
+            </DialogTitle>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowMap(true)}
+              title={t('map.viewRoute')}
+            >
+              <MapPin className="w-5 h-5 text-muted-foreground" />
+            </Button>
+          </div>
         </DialogHeader>
+
+        <RouteMapDialog
+          open={showMap}
+          onOpenChange={setShowMap}
+          originLabel={t('map.you')}
+          destinationLabel={otherUserName}
+        />
 
         <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
           {messages.length === 0 ? (

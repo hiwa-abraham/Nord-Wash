@@ -19,7 +19,8 @@ import {
   ChevronRight,
   ArrowLeft,
   Loader2,
-  Wifi
+  Wifi,
+  Navigation
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useOrdersRealtime } from '@/hooks/useOrdersRealtime';
 import type { Tables } from '@/integrations/supabase/types';
 import { PushNotificationPrompt } from '@/components/PushNotificationPrompt';
+import RouteMapDialog from '@/components/map/RouteMapDialog';
 
 type Order = Tables<'orders'>;
 
@@ -68,6 +70,7 @@ export default function Orders() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+  const [mapOrder, setMapOrder] = useState<Order | null>(null);
 
   // Use realtime hook for live updates
   const { orders, isLoading } = useOrdersRealtime({
@@ -279,6 +282,22 @@ export default function Orders() {
                           </div>
                         )}
 
+                        {/* View Route Button */}
+                        {order.pickup_address && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full flex items-center gap-2"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setMapOrder(order);
+                            }}
+                          >
+                            <Navigation className="w-4 h-4" />
+                            {t('map.viewRoute')}
+                          </Button>
+                        )}
+
                         {/* Payment Date */}
                         {order.paid_at && (
                           <div className="text-xs text-muted-foreground">
@@ -292,6 +311,17 @@ export default function Orders() {
               );
             })}
           </div>
+        )}
+
+        {/* Route Map Dialog */}
+        {mapOrder && (
+          <RouteMapDialog
+            open={!!mapOrder}
+            onOpenChange={(open) => !open && setMapOrder(null)}
+            destinationAddress={`${mapOrder.pickup_address}, ${mapOrder.pickup_city}${mapOrder.pickup_postal_code ? `, ${mapOrder.pickup_postal_code}` : ''}`}
+            originLabel={t('map.you')}
+            destinationLabel={`${mapOrder.pickup_address}, ${mapOrder.pickup_city}`}
+          />
         )}
       </div>
     </main>

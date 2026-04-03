@@ -520,6 +520,20 @@
     "message": "¡Ups! Página no encontrada",
     "returnHome": "Volver al inicio"
   },
+  "map": {
+    "routeTitle": "Ruta y Navegación",
+    "viewRoute": "Ver ruta",
+    "walking": "A pie",
+    "cycling": "Bicicleta",
+    "driving": "En coche",
+    "locating": "Obteniendo tu ubicación...",
+    "locationError": "No se pudo obtener tu ubicación. Permite el acceso a la ubicación.",
+    "destinationNotFound": "La dirección de destino no se encontró en el mapa.",
+    "tryAgain": "Intentar de nuevo",
+    "yourLocation": "Tu ubicación",
+    "destination": "Destino",
+    "you": "Tú"
+  },
   "footer": {
     "termsOfService": "Términos de servicio",
     "privacyPolicy": "Política de privacidad",
