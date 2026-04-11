@@ -1,43 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import { Loader2 } from 'lucide-react';
 import type { LatLng } from '@/hooks/useGeolocation';
-
-// Fix default marker icons in Leaflet + Vite
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
-
-const userIcon = new L.Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
-
-const otherIcon = new L.Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-  className: 'hue-rotate-[120deg]',
-});
 
 export type TransportMode = 'foot' | 'bike' | 'car';
 
 interface RouteInfo {
-  distance: number; // meters
-  duration: number; // seconds
+  distance: number;
+  duration: number;
   geometry: [number, number][];
 }
 
@@ -48,18 +17,6 @@ interface RouteMapProps {
   destinationLabel: string;
   mode: TransportMode;
   onRouteInfo?: (info: RouteInfo | null) => void;
-}
-
-function FitBounds({ origin, destination }: { origin: LatLng; destination: LatLng }) {
-  const map = useMap();
-  useEffect(() => {
-    const bounds = L.latLngBounds(
-      [origin.lat, origin.lng],
-      [destination.lat, destination.lng]
-    );
-    map.fitBounds(bounds, { padding: [50, 50] });
-  }, [map, origin, destination]);
-  return null;
 }
 
 const OSRM_PROFILES: Record<TransportMode, string> = {
@@ -76,13 +33,9 @@ export default function RouteMap({
   mode,
   onRouteInfo,
 }: RouteMapProps) {
-  const [route, setRoute] = useState<[number, number][]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const center = useMemo<[number, number]>(
-    () => [(origin.lat + destination.lat) / 2, (origin.lng + destination.lng) / 2],
-    [origin, destination]
-  );
-
+  // Fetch route info for distance/duration
   useEffect(() => {
     const fetchRoute = async () => {
       try {
@@ -96,44 +49,57 @@ export default function RouteMap({
           const coords: [number, number][] = r.geometry.coordinates.map(
             (c: [number, number]) => [c[1], c[0]]
           );
-          setRoute(coords);
           onRouteInfo?.({
             distance: r.distance,
             duration: r.duration,
             geometry: coords,
           });
         } else {
-          setRoute([]);
           onRouteInfo?.(null);
         }
       } catch {
-        // Fallback: straight line
-        setRoute([[origin.lat, origin.lng], [destination.lat, destination.lng]]);
         onRouteInfo?.(null);
       }
     };
-
     fetchRoute();
   }, [origin, destination, mode]);
 
-  const routeColor = mode === 'foot' ? 'hsl(199, 89%, 48%)' : mode === 'bike' ? 'hsl(169, 80%, 42%)' : 'hsl(280, 70%, 55%)';
+  // Build an OpenStreetMap embed showing both markers
+  const bbox = useMemo(() => {
+    const minLat = Math.min(origin.lat, destination.lat);
+    const maxLat = Math.max(origin.lat, destination.lat);
+    const minLng = Math.min(origin.lng, destination.lng);
+    const maxLng = Math.max(origin.lng, destination.lng);
+    const padLat = Math.max((maxLat - minLat) * 0.3, 0.005);
+    const padLng = Math.max((maxLng - minLng) * 0.3, 0.005);
+    return `${minLng - padLng},${minLat - padLat},${maxLng + padLng},${maxLat + padLat}`;
+  }, [origin, destination]);
+
+  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${destination.lat},${destination.lng}`;
 
   return (
-    <MapContainer center={center} zoom={13} className="w-full h-full rounded-lg" style={{ minHeight: 300 }}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <FitBounds origin={origin} destination={destination} />
-      <Marker position={[origin.lat, origin.lng]} icon={userIcon}>
-        <Popup>{originLabel}</Popup>
-      </Marker>
-      <Marker position={[destination.lat, destination.lng]} icon={otherIcon}>
-        <Popup>{destinationLabel}</Popup>
-      </Marker>
-      {route.length > 0 && (
-        <Polyline positions={route} pathOptions={{ color: routeColor, weight: 5, opacity: 0.8 }} />
+    <div className="relative w-full rounded-lg overflow-hidden border border-border" style={{ minHeight: 300 }}>
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted/50 z-10">
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        </div>
       )}
-    </MapContainer>
+      <iframe
+        src={mapUrl}
+        className="w-full h-full border-0"
+        style={{ minHeight: 300 }}
+        loading="lazy"
+        title={`Route from ${originLabel} to ${destinationLabel}`}
+        onLoad={() => setLoading(false)}
+      />
+      <div className="absolute bottom-2 left-2 right-2 flex gap-2 text-xs">
+        <span className="bg-background/90 backdrop-blur px-2 py-1 rounded shadow text-foreground">
+          📍 {originLabel}
+        </span>
+        <span className="bg-background/90 backdrop-blur px-2 py-1 rounded shadow text-foreground">
+          📌 {destinationLabel}
+        </span>
+      </div>
+    </div>
   );
 }
