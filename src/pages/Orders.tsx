@@ -235,6 +235,12 @@ export default function Orders() {
                           </div>
                         </div>
 
+                        {/* Pickup Location Map */}
+                        <MiniLocationMap
+                          address={`${order.pickup_address}, ${order.pickup_city}${order.pickup_postal_code ? `, ${order.pickup_postal_code}` : ''}`}
+                          label={order.pickup_address}
+                        />
+
                         {/* Services */}
                         {services.length > 0 && (
                           <div>
