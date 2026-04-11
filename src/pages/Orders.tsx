@@ -31,6 +31,7 @@ import { useOrdersRealtime } from '@/hooks/useOrdersRealtime';
 import type { Tables } from '@/integrations/supabase/types';
 import { PushNotificationPrompt } from '@/components/PushNotificationPrompt';
 import RouteMapDialog from '@/components/map/RouteMapDialog';
+import MiniLocationMap from '@/components/map/MiniLocationMap';
 
 type Order = Tables<'orders'>;
 
@@ -233,6 +234,12 @@ export default function Orders() {
                             </div>
                           </div>
                         </div>
+
+                        {/* Pickup Location Map */}
+                        <MiniLocationMap
+                          address={`${order.pickup_address}, ${order.pickup_city}${order.pickup_postal_code ? `, ${order.pickup_postal_code}` : ''}`}
+                          label={order.pickup_address}
+                        />
 
                         {/* Services */}
                         {services.length > 0 && (
