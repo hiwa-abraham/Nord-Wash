@@ -36,8 +36,11 @@ import MiniLocationMap from '@/components/map/MiniLocationMap';
 type Order = Tables<'orders'>;
 
 interface ServiceItem {
-  name: string;
-  price: number;
+  name?: string;
+  serviceName?: string;
+  price?: number;
+  totalPrice?: number;
+  pricePerKg?: number;
   quantity: number;
 }
 
