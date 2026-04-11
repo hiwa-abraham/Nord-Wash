@@ -31,6 +31,7 @@ import { useOrdersRealtime } from '@/hooks/useOrdersRealtime';
 import type { Tables } from '@/integrations/supabase/types';
 import { PushNotificationPrompt } from '@/components/PushNotificationPrompt';
 import RouteMapDialog from '@/components/map/RouteMapDialog';
+import MiniLocationMap from '@/components/map/MiniLocationMap';
 
 type Order = Tables<'orders'>;
 
