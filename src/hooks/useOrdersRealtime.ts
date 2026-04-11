@@ -54,99 +54,14 @@ export function useOrdersRealtime({ userId, role, enabled = true }: UseOrdersRea
 
     fetchOrders();
 
-    // Set up realtime subscription
-    const channel = supabase
-      .channel(`orders-${role}-${truncateId(userId)}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'orders',
-        },
-        (payload) => {
-          const newOrder = payload.new as Order;
-          const isRelevant = role === 'customer' 
-            ? newOrder.customer_id === userId 
-            : newOrder.washer_id === userId;
-          
-          if (isRelevant) {
-            secureLog.debug('New order received:', truncateId(newOrder.id));
-            setOrders(prev => [newOrder, ...prev]);
-            toast.success('New order received!');
-          }
-        }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'orders',
-        },
-        (payload) => {
-          const updatedOrder = payload.new as Order;
-          const isRelevant = role === 'customer' 
-            ? updatedOrder.customer_id === userId 
-            : updatedOrder.washer_id === userId;
-          
-          if (isRelevant) {
-            secureLog.debug('Order updated:', truncateId(updatedOrder.id), 'Status:', updatedOrder.status);
-            setOrders(prev => 
-              prev.map(order => 
-                order.id === updatedOrder.id ? updatedOrder : order
-              )
-            );
-            
-            // Show status change notification
-            const oldOrder = orders.find(o => o.id === updatedOrder.id);
-            if (oldOrder && oldOrder.status !== updatedOrder.status) {
-              const notification = getOrderStatusNotification(updatedOrder.status);
-              
-              if (notification) {
-                // Show toast for in-app notification
-                toast.info(notification.title, {
-                  description: notification.body,
-                });
-                
-                // Send local notification for native apps (works in background)
-                if (Capacitor.isNativePlatform()) {
-                  LocalNotifications.schedule({
-                    notifications: [{
-                      id: Date.now(),
-                      title: notification.title,
-                      body: notification.body,
-                      extra: { orderId: updatedOrder.id },
-                    }],
-                  }).catch(err => secureLog.error('Local notification error:', err));
-                }
-              } else {
-                toast.info(`Order status: ${updatedOrder.status}`);
-              }
-            }
-          }
-        }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: 'DELETE',
-          schema: 'public',
-          table: 'orders',
-        },
-        (payload) => {
-          const deletedOrder = payload.old as Order;
-          secureLog.debug('Order deleted:', truncateId(deletedOrder.id));
-          setOrders(prev => prev.filter(order => order.id !== deletedOrder.id));
-        }
-      )
-      .subscribe((status) => {
-        secureLog.debug('Realtime subscription status:', status);
-      });
+    // Poll for updates every 15 seconds instead of using Realtime broadcast
+    // (orders table removed from Realtime publication to prevent PII leakage)
+    const interval = setInterval(() => {
+      fetchOrders();
+    }, 15000);
 
     return () => {
-      secureLog.debug('Cleaning up realtime subscription');
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, [userId, role, enabled, fetchOrders]);
 
