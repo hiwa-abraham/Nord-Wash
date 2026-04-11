@@ -36,8 +36,11 @@ import MiniLocationMap from '@/components/map/MiniLocationMap';
 type Order = Tables<'orders'>;
 
 interface ServiceItem {
-  name: string;
-  price: number;
+  name?: string;
+  serviceName?: string;
+  price?: number;
+  totalPrice?: number;
+  pricePerKg?: number;
   quantity: number;
 }
 
@@ -246,14 +249,18 @@ export default function Orders() {
                           <div>
                             <p className="text-sm font-medium mb-2">{t('orders.services')}</p>
                             <div className="space-y-1">
-                              {services.map((service, idx) => (
-                                <div key={idx} className="flex justify-between text-sm">
-                                  <span className="text-muted-foreground">
-                                    {service.name} × {service.quantity}
-                                  </span>
-                                  <span>{formatCurrency(service.price * service.quantity * 100)}</span>
-                                </div>
-                              ))}
+                              {services.map((service, idx) => {
+                                const displayName = service.name || service.serviceName || 'Service';
+                                const displayPrice = service.totalPrice ?? (service.price ? service.price * service.quantity : 0);
+                                return (
+                                  <div key={idx} className="flex justify-between text-sm">
+                                    <span className="text-muted-foreground">
+                                      {displayName} × {service.quantity}
+                                    </span>
+                                    <span>{formatCurrency(displayPrice * 100)}</span>
+                                  </div>
+                                );
+                              })}
                             </div>
                           </div>
                         )}
