@@ -1,0 +1,2 @@
+ALTER TABLE public.services ADD COLUMN name_key text;
+COMMENT ON COLUMN public.services.name_key IS 'Translation key used by the frontend to look up localized service name/description (e.g. wash_iron, dry_cleaning). If null, the frontend falls back to matching service.name.';

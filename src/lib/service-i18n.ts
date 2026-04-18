@@ -1,54 +1,68 @@
 /**
- * Maps service names/descriptions stored in the database (English) to
- * i18n translation keys, so they can be displayed in the user's language.
- *
- * Falls back to the original DB value if no translation key matches.
+ * Translates a service's name/description using its translation key,
+ * falling back to legacy English-name string matching, then to raw text.
  */
 import i18n from '@/i18n';
 
-const NAME_KEY_MAP: Record<string, string> = {
-  'wash & fold': 'serviceCatalog.wash_fold.name',
-  'wash and fold': 'serviceCatalog.wash_fold.name',
-  'wash & iron': 'serviceCatalog.wash_iron.name',
-  'wash and iron': 'serviceCatalog.wash_iron.name',
-  'dry cleaning': 'serviceCatalog.dry_cleaning.name',
-  'ironing only': 'serviceCatalog.ironing_only.name',
-  'ironing': 'serviceCatalog.ironing_only.name',
-  'express wash': 'serviceCatalog.express_wash.name',
-  'delicates': 'serviceCatalog.delicates.name',
-  'bedding & linens': 'serviceCatalog.bedding.name',
-  'bedding': 'serviceCatalog.bedding.name',
+/** Available translation keys for services. Keep in sync with locale files. */
+export const SERVICE_NAME_KEYS = [
+  'wash_fold',
+  'wash_iron',
+  'dry_cleaning',
+  'ironing_only',
+  'express_wash',
+  'delicates',
+  'bedding',
+] as const;
+
+export type ServiceNameKey = typeof SERVICE_NAME_KEYS[number];
+
+// Legacy fallback: match by English service name when no nameKey is set.
+const LEGACY_NAME_MAP: Record<string, ServiceNameKey> = {
+  'wash & fold': 'wash_fold',
+  'wash and fold': 'wash_fold',
+  'regular wash': 'wash_fold',
+  'wash & iron': 'wash_iron',
+  'wash and iron': 'wash_iron',
+  'dry cleaning': 'dry_cleaning',
+  'ironing only': 'ironing_only',
+  'iron only': 'ironing_only',
+  'ironing': 'ironing_only',
+  'express wash': 'express_wash',
+  'express service': 'express_wash',
+  'delicates': 'delicates',
+  'bedding & linens': 'bedding',
+  'bedding': 'bedding',
 };
 
-const DESC_KEY_MAP: Record<string, string> = {
-  'wash & fold': 'serviceCatalog.wash_fold.description',
-  'wash and fold': 'serviceCatalog.wash_fold.description',
-  'wash & iron': 'serviceCatalog.wash_iron.description',
-  'wash and iron': 'serviceCatalog.wash_iron.description',
-  'dry cleaning': 'serviceCatalog.dry_cleaning.description',
-  'ironing only': 'serviceCatalog.ironing_only.description',
-  'ironing': 'serviceCatalog.ironing_only.description',
-  'express wash': 'serviceCatalog.express_wash.description',
-  'delicates': 'serviceCatalog.delicates.description',
-  'bedding & linens': 'serviceCatalog.bedding.description',
-  'bedding': 'serviceCatalog.bedding.description',
-};
+function resolveKey(nameKey?: string | null, name?: string | null): ServiceNameKey | null {
+  if (nameKey && (SERVICE_NAME_KEYS as readonly string[]).includes(nameKey)) {
+    return nameKey as ServiceNameKey;
+  }
+  if (name) {
+    const match = LEGACY_NAME_MAP[name.trim().toLowerCase()];
+    if (match) return match;
+  }
+  return null;
+}
 
-export function translateServiceName(name?: string | null): string {
-  if (!name) return '';
-  const key = NAME_KEY_MAP[name.trim().toLowerCase()];
-  if (!key) return name;
-  const translated = i18n.t(key);
-  return translated === key ? name : translated;
+export function translateServiceName(
+  name?: string | null,
+  nameKey?: string | null
+): string {
+  const key = resolveKey(nameKey, name);
+  if (!key) return name || '';
+  const t = i18n.t(`serviceCatalog.${key}.name`);
+  return t === `serviceCatalog.${key}.name` ? (name || '') : t;
 }
 
 export function translateServiceDescription(
-  serviceName?: string | null,
-  fallback?: string | null
+  name?: string | null,
+  fallback?: string | null,
+  nameKey?: string | null
 ): string {
-  if (!serviceName) return fallback || '';
-  const key = DESC_KEY_MAP[serviceName.trim().toLowerCase()];
+  const key = resolveKey(nameKey, name);
   if (!key) return fallback || '';
-  const translated = i18n.t(key);
-  return translated === key ? fallback || '' : translated;
+  const t = i18n.t(`serviceCatalog.${key}.description`);
+  return t === `serviceCatalog.${key}.description` ? (fallback || '') : t;
 }

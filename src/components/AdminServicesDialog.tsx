@@ -11,8 +11,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Settings, Plus, Trash2, Pencil } from 'lucide-react';
 import { toast } from 'sonner';
+import { SERVICE_NAME_KEYS } from '@/lib/service-i18n';
 
 interface AdminServicesDialogProps {
   services: Service[];
@@ -35,6 +43,7 @@ export function AdminServicesDialog({
   
   const [formData, setFormData] = useState({
     name: '',
+    nameKey: 'none' as string,
     description: '',
     pricePerKg: '',
     discountPercent: '',
@@ -43,6 +52,7 @@ export function AdminServicesDialog({
   const resetForm = () => {
     setFormData({
       name: '',
+      nameKey: 'none',
       description: '',
       pricePerKg: '',
       discountPercent: '',
@@ -55,6 +65,7 @@ export function AdminServicesDialog({
     setEditingService(service);
     setFormData({
       name: service.name,
+      nameKey: service.nameKey || 'none',
       description: service.description,
       pricePerKg: service.pricePerKg.toString(),
       discountPercent: service.discountPercent.toString(),
@@ -70,6 +81,7 @@ export function AdminServicesDialog({
 
     const serviceData = {
       name: formData.name,
+      nameKey: formData.nameKey === 'none' ? null : formData.nameKey,
       description: formData.description,
       pricePerKg: parseFloat(formData.pricePerKg) || 0,
       discountPercent: parseFloat(formData.discountPercent) || 0,
@@ -184,6 +196,27 @@ export function AdminServicesDialog({
                     onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
                     placeholder="Brief description"
                   />
+                </div>
+
+                <div className="space-y-2 sm:col-span-2">
+                  <Label htmlFor="nameKey">Translation Key</Label>
+                  <Select
+                    value={formData.nameKey}
+                    onValueChange={(value) => setFormData((prev) => ({ ...prev, nameKey: value }))}
+                  >
+                    <SelectTrigger id="nameKey">
+                      <SelectValue placeholder="None (use plain name)" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">None (display name as-is)</SelectItem>
+                      {SERVICE_NAME_KEYS.map((key) => (
+                        <SelectItem key={key} value={key}>{key}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Pick a key to display this service in the user's language across all locales.
+                  </p>
                 </div>
                 
                 <div className="space-y-2">
