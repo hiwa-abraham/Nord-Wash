@@ -423,17 +423,33 @@
       "infoCollect": {
         "title": "1. Information vi samlar in",
         "intro": "NordWash samlar in information som du ger oss direkt, inklusive:",
-        "items": ["Kontoinformation (namn, e-postadress, telefonnummer)", "Hämtnings- och leveransadresser", "Betalningsinformation (behandlas säkert via Stripe)", "Beställningshistorik och preferenser", "Kommunikation med vårt team eller tvättare"]
+        "items": [
+          "Kontoinformation (namn, e-postadress, telefonnummer)",
+          "Hämtnings- och leveransadresser",
+          "Betalningsinformation (behandlas säkert via Stripe)",
+          "Beställningshistorik och preferenser",
+          "Kommunikation med vårt team eller tvättare"
+        ]
       },
       "howUse": {
         "title": "2. Hur vi använder din information",
         "intro": "Vi använder informationen vi samlar in för att:",
-        "items": ["Bearbeta och utföra dina tvättbeställningar", "Kommunicera med dig om dina beställningar", "Skicka dig tjänsteuppdateringar och kampanjerbjudanden", "Förbättra våra tjänster och användarupplevelse", "Säkerställa säkerheten på vår plattform"]
+        "items": [
+          "Bearbeta och utföra dina tvättbeställningar",
+          "Kommunicera med dig om dina beställningar",
+          "Skicka dig tjänsteuppdateringar och kampanjerbjudanden",
+          "Förbättra våra tjänster och användarupplevelse",
+          "Säkerställa säkerheten på vår plattform"
+        ]
       },
       "infoSharing": {
         "title": "3. Informationsdelning",
         "intro": "Vi delar din information endast när det är nödvändigt för att tillhandahålla våra tjänster:",
-        "items": ["Med tvättare för att utföra dina beställningar (hämtningsadress och beställningsuppgifter)", "Med betalningsprocessorer för att slutföra transaktioner", "När det krävs enligt lag eller för att skydda våra rättigheter"],
+        "items": [
+          "Med tvättare för att utföra dina beställningar (hämtningsadress och beställningsuppgifter)",
+          "Med betalningsprocessorer för att slutföra transaktioner",
+          "När det krävs enligt lag eller för att skydda våra rättigheter"
+        ],
         "noSell": "Vi säljer inte din personliga information till tredje part."
       },
       "dataSecurity": {
@@ -443,7 +459,12 @@
       "yourRights": {
         "title": "5. Dina rättigheter",
         "intro": "Du har rätt att:",
-        "items": ["Få tillgång till dina personuppgifter", "Begära korrigering av felaktiga uppgifter", "Begära radering av dina uppgifter", "Avregistrera dig från marknadsföringskommunikation"]
+        "items": [
+          "Få tillgång till dina personuppgifter",
+          "Begära korrigering av felaktiga uppgifter",
+          "Begära radering av dina uppgifter",
+          "Avregistrera dig från marknadsföringskommunikation"
+        ]
       },
       "contact": {
         "title": "6. Kontakta oss",
@@ -455,17 +476,97 @@
     "title": "Användarvillkor",
     "lastUpdated": "Senast uppdaterad: 3 januari 2026",
     "sections": {
-      "acceptance": { "title": "1. Godkännande av villkor", "content": "Genom att använda NordWash accepterar du och förbinder dig att följa dessa användarvillkor. Om du inte godkänner dessa villkor, vänligen använd inte våra tjänster." },
-      "description": { "title": "2. Beskrivning av tjänsten", "content": "NordWash är en plattform som kopplar samman kunder med tvättleverantörer (tvättare). Vi underlättar hämtning, rengöring och leverans av tvättartiklar." },
-      "userAccounts": { "title": "3. Användarkonton", "content": "För att använda våra tjänster måste du skapa ett konto med korrekt och fullständig information. Du ansvarar för att upprätthålla sekretessen för dina kontouppgifter och för alla aktiviteter på ditt konto." },
-      "ordersPayments": { "title": "4. Beställningar och betalningar", "items": ["Alla priser visas i appen och kan ändras", "Betalning behandlas säkert via vår betalningsleverantör", "Du godkänner att betala för alla beställningar som görs via ditt konto", "Återbetalningar hanteras från fall till fall"] },
-      "liability": { "title": "5. Ansvar", "content": "Även om vi tar hand om att säkerställa kvalitetstjänster, ansvarar NordWash inte för skador på föremål som är naturligt ömtåliga eller felaktigt märkta." },
-      "userConduct": { "title": "6. Användarbeteende", "content": "Du godkänner att använda våra tjänster respektfullt och lagligt. Missbruk av plattformen kan leda till kontouppsägning." },
-      "changesToTerms": { "title": "7. Ändringar av villkor", "content": "Vi förbehåller oss rätten att ändra dessa villkor när som helst. Fortsatt användning innebär godkännande av de nya villkoren." },
-      "contact": { "title": "8. Kontakt", "content": "För frågor om dessa användarvillkor, kontakta oss via hjälpsektionen i vår app." }
+      "acceptance": {
+        "title": "1. Godkännande av villkor",
+        "content": "Genom att använda NordWash accepterar du och förbinder dig att följa dessa användarvillkor. Om du inte godkänner dessa villkor, vänligen använd inte våra tjänster."
+      },
+      "description": {
+        "title": "2. Beskrivning av tjänsten",
+        "content": "NordWash är en plattform som kopplar samman kunder med tvättleverantörer (tvättare). Vi underlättar hämtning, rengöring och leverans av tvättartiklar."
+      },
+      "userAccounts": {
+        "title": "3. Användarkonton",
+        "content": "För att använda våra tjänster måste du skapa ett konto med korrekt och fullständig information. Du ansvarar för att upprätthålla sekretessen för dina kontouppgifter och för alla aktiviteter på ditt konto."
+      },
+      "ordersPayments": {
+        "title": "4. Beställningar och betalningar",
+        "items": [
+          "Alla priser visas i appen och kan ändras",
+          "Betalning behandlas säkert via vår betalningsleverantör",
+          "Du godkänner att betala för alla beställningar som görs via ditt konto",
+          "Återbetalningar hanteras från fall till fall"
+        ]
+      },
+      "liability": {
+        "title": "5. Ansvar",
+        "content": "Även om vi tar hand om att säkerställa kvalitetstjänster, ansvarar NordWash inte för skador på föremål som är naturligt ömtåliga eller felaktigt märkta."
+      },
+      "userConduct": {
+        "title": "6. Användarbeteende",
+        "content": "Du godkänner att använda våra tjänster respektfullt och lagligt. Missbruk av plattformen kan leda till kontouppsägning."
+      },
+      "changesToTerms": {
+        "title": "7. Ändringar av villkor",
+        "content": "Vi förbehåller oss rätten att ändra dessa villkor när som helst. Fortsatt användning innebär godkännande av de nya villkoren."
+      },
+      "contact": {
+        "title": "8. Kontakt",
+        "content": "För frågor om dessa användarvillkor, kontakta oss via hjälpsektionen i vår app."
+      }
     }
   },
-  "notFound": { "title": "404", "message": "Hoppsan! Sidan hittades inte", "returnHome": "Tillbaka till startsidan" },
-  "map": { "routeTitle": "Rutt & Navigation", "viewRoute": "Visa rutt", "walking": "Gång", "cycling": "Cykling", "driving": "Bilkörning", "locating": "Hämtar din plats...", "locationError": "Kunde inte hämta din plats. Tillåt platsåtkomst.", "destinationNotFound": "Destinationsadressen kunde inte hittas på kartan.", "tryAgain": "Försök igen", "yourLocation": "Din plats", "destination": "Destination", "you": "Du" },
-  "footer": { "termsOfService": "Användarvillkor", "privacyPolicy": "Integritetspolicy", "allRightsReserved": "Alla rättigheter förbehållna" }
+  "notFound": {
+    "title": "404",
+    "message": "Hoppsan! Sidan hittades inte",
+    "returnHome": "Tillbaka till startsidan"
+  },
+  "map": {
+    "routeTitle": "Rutt & Navigation",
+    "viewRoute": "Visa rutt",
+    "walking": "Gång",
+    "cycling": "Cykling",
+    "driving": "Bilkörning",
+    "locating": "Hämtar din plats...",
+    "locationError": "Kunde inte hämta din plats. Tillåt platsåtkomst.",
+    "destinationNotFound": "Destinationsadressen kunde inte hittas på kartan.",
+    "tryAgain": "Försök igen",
+    "yourLocation": "Din plats",
+    "destination": "Destination",
+    "you": "Du"
+  },
+  "footer": {
+    "termsOfService": "Användarvillkor",
+    "privacyPolicy": "Integritetspolicy",
+    "allRightsReserved": "Alla rättigheter förbehållna"
+  },
+  "serviceCatalog": {
+    "wash_fold": {
+      "name": "Tvätt & Vikning",
+      "description": "Standardtvätt, torkning och vikning"
+    },
+    "wash_iron": {
+      "name": "Tvätt & Strykning",
+      "description": "Tvätt med professionell strykning"
+    },
+    "dry_cleaning": {
+      "name": "Kemtvätt",
+      "description": "Professionell kemtvätt för ömtåliga plagg"
+    },
+    "ironing_only": {
+      "name": "Endast strykning",
+      "description": "Professionell strykning av rena plagg"
+    },
+    "express_wash": {
+      "name": "Expresstvätt",
+      "description": "Tvätt samma dag"
+    },
+    "delicates": {
+      "name": "Ömtåliga plagg",
+      "description": "Skonsam vård av ömtåliga tyger"
+    },
+    "bedding": {
+      "name": "Sängkläder",
+      "description": "Lakan, påslakan och örngott"
+    }
+  }
 }

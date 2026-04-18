@@ -538,5 +538,35 @@
     "termsOfService": "Términos de servicio",
     "privacyPolicy": "Política de privacidad",
     "allRightsReserved": "Todos los derechos reservados"
+  },
+  "serviceCatalog": {
+    "wash_fold": {
+      "name": "Lavado y Doblado",
+      "description": "Lavado, secado y doblado estándar"
+    },
+    "wash_iron": {
+      "name": "Lavado y Planchado",
+      "description": "Lavado con planchado profesional"
+    },
+    "dry_cleaning": {
+      "name": "Limpieza en Seco",
+      "description": "Limpieza en seco profesional para prendas delicadas"
+    },
+    "ironing_only": {
+      "name": "Solo Planchado",
+      "description": "Servicio de planchado profesional para prendas limpias"
+    },
+    "express_wash": {
+      "name": "Lavado Exprés",
+      "description": "Servicio de lavado el mismo día"
+    },
+    "delicates": {
+      "name": "Delicados",
+      "description": "Cuidado suave para tejidos delicados"
+    },
+    "bedding": {
+      "name": "Ropa de Cama",
+      "description": "Sábanas, fundas nórdicas y fundas de almohada"
+    }
   }
 }

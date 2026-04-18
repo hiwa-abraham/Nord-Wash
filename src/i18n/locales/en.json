@@ -538,5 +538,35 @@
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
     "allRightsReserved": "All rights reserved"
+  },
+  "serviceCatalog": {
+    "wash_fold": {
+      "name": "Wash & Fold",
+      "description": "Standard washing, drying, and folding"
+    },
+    "wash_iron": {
+      "name": "Wash & Iron",
+      "description": "Washing with professional ironing"
+    },
+    "dry_cleaning": {
+      "name": "Dry Cleaning",
+      "description": "Professional dry cleaning for delicate items"
+    },
+    "ironing_only": {
+      "name": "Ironing Only",
+      "description": "Professional ironing service for clean garments"
+    },
+    "express_wash": {
+      "name": "Express Wash",
+      "description": "Same-day washing service"
+    },
+    "delicates": {
+      "name": "Delicates",
+      "description": "Gentle care for delicate fabrics"
+    },
+    "bedding": {
+      "name": "Bedding & Linens",
+      "description": "Sheets, duvet covers, and pillowcases"
+    }
   }
 }
