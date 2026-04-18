@@ -133,6 +133,7 @@ export interface ChatConversation {
 export interface Service {
   id: string;
   name: string;                // Service name (e.g., "Wash & Iron")
+  nameKey?: string | null;     // Optional i18n key (e.g. "wash_iron") for translated name/description
   description: string;         // What's included
   pricePerKg: number;          // Base price per kilogram
   discountPercent: number;     // Current discount (0-100)
