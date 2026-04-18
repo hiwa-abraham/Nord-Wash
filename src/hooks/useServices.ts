@@ -34,6 +34,7 @@ const defaultServices: Service[] = [
   {
     id: 'service-1',
     name: 'Regular Wash',
+    nameKey: 'wash_fold',
     description: 'Standard washing for everyday clothes',
     pricePerKg: 4,
     discountPercent: 0,
@@ -42,6 +43,7 @@ const defaultServices: Service[] = [
   {
     id: 'service-2',
     name: 'Wash & Iron',
+    nameKey: 'wash_iron',
     description: 'Washing with professional ironing',
     pricePerKg: 6,
     discountPercent: 10,
@@ -50,6 +52,7 @@ const defaultServices: Service[] = [
   {
     id: 'service-3',
     name: 'Dry Cleaning',
+    nameKey: 'dry_cleaning',
     description: 'Delicate fabrics and special care items',
     pricePerKg: 12,
     discountPercent: 0,
@@ -58,6 +61,7 @@ const defaultServices: Service[] = [
   {
     id: 'service-4',
     name: 'Iron Only',
+    nameKey: 'ironing_only',
     description: 'Professional ironing service',
     pricePerKg: 3,
     discountPercent: 15,
@@ -66,6 +70,7 @@ const defaultServices: Service[] = [
   {
     id: 'service-5',
     name: 'Express Service',
+    nameKey: 'express_wash',
     description: 'Same day pickup and delivery',
     pricePerKg: 10,
     discountPercent: 0,

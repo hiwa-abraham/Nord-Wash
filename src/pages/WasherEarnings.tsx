@@ -334,7 +334,7 @@ function OrderCard({ order, isExpanded, onToggle, formatCurrency, isPending }: O
                   {services.map((service, idx) => (
                     <div key={idx} className="flex justify-between text-sm">
                       <span className="text-muted-foreground">
-                        {translateServiceName(service.name)} × {service.quantity}
+                        {translateServiceName(service.name, service.nameKey)} × {service.quantity}
                       </span>
                       <span>{formatCurrency(service.price * service.quantity * 100)}</span>
                     </div>

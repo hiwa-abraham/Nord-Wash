@@ -43,9 +43,9 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
               
-              <h3 className="text-lg font-semibold mb-2">{translateServiceName(service.name)}</h3>
+              <h3 className="text-lg font-semibold mb-2">{translateServiceName(service.name, service.nameKey)}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                {translateServiceDescription(service.name, service.description)}
+                {translateServiceDescription(service.name, service.description, service.nameKey)}
               </p>
               
               <div className="flex items-baseline gap-2">
