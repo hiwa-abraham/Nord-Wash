@@ -11,8 +11,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Settings, Plus, Trash2, Pencil } from 'lucide-react';
 import { toast } from 'sonner';
+import { SERVICE_NAME_KEYS } from '@/lib/service-i18n';
 
 interface AdminServicesDialogProps {
   services: Service[];
@@ -35,6 +43,7 @@ export function AdminServicesDialog({
   
   const [formData, setFormData] = useState({
     name: '',
+    nameKey: 'none' as string,
     description: '',
     pricePerKg: '',
     discountPercent: '',
@@ -43,6 +52,7 @@ export function AdminServicesDialog({
   const resetForm = () => {
     setFormData({
       name: '',
+      nameKey: 'none',
       description: '',
       pricePerKg: '',
       discountPercent: '',
@@ -55,6 +65,7 @@ export function AdminServicesDialog({
     setEditingService(service);
     setFormData({
       name: service.name,
+      nameKey: service.nameKey || 'none',
       description: service.description,
       pricePerKg: service.pricePerKg.toString(),
       discountPercent: service.discountPercent.toString(),
@@ -70,6 +81,7 @@ export function AdminServicesDialog({
 
     const serviceData = {
       name: formData.name,
+      nameKey: formData.nameKey === 'none' ? null : formData.nameKey,
       description: formData.description,
       pricePerKg: parseFloat(formData.pricePerKg) || 0,
       discountPercent: parseFloat(formData.discountPercent) || 0,
