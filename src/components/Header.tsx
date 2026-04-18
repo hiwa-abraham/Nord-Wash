@@ -14,12 +14,10 @@ import {
   Shield,
   Sparkles,
   ChevronRight,
-  Globe,
   Settings,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Separator } from '@/components/ui/separator';
 import { BackButton } from '@/components/BackButton';
 
