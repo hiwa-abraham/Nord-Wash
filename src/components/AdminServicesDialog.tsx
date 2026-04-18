@@ -197,6 +197,27 @@ export function AdminServicesDialog({
                     placeholder="Brief description"
                   />
                 </div>
+
+                <div className="space-y-2 sm:col-span-2">
+                  <Label htmlFor="nameKey">Translation Key</Label>
+                  <Select
+                    value={formData.nameKey}
+                    onValueChange={(value) => setFormData((prev) => ({ ...prev, nameKey: value }))}
+                  >
+                    <SelectTrigger id="nameKey">
+                      <SelectValue placeholder="None (use plain name)" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">None (display name as-is)</SelectItem>
+                      {SERVICE_NAME_KEYS.map((key) => (
+                        <SelectItem key={key} value={key}>{key}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Pick a key to display this service in the user's language across all locales.
+                  </p>
+                </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="price">Price per kg ($) *</Label>
