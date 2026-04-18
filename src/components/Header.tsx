@@ -14,12 +14,10 @@ import {
   Shield,
   Sparkles,
   ChevronRight,
-  Globe,
   Settings,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Separator } from '@/components/ui/separator';
 import { BackButton } from '@/components/BackButton';
 
@@ -141,10 +139,6 @@ export function Header() {
               </nav>
 
               <div className="px-3 pb-4 pt-2 border-t border-border/40 space-y-2">
-                <div className="flex items-center gap-2 px-3 py-2">
-                  <Globe className="w-4 h-4 text-muted-foreground" />
-                  <LanguageSwitcher />
-                </div>
                 {isAuthenticated ? (
                   <button
                     onClick={handleLogout}
