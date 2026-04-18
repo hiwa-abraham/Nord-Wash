@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { translateServiceName } from '@/lib/service-i18n';
 import { format } from 'date-fns';
 import { 
   Package, 
@@ -250,7 +251,8 @@ export default function Orders() {
                             <p className="text-sm font-medium mb-2">{t('orders.services')}</p>
                             <div className="space-y-1">
                               {services.map((service, idx) => {
-                                const displayName = service.name || service.serviceName || 'Service';
+                                const rawName = service.name || service.serviceName || 'Service';
+                                const displayName = translateServiceName(rawName);
                                 const displayPrice = service.totalPrice ?? (service.price ? service.price * service.quantity : 0);
                                 return (
                                   <div key={idx} className="flex justify-between text-sm">

@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { translateServiceName } from '@/lib/service-i18n';
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { 
   DollarSign,
@@ -333,7 +334,7 @@ function OrderCard({ order, isExpanded, onToggle, formatCurrency, isPending }: O
                   {services.map((service, idx) => (
                     <div key={idx} className="flex justify-between text-sm">
                       <span className="text-muted-foreground">
-                        {service.name} × {service.quantity}
+                        {translateServiceName(service.name)} × {service.quantity}
                       </span>
                       <span>{formatCurrency(service.price * service.quantity * 100)}</span>
                     </div>

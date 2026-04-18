@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Service } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles } from 'lucide-react';
+import { translateServiceName, translateServiceDescription } from '@/lib/service-i18n';
 
 interface ServicesSectionProps {
   services: Service[];
@@ -42,9 +43,9 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
               
-              <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
+              <h3 className="text-lg font-semibold mb-2">{translateServiceName(service.name)}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                {service.description}
+                {translateServiceDescription(service.name, service.description)}
               </p>
               
               <div className="flex items-baseline gap-2">

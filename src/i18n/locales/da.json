@@ -538,5 +538,35 @@
     "termsOfService": "Servicevilkår",
     "privacyPolicy": "Privatlivspolitik",
     "allRightsReserved": "Alle rettigheder forbeholdes"
+  },
+  "serviceCatalog": {
+    "wash_fold": {
+      "name": "Vask & Fold",
+      "description": "Standard vask, tørring og foldning"
+    },
+    "wash_iron": {
+      "name": "Vask & Strygning",
+      "description": "Vask med professionel strygning"
+    },
+    "dry_cleaning": {
+      "name": "Kemisk Rens",
+      "description": "Professionel kemisk rens af sarte tekstiler"
+    },
+    "ironing_only": {
+      "name": "Kun Strygning",
+      "description": "Professionel strygning af rent tøj"
+    },
+    "express_wash": {
+      "name": "Ekspresvask",
+      "description": "Samme-dags vask"
+    },
+    "delicates": {
+      "name": "Sarte Tekstiler",
+      "description": "Skånsom pleje af sarte stoffer"
+    },
+    "bedding": {
+      "name": "Sengetøj",
+      "description": "Lagner, dynebetræk og pudebetræk"
+    }
   }
 }

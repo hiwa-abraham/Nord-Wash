@@ -538,5 +538,35 @@
     "termsOfService": "Tjenestevilkår",
     "privacyPolicy": "Personvernerklæring",
     "allRightsReserved": "Alle rettigheter reservert"
+  },
+  "serviceCatalog": {
+    "wash_fold": {
+      "name": "Vask & Bretting",
+      "description": "Standard vask, tørking og bretting"
+    },
+    "wash_iron": {
+      "name": "Vask & Stryking",
+      "description": "Vask med profesjonell stryking"
+    },
+    "dry_cleaning": {
+      "name": "Kjemisk Rens",
+      "description": "Profesjonell kjemisk rens for ømfintlige plagg"
+    },
+    "ironing_only": {
+      "name": "Kun Stryking",
+      "description": "Profesjonell strykeservice for rene plagg"
+    },
+    "express_wash": {
+      "name": "Ekspressvask",
+      "description": "Vask samme dag"
+    },
+    "delicates": {
+      "name": "Ømfintlige plagg",
+      "description": "Skånsom behandling av ømfintlige stoffer"
+    },
+    "bedding": {
+      "name": "Sengetøy",
+      "description": "Laken, dynetrekk og putetrekk"
+    }
   }
 }
