@@ -300,14 +300,14 @@ export default function SchedulePickup() {
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
-                              <h3 className="font-semibold">{service.name}</h3>
+                              <h3 className="font-semibold">{translateServiceName(service.name)}</h3>
                               {hasDiscount && (
                                  <span className="text-xs bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-medium">
                                   {service.discountPercent}% {t('services.off')}
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm text-muted-foreground">{service.description}</p>
+                            <p className="text-sm text-muted-foreground">{translateServiceDescription(service.name, service.description)}</p>
                             <div className="flex items-center gap-2 mt-1">
                               {hasDiscount ? (
                                 <>
@@ -619,7 +619,7 @@ export default function SchedulePickup() {
                       return (
                         <div key={sel.serviceId} className="flex justify-between">
                           <span>
-                            {service.name} × {sel.quantity} kg
+                            {translateServiceName(service.name)} × {sel.quantity} kg
                           </span>
                           <span className="font-medium">
                             €{calculateServicePrice(sel.serviceId).toFixed(2)}
