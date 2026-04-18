@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { translateServiceName } from '@/lib/service-i18n';
 import { format } from 'date-fns';
 import { 
   Package, 
