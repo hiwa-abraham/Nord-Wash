@@ -278,7 +278,8 @@ export default function WasherDashboard() {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </div>
