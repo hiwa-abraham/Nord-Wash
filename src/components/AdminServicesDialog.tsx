@@ -47,6 +47,7 @@ export function AdminServicesDialog({
     description: '',
     pricePerKg: '',
     discountPercent: '',
+    currency: 'SEK',
   });
 
   const resetForm = () => {
@@ -56,6 +57,7 @@ export function AdminServicesDialog({
       description: '',
       pricePerKg: '',
       discountPercent: '',
+      currency: 'SEK',
     });
     setEditingService(null);
     setIsAddingNew(false);
@@ -69,6 +71,7 @@ export function AdminServicesDialog({
       description: service.description,
       pricePerKg: service.pricePerKg.toString(),
       discountPercent: service.discountPercent.toString(),
+      currency: service.currency || 'SEK',
     });
     setIsAddingNew(false);
   };
@@ -86,6 +89,7 @@ export function AdminServicesDialog({
       pricePerKg: parseFloat(formData.pricePerKg) || 0,
       discountPercent: parseFloat(formData.discountPercent) || 0,
       isActive: true,
+      currency: formData.currency || 'SEK',
     };
 
     if (editingService) {
@@ -135,7 +139,7 @@ export function AdminServicesDialog({
                     )}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    ${service.pricePerKg}/kg
+                    {service.pricePerKg} {service.currency || 'SEK'}/kg
                   </p>
                 </div>
                 
@@ -220,7 +224,7 @@ export function AdminServicesDialog({
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="price">Price per kg ($) *</Label>
+                  <Label htmlFor="price">Price per kg *</Label>
                   <Input
                     id="price"
                     type="number"
@@ -230,6 +234,26 @@ export function AdminServicesDialog({
                     onChange={(e) => setFormData((prev) => ({ ...prev, pricePerKg: e.target.value }))}
                     placeholder="0.00"
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="currency">Currency</Label>
+                  <Select
+                    value={formData.currency}
+                    onValueChange={(value) => setFormData((prev) => ({ ...prev, currency: value }))}
+                  >
+                    <SelectTrigger id="currency">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="SEK">SEK — Swedish Krona</SelectItem>
+                      <SelectItem value="EUR">EUR — Euro</SelectItem>
+                      <SelectItem value="USD">USD — US Dollar</SelectItem>
+                      <SelectItem value="GBP">GBP — British Pound</SelectItem>
+                      <SelectItem value="NOK">NOK — Norwegian Krone</SelectItem>
+                      <SelectItem value="DKK">DKK — Danish Krone</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 
                 <div className="space-y-2">

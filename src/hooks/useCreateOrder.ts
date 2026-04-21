@@ -209,10 +209,26 @@ export function useCreateOrder() {
         payment_status: 'pending' as const,
       };
 
+      // Geocode pickup address (best-effort; do not block order on failure)
+      let pickup_latitude: number | null = null;
+      let pickup_longitude: number | null = null;
+      try {
+        const fullAddress = `${params.contactDetails.address}, ${params.contactDetails.city}${params.contactDetails.postalCode ? `, ${params.contactDetails.postalCode}` : ''}`;
+        const { data: geo } = await supabase.functions.invoke('geocode-address', {
+          body: { address: fullAddress },
+        });
+        if (geo?.lat && geo?.lng) {
+          pickup_latitude = Number(geo.lat);
+          pickup_longitude = Number(geo.lng);
+        }
+      } catch {
+        // ignore — coords are optional
+      }
+
       // Insert order into database (wrap in array for Supabase insert)
       const { data: order, error: insertError } = await supabase
         .from('orders')
-        .insert([orderData] as any)
+        .insert([{ ...orderData, pickup_latitude, pickup_longitude }] as never)
         .select('id')
         .single();
 
