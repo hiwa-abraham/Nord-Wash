@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -6,16 +6,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import ChatDialog from '@/components/ChatDialog';
-import { 
-  Shirt, 
-  MapPin, 
+import GoogleListingsMap, { type MapListing } from '@/components/map/GoogleListingsMap';
+import { useDeploymentCurrency } from '@/hooks/useDeploymentCurrency';
+import {
+  Shirt,
+  MapPin,
   Calendar,
   DollarSign,
   CheckCircle2,
   Clock,
   Weight,
   Sparkles,
-  MessageCircle
+  MessageCircle,
+  Map as MapIcon,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -31,15 +34,18 @@ const mockAvailableRequests = [
     serviceType: 'wash-iron',
     weight: 5,
     price: 25,
-    pickupAddress: '123 Main St, City',
+    pickupAddress: '123 Main St, Stockholm',
     pickupDate: new Date(),
     specialInstructions: 'Please handle with care',
+    lat: 59.3293,
+    lng: 18.0686,
   },
 ];
 
 export default function WasherDashboard() {
   const { t } = useTranslation();
   const { profile, isAuthenticated, role } = useAuth();
+  const { country } = useDeploymentCurrency();
   const navigate = useNavigate();
   const [availableRequests, setAvailableRequests] = useState(mockAvailableRequests);
   const [myJobs, setMyJobs] = useState<typeof mockAvailableRequests>([]);
