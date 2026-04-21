@@ -187,11 +187,29 @@ export default function WasherDashboard() {
               </CardContent>
             </Card>
           ) : (
-            <div className="grid gap-4">
-              {availableRequests.map((request) => (
+            <div className="space-y-4">
+              {/* Map of all available jobs */}
+              <Card className="border-0 shadow-md overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="px-4 py-2 flex items-center gap-2 border-b bg-muted/30">
+                    <MapIcon className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">Job locations</span>
+                    <Badge variant="secondary" className="ml-auto">{mapListings.length}</Badge>
+                  </div>
+                  <GoogleListingsMap
+                    listings={mapListings}
+                    height={320}
+                    selectedId={selectedMapId}
+                  />
+                </CardContent>
+              </Card>
+
+              <div className="grid gap-4">
+                {availableRequests.map((request) => (
                 <Card 
                   key={request.id} 
-                  className="border-0 shadow-md hover:shadow-lg transition-all overflow-hidden"
+                  className="border-0 shadow-md hover:shadow-lg transition-all overflow-hidden cursor-pointer"
+                  onClick={() => setSelectedMapId(request.id)}
                 >
                   <CardContent className="p-0">
                     <div className="flex flex-col lg:flex-row">
