@@ -3,6 +3,7 @@ import { Service } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles } from 'lucide-react';
 import { translateServiceName, translateServiceDescription } from '@/lib/service-i18n';
+import PriceDisplay from '@/components/PriceDisplay';
 
 interface ServicesSectionProps {
   services: Service[];
@@ -48,21 +49,28 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                 {translateServiceDescription(service.name, service.description, service.nameKey)}
               </p>
               
-              <div className="flex items-baseline gap-2">
+              <div className="flex items-baseline gap-2 flex-wrap">
                 {service.discountPercent > 0 ? (
                   <>
                     <span className="text-2xl font-bold text-primary">
-                      ${calculateDiscountedPrice(service.pricePerKg, service.discountPercent).toFixed(2)}
+                      <PriceDisplay
+                        amount={calculateDiscountedPrice(service.pricePerKg, service.discountPercent)}
+                        currency={service.currency || 'SEK'}
+                      />
                     </span>
                     <span className="text-sm text-muted-foreground line-through">
-                      ${service.pricePerKg.toFixed(2)}
+                      <PriceDisplay
+                        amount={service.pricePerKg}
+                        currency={service.currency || 'SEK'}
+                        showConversion={false}
+                      />
                     </span>
                     <span className="text-sm text-muted-foreground">{t('services.perKg')}</span>
                   </>
                 ) : (
                   <>
                     <span className="text-2xl font-bold text-primary">
-                      ${service.pricePerKg.toFixed(2)}
+                      <PriceDisplay amount={service.pricePerKg} currency={service.currency || 'SEK'} />
                     </span>
                     <span className="text-sm text-muted-foreground">{t('services.perKg')}</span>
                   </>
