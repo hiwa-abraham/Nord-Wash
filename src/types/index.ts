@@ -138,4 +138,5 @@ export interface Service {
   pricePerKg: number;          // Base price per kilogram
   discountPercent: number;     // Current discount (0-100)
   isActive: boolean;           // Whether service is available
+  currency?: string;           // ISO 4217 currency code (e.g. "SEK", "EUR")
 }

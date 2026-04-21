@@ -24,6 +24,7 @@ type DbServiceRow = {
   price_per_kg: number;
   discount_percent: number;
   is_active: boolean;
+  currency?: string | null;
 };
 
 const fromDb = (r: DbServiceRow): Service => ({
@@ -34,6 +35,7 @@ const fromDb = (r: DbServiceRow): Service => ({
   pricePerKg: Number(r.price_per_kg),
   discountPercent: Number(r.discount_percent),
   isActive: r.is_active,
+  currency: r.currency || 'SEK',
 });
 
 const toDb = (s: Partial<Omit<Service, 'id'>>) => {
@@ -44,6 +46,7 @@ const toDb = (s: Partial<Omit<Service, 'id'>>) => {
   if (s.pricePerKg !== undefined) row.price_per_kg = s.pricePerKg;
   if (s.discountPercent !== undefined) row.discount_percent = s.discountPercent;
   if (s.isActive !== undefined) row.is_active = s.isActive;
+  if (s.currency !== undefined) row.currency = s.currency;
   return row;
 };
 
