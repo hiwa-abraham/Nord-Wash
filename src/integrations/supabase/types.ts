@@ -77,6 +77,30 @@ export type Database = {
         }
         Relationships: []
       }
+      exchange_rates: {
+        Row: {
+          base_currency: string
+          expires_at: string
+          fetched_at: string
+          id: string
+          rates: Json
+        }
+        Insert: {
+          base_currency: string
+          expires_at?: string
+          fetched_at?: string
+          id?: string
+          rates: Json
+        }
+        Update: {
+          base_currency?: string
+          expires_at?: string
+          fetched_at?: string
+          id?: string
+          rates?: Json
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -128,6 +152,8 @@ export type Database = {
           pickup_address: string
           pickup_city: string
           pickup_date: string
+          pickup_latitude: number | null
+          pickup_longitude: number | null
           pickup_postal_code: string | null
           pickup_time: string
           service_fee: number
@@ -157,6 +183,8 @@ export type Database = {
           pickup_address: string
           pickup_city: string
           pickup_date: string
+          pickup_latitude?: number | null
+          pickup_longitude?: number | null
           pickup_postal_code?: string | null
           pickup_time: string
           service_fee?: number
@@ -186,6 +214,8 @@ export type Database = {
           pickup_address?: string
           pickup_city?: string
           pickup_date?: string
+          pickup_latitude?: number | null
+          pickup_longitude?: number | null
           pickup_postal_code?: string | null
           pickup_time?: string
           service_fee?: number
@@ -286,6 +316,7 @@ export type Database = {
       services: {
         Row: {
           created_at: string
+          currency: string
           description: string
           discount_percent: number
           id: string
@@ -297,6 +328,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          currency?: string
           description: string
           discount_percent?: number
           id?: string
@@ -308,6 +340,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          currency?: string
           description?: string
           discount_percent?: number
           id?: string
@@ -466,6 +499,8 @@ export type Database = {
           pickup_address: string
           pickup_city: string
           pickup_date: string
+          pickup_latitude: number | null
+          pickup_longitude: number | null
           pickup_postal_code: string | null
           pickup_time: string
           service_fee: number
