@@ -49,7 +49,7 @@ export function useDeploymentCurrency() {
         .select('value')
         .eq('key', 'deployment_country')
         .maybeSingle();
-      const c = (data?.value as DeploymentCountry) || DEFAULT;
+      const c = (data?.value as unknown as DeploymentCountry) || DEFAULT;
       if (!mounted) return;
       setCountry(c);
       await loadRates(c.currency);

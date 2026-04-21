@@ -48,9 +48,11 @@ function FitBounds({ points }: { points: { lat: number; lng: number }[] }) {
       map.setZoom(14);
       return;
     }
-    const bounds = new google.maps.LatLngBounds();
+    const g = (window as unknown as { google?: { maps: { LatLngBounds: new () => { extend: (p: unknown) => void } } } }).google;
+    if (!g) return;
+    const bounds = new g.maps.LatLngBounds();
     points.forEach((p) => bounds.extend(p));
-    map.fitBounds(bounds, 60);
+    (map as unknown as { fitBounds: (b: unknown, pad: number) => void }).fitBounds(bounds, 60);
   }, [map, points]);
   return null;
 }
