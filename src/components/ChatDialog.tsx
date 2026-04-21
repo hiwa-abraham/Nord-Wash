@@ -44,7 +44,6 @@ export default function ChatDialog({
   const [isSending, setIsSending] = useState(false);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(conversationId);
-  const scrollViewportRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [showMap, setShowMap] = useState(false);
 
@@ -324,10 +323,7 @@ export default function ChatDialog({
           destinationLabel={otherUserName}
         />
 
-        <ScrollArea
-          className="flex-1 p-4"
-          viewportRef={scrollViewportRef as React.RefObject<HTMLDivElement>}
-        >
+        <ScrollArea className="flex-1 p-4">
           {isLoadingMessages ? (
             <div className="flex items-center justify-center h-full text-muted-foreground">
               <Loader2 className="w-5 h-5 animate-spin" />
