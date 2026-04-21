@@ -51,6 +51,21 @@ export default function WasherDashboard() {
   const [myJobs, setMyJobs] = useState<typeof mockAvailableRequests>([]);
   const [chatOpen, setChatOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<{ id: string; name: string } | null>(null);
+  const [selectedMapId, setSelectedMapId] = useState<string | null>(null);
+
+  const mapListings: MapListing[] = useMemo(
+    () =>
+      availableRequests.map((r) => ({
+        id: r.id,
+        title: r.title,
+        description: r.description,
+        price: r.price,
+        currency: country.currency,
+        lat: r.lat,
+        lng: r.lng,
+      })),
+    [availableRequests, country.currency]
+  );
 
   useEffect(() => {
     if (!isAuthenticated) {
