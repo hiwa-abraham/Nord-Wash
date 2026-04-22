@@ -23,7 +23,7 @@ import { BackButton } from '@/components/BackButton';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, logout, user, isAdmin } = useAuth();
+  const { isAuthenticated, logout, user, isAdmin, isOwnerAdmin } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -117,12 +117,25 @@ export function Header() {
                   );
                 })}
 
-                {isAdmin && (
+                {(isAdmin || isOwnerAdmin) && (
                   <>
                     <Separator className="my-2" />
                     <p className="px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       {t('common.admin')}
                     </p>
+                    {isOwnerAdmin && (
+                      <button
+                        className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                          location.pathname === '/admin'
+                            ? 'bg-primary/10 text-primary'
+                            : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
+                        }`}
+                        onClick={() => handleNavClick('/admin')}
+                      >
+                        <Shield className="w-[18px] h-[18px] shrink-0" />
+                        <span>Owner Dashboard</span>
+                      </button>
+                    )}
                     <button
                       className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                         location.pathname === '/admin/security'

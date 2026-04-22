@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_action_logs: {
+        Row: {
+          action: string
+          actor_id: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          metadata: Json | null
+          target_id: string | null
+          target_type: string | null
+        }
+        Insert: {
+          action: string
+          actor_id: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Relationships: []
+      }
+      admin_settings: {
+        Row: {
+          id: string
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          id?: string
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value: Json
+        }
+        Update: {
+          id?: string
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           created_at: string
@@ -98,6 +155,54 @@ export type Database = {
           fetched_at?: string
           id?: string
           rates?: Json
+        }
+        Relationships: []
+      }
+      issues: {
+        Row: {
+          assigned_to: string | null
+          created_at: string
+          description: string | null
+          id: string
+          priority: Database["public"]["Enums"]["issue_priority"]
+          reporter_email: string | null
+          reporter_id: string | null
+          resolution_notes: string | null
+          resolved_at: string | null
+          source: string
+          status: Database["public"]["Enums"]["issue_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          priority?: Database["public"]["Enums"]["issue_priority"]
+          reporter_email?: string | null
+          reporter_id?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["issue_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          priority?: Database["public"]["Enums"]["issue_priority"]
+          reporter_email?: string | null
+          reporter_id?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["issue_status"]
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -379,6 +484,27 @@ export type Database = {
         }
         Relationships: []
       }
+      suspended_users: {
+        Row: {
+          reason: string | null
+          suspended_at: string
+          suspended_by: string
+          user_id: string
+        }
+        Insert: {
+          reason?: string | null
+          suspended_at?: string
+          suspended_by: string
+          user_id: string
+        }
+        Update: {
+          reason?: string | null
+          suspended_at?: string
+          suspended_by?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -419,6 +545,8 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_maintenance_mode: { Args: never; Returns: boolean }
+      get_owner_email: { Args: never; Returns: string }
       get_public_profile: {
         Args: { _user_id: string }
         Returns: {
@@ -470,6 +598,17 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      is_owner_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_user_suspended: { Args: { _user_id: string }; Returns: boolean }
+      log_admin_action: {
+        Args: {
+          _action: string
+          _metadata?: Json
+          _target_id?: string
+          _target_type?: string
+        }
+        Returns: string
       }
       log_security_event: {
         Args: {
@@ -524,7 +663,9 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "customer" | "washer" | "admin"
+      app_role: "customer" | "washer" | "admin" | "owner_admin"
+      issue_priority: "critical" | "high" | "medium" | "low"
+      issue_status: "open" | "in_progress" | "resolved" | "closed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -652,7 +793,9 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["customer", "washer", "admin"],
+      app_role: ["customer", "washer", "admin", "owner_admin"],
+      issue_priority: ["critical", "high", "medium", "low"],
+      issue_status: ["open", "in_progress", "resolved", "closed"],
     },
   },
 } as const

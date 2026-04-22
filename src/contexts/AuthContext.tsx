@@ -25,7 +25,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { secureLog } from '@/lib/secure-logger';
 
 // Application roles - stored in user_roles table with RLS
-type AppRole = 'customer' | 'washer' | 'admin';
+type AppRole = 'customer' | 'washer' | 'admin' | 'owner_admin';
 
 /**
  * Profile interface matching the profiles table schema.
@@ -54,6 +54,7 @@ interface AuthContextType {
   isAuthenticated: boolean;       // Quick check if user is logged in
   isLoading: boolean;             // Loading state during auth operations
   isAdmin: boolean;               // Quick check if user is admin
+  isOwnerAdmin: boolean;          // Quick check if user is the single owner_admin
   login: (email: string, password: string) => Promise<{ error: Error | null }>;
   signup: (name: string, email: string, password: string, role: AppRole) => Promise<{ error: Error | null }>;
   logout: () => Promise<void>;
@@ -216,7 +217,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         role,
         isAuthenticated: !!user,
         isLoading,
-        isAdmin: role === 'admin',
+        isAdmin: role === 'admin' || role === 'owner_admin',
+        isOwnerAdmin: role === 'owner_admin',
         login,
         signup,
         logout,
