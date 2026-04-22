@@ -42,6 +42,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 import AdminSecurity from "./pages/AdminSecurity";
+import AdminDashboard from "./pages/AdminDashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
@@ -88,6 +89,7 @@ const App = () => (
                 <Route path="/settings" element={<Settings />} />
                 
                 {/* Admin routes */}
+                <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/admin/security" element={<AdminSecurity />} />
                 
                 {/* Catch-all for 404 */}
