@@ -531,9 +531,27 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_issue_priority_weight: {
+        Args: { _priority: Database["public"]["Enums"]["issue_priority"] }
+        Returns: number
+      }
       cleanup_old_audit_logs: {
         Args: { days_to_keep?: number }
         Returns: number
+      }
+      delete_user_account: { Args: { _user_id: string }; Returns: undefined }
+      get_admin_dashboard_metrics: {
+        Args: never
+        Returns: {
+          active_users_last_30_days: number
+          failed_logins_last_24h: number
+          new_orders_last_7_days: number
+          open_issues: number
+          revenue_paid_cents: number
+          suspicious_activity_last_24h: number
+          system_status: string
+          total_users: number
+        }[]
       }
       get_limited_public_profile: {
         Args: { _user_id: string }
@@ -599,6 +617,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_admin_level: { Args: { _user_id: string }; Returns: boolean }
       is_owner_admin: { Args: { _user_id: string }; Returns: boolean }
       is_user_suspended: { Args: { _user_id: string }; Returns: boolean }
       log_admin_action: {
@@ -660,6 +679,17 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      set_user_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      update_homepage_content: {
+        Args: { _hero_subtitle: string; _hero_title: string }
+        Returns: undefined
       }
     }
     Enums: {
