@@ -54,6 +54,7 @@ interface AuthContextType {
   isAuthenticated: boolean;       // Quick check if user is logged in
   isLoading: boolean;             // Loading state during auth operations
   isAdmin: boolean;               // Quick check if user is admin
+  isOwnerAdmin: boolean;          // Quick check if user is the single owner_admin
   login: (email: string, password: string) => Promise<{ error: Error | null }>;
   signup: (name: string, email: string, password: string, role: AppRole) => Promise<{ error: Error | null }>;
   logout: () => Promise<void>;
