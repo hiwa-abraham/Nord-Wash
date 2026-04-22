@@ -25,7 +25,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { secureLog } from '@/lib/secure-logger';
 
 // Application roles - stored in user_roles table with RLS
-type AppRole = 'customer' | 'washer' | 'admin';
+type AppRole = 'customer' | 'washer' | 'admin' | 'owner_admin';
 
 /**
  * Profile interface matching the profiles table schema.
