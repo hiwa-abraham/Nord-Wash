@@ -22,6 +22,8 @@ interface Profile {
   created_at: string;
 }
 
+type ManagedRole = 'customer' | 'washer' | 'admin';
+
 export function UsersTab() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [suspended, setSuspended] = useState<Set<string>>(new Set());
@@ -77,7 +79,7 @@ export function UsersTab() {
     setBusyUserId(null);
   };
 
-  const updateRole = async (userId: string, name: string, role: string) => {
+  const updateRole = async (userId: string, name: string, role: ManagedRole) => {
     setBusyUserId(userId);
     const { data, error } = await supabase.rpc('set_user_role', {
       _user_id: userId,
@@ -96,7 +98,9 @@ export function UsersTab() {
 
   const removeUser = async (userId: string, name: string) => {
     setBusyUserId(userId);
-    const { error } = await supabase.rpc('delete_user_account', { _user_id: userId });
+    const { error } = await supabase.functions.invoke('admin-delete-user', {
+      body: { userId },
+    });
     if (error) {
       toast.error(error.message);
       setBusyUserId(null);
@@ -173,7 +177,7 @@ export function UsersTab() {
                       <UserX className="w-4 h-4 mr-1" /> Suspend
                     </Button>
                   )}
-                  <Button size="sm" variant="outline" onClick={() => updateRole(p.user_id, p.full_name, 'admin')} disabled={isBusy || role === 'admin'}>
+                  <Button size="sm" variant="outline" onClick={() => updateRole(p.user_id, p.full_name, 'admin' as ManagedRole)} disabled={isBusy || role === 'admin'}>
                     <UserCog className="w-4 h-4 mr-1" /> Make admin
                   </Button>
                   <Button size="sm" variant="outline" onClick={() => removeUser(p.user_id, p.full_name)} disabled={isBusy}>
