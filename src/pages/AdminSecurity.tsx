@@ -57,21 +57,21 @@ const severityConfig: Record<string, { icon: typeof AlertCircle; color: string; 
 
 export default function AdminSecurity() {
   const navigate = useNavigate();
-  const { user, role, isLoading: authLoading } = useAuth();
+  const { user, isAdmin, isLoading: authLoading } = useAuth();
   const [events, setEvents] = useState<SecurityEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!authLoading && (!user || role !== 'admin')) {
-      navigate('/auth');
+    if (!authLoading && (!user || !isAdmin)) {
+      navigate('/');
     }
-  }, [user, role, authLoading, navigate]);
+  }, [user, isAdmin, authLoading, navigate]);
 
   useEffect(() => {
-    if (user && role === 'admin') {
+    if (user && isAdmin) {
       fetchSecurityEvents();
     }
-  }, [user, role]);
+  }, [user, isAdmin]);
 
   const fetchSecurityEvents = async () => {
     setIsLoading(true);
