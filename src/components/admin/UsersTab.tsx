@@ -156,7 +156,7 @@ export function UsersTab() {
 
             {role !== 'owner_admin' && (
               <div className="grid gap-3 md:grid-cols-[minmax(0,180px)_1fr] md:items-center">
-                <Select value={role} onValueChange={(value) => updateRole(p.user_id, p.full_name, value)} disabled={isBusy}>
+                <Select value={role} onValueChange={(value) => updateRole(p.user_id, p.full_name, value as ManagedRole)} disabled={isBusy}>
                   <SelectTrigger className="h-9">
                     <SelectValue placeholder="Change role" />
                   </SelectTrigger>
